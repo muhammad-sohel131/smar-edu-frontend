@@ -6,7 +6,7 @@ import { FaTimes, FaCheckCircle, FaCreditCard, FaReceipt, FaLock, FaEye, FaEyeSl
 const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
   const [step, setStep] = useState(1);
   const [orderComplete, setOrderComplete] = useState(false);
-  const [selectedPayment, setSelectedPayment] = useState("");
+  const [selectedPayment, setSelectedPayment] = useState("sslcommerz");
   const [paymentProcessing, setPaymentProcessing] = useState(false);
   const [cardDetails, setCardDetails] = useState({
     number: "",
@@ -18,32 +18,11 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
 
   const paymentMethods = [
     {
-      id: "toyyibpay",
-      name: "ToyyibPay",
-      description: "Secure payment via ToyyibPay",
-      icon: "🏦",
-      fee: 0.50
-    },
-    {
-      id: "billplz",
-      name: "Billplz",
-      description: "Easy payment with Billplz",
-      icon: "🧾",
-      fee: 0.30
-    },
-    {
-      id: "stripe",
-      name: "Stripe",
-      description: "Credit/Debit card payment",
+      id: "sslcommerz",
+      name: "SSLCommerz",
+      description: "Secure payment via SSLCommerz",
       icon: "💳",
-      fee: 0.60
-    },
-    {
-      id: "fpx",
-      name: "FPX",
-      description: "Online banking",
-      icon: "🏛️",
-      fee: 0.20
+      fee: 0.00
     }
   ];
 
@@ -142,12 +121,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
     return total + fee;
   };
 
-  // Test card numbers for demo
-  const testCards = [
-    { number: "4242 4242 4242 4242", name: "Visa Test Card" },
-    { number: "5555 5555 5555 4444", name: "MasterCard Test Card" },
-    { number: "3782 822463 10005", name: "Amex Test Card" },
-  ];
+
 
   if (!isOpen) return null;
 
@@ -321,108 +295,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                   ))}
                 </div>
 
-                {/* Card Details Form for Stripe */}
-                {selectedPayment === "stripe" && (
-                  <div className="rounded-2xl border border-gray-200 p-6 bg-gray-50">
-                    <div className="flex items-center gap-2 mb-4">
-                      <FaLock className="text-green-600" />
-                      <span className="font-semibold text-gray-800">Secure Card Payment</span>
-                    </div>
 
-                    {/* Test Card Suggestions */}
-                    <div className="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                      <p className="text-sm font-medium text-yellow-800 mb-2">Test Cards for Demo:</p>
-                      <div className="space-y-1">
-                        {testCards.map((card, index) => (
-                          <button
-                            key={index}
-                            onClick={() => {
-                              setCardDetails(prev => ({
-                                ...prev,
-                                number: card.number,
-                                name: "Test User",
-                                expiry: "12/25",
-                                cvv: "123"
-                              }));
-                            }}
-                            className="text-xs text-yellow-700 hover:text-yellow-800 block w-full text-left p-1 hover:bg-yellow-100 rounded"
-                          >
-                            <strong>{card.name}:</strong> {card.number}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      {/* Card Number */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Card Number
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="1234 5678 9012 3456"
-                          value={cardDetails.number}
-                          onChange={(e) => handleCardInputChange("number", e.target.value)}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                        />
-                      </div>
-
-                      {/* Cardholder Name */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Cardholder Name
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="John Doe"
-                          value={cardDetails.name}
-                          onChange={(e) => handleCardInputChange("name", e.target.value)}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        {/* Expiry Date */}
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Expiry Date
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="MM/YY"
-                            value={cardDetails.expiry}
-                            onChange={(e) => handleCardInputChange("expiry", e.target.value)}
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                          />
-                        </div>
-
-                        {/* CVV */}
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            CVV
-                          </label>
-                          <div className="relative">
-                            <input
-                              type={showCvv ? "text" : "password"}
-                              placeholder="123"
-                              value={cardDetails.cvv}
-                              onChange={(e) => handleCardInputChange("cvv", e.target.value)}
-                              className="w-full rounded-lg border border-gray-300 px-4 py-3 pr-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowCvv(!showCvv)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                              {showCvv ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {/* Payment Summary */}
                 {selectedPayment && (
@@ -463,7 +336,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                   </button>
                   <button
                     onClick={handleCheckout}
-                    disabled={!selectedPayment || (selectedPayment === "stripe" && (!cardDetails.number || !cardDetails.name || !cardDetails.expiry || !cardDetails.cvv))}
+                    disabled={!selectedPayment}
                     className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 py-4 font-bold text-white transition-all hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed"
                   >
                     Proceed to Pay ${getTotalWithFee().toFixed(2)}
@@ -506,13 +379,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                         </div>
                       </div>
                       
-                      {/* Show card preview for Stripe */}
-                      {selectedPayment === "stripe" && (
-                        <div className="mb-4 p-3 bg-white rounded-lg border">
-                          <div className="text-xs text-gray-600">Card ending with {cardDetails.number.slice(-4)}</div>
-                          <div className="text-sm font-medium">{cardDetails.name}</div>
-                        </div>
-                      )}
+
                       
                       <button
                         onClick={processPayment}
@@ -566,7 +433,6 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
             </p>
             <p className="mb-6 text-sm text-gray-500">
               Payment Method: {paymentMethods.find(m => m.id === selectedPayment)?.name}
-              {selectedPayment === "stripe" && ` (Card ending with ${cardDetails.number.slice(-4)})`}
             </p>
             <div className="space-y-4">
               <button

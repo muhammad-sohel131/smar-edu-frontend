@@ -28,7 +28,7 @@ export default function ProductCheckoutPage() {
   const { t, i18n } = useTranslation();
   const { cart, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
   
-  const [paymentMethod, setPaymentMethod] = useState("paypal");
+  const [paymentMethod, setPaymentMethod] = useState("sslcommerz");
   const [billingInfo, setBillingInfo] = useState({
     firstName: "",
     lastName: "",
@@ -57,10 +57,7 @@ export default function ProductCheckoutPage() {
   const total = subtotal + shipping + tax;
 
   const paymentOptions = [
-    { id: "paypal", label: "PayPal", icon: Wallet },
-    { id: "stripe", label: "Stripe", icon: Landmark },
-    { id: "tayyibpay", label: "TayyibPay", icon: DollarSign },
-    { id: "billplz", label: "Billplz", icon: DollarSign },
+    { id: "sslcommerz", label: "SSLCommerz", icon: ShieldCheck },
   ];
 
   const card =
@@ -322,28 +319,10 @@ export default function ProductCheckoutPage() {
                 </div>
 
                 <div className="space-y-4">
-                  {paymentMethod === "paypal" && (
+                  {paymentMethod === "sslcommerz" && (
                     <Notice
-                      title="PayPal"
-                      message="You will be redirected to PayPal to complete your payment securely."
-                    />
-                  )}
-                  {paymentMethod === "stripe" && (
-                    <Notice
-                      title="Stripe"
-                      message="Stripe secure checkout will open to confirm your card payment."
-                    />
-                  )}
-                  {paymentMethod === "tayyibpay" && (
-                    <Notice
-                      title="TayyibPay"
-                      message="You'll be redirected to TayyibPay Malaysia gateway to complete your transaction."
-                    />
-                  )}
-                  {paymentMethod === "billplz" && (
-                    <Notice
-                      title="Billplz"
-                      message="You'll be redirected to Billplz Malaysia gateway to complete your transaction."
+                      title="SSLCommerz"
+                      message="You will be redirected to SSLCommerz to complete your payment securely."
                     />
                   )}
                 </div>
