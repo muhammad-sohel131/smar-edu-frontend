@@ -24,7 +24,7 @@ export default function CheckoutPage() {
   const router = useRouter()
   const params = useSearchParams()
   const { t, i18n } = useTranslation();
-  const [paymentMethod, setPaymentMethod] = useState("paypal");
+  const [paymentMethod, setPaymentMethod] = useState("sslcommerz");
   const [billingInfo, setBillingInfo] = useState({
     firstName: "",
     lastName: "",
@@ -55,10 +55,7 @@ export default function CheckoutPage() {
 
 
   const paymentOptions = [
-    { id: "paypal", label: "PayPal", icon: Wallet },
-    { id: "stripe", label: "Stripe", icon: Landmark },
-    { id: "tayyibpay", label: "TayyibPay", icon: DollarSign },
-    { id: "billplz", label: "Billplz", icon: DollarSign },
+    { id: "sslcommerz", label: "SSLCommerz", icon: ShieldCheck },
   ];
 
   const card =
@@ -162,17 +159,8 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="space-y-4">
-                    {paymentMethod === "paypal" && (
-                      <Notice title="PayPal" message="You will be redirected to PayPal to complete your payment securely." />
-                    )}
-                    {paymentMethod === "stripe" && (
-                      <Notice title="Stripe" message="Stripe secure checkout will open to confirm your card payment." />
-                    )}
-                    {paymentMethod === "tayyibpay" && (
-                      <Notice title="TayyibPay" message="You’ll be redirected to TayyibPay Malaysia gateway to complete your transaction." />
-                    )}
-                    {paymentMethod === "billplz" && (
-                      <Notice title="Billplz" message="You’ll be redirected to Billplz Malaysia gateway to complete your transaction." />
+                    {paymentMethod === "sslcommerz" && (
+                      <Notice title="SSLCommerz" message="You will be redirected to the secure SSLCommerz gateway to complete your payment." />
                     )}
                   </div>
                 </>}
