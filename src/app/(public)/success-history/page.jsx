@@ -4,7 +4,7 @@ export default function SuccessHistory() {
       year: "2018",
       title: "Founded the Platform",
       description:
-        "Our journey began with a vision to make learning more accessible, creating a user-friendly LMS platform for learners worldwide.",
+        "Our journey began with a vision to make learning more accessible, creating a user-friendly SMARTEDU HUB ecosystem for learners worldwide.",
     },
     {
       year: "2019",
@@ -43,7 +43,7 @@ export default function SuccessHistory() {
           Success History
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          From humble beginnings to becoming a trusted LMS solution for
+          From humble beginnings to becoming a trusted SMARTEDU HUB ecosystem for
           learners worldwide, here’s a look at our journey through the years.
         </p>
       </div>

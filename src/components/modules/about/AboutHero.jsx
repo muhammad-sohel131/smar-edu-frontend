@@ -33,7 +33,7 @@ export default function AboutHero() {
           {t("aboutHero.title") || "Empowering Learning, Inspiring Growth"}
         </h2>
         <p className="text-gray-600 text-sm mb-6">
-          {t("aboutHero.description") || "At DreamLMS, we make education accessible to all with interactive courses and expert-led content. Learn anytime, anywhere, and achieve your goals seamlessly."}
+          {t("aboutHero.description") || "At SMARTEDU HUB, we integrate education, events, donations, and e-commerce into a single ecosystem. Learn, participate, and shop seamlessly."}
         </p>
 
         {/* Features */}

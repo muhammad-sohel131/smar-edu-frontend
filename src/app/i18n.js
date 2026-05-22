@@ -63,7 +63,7 @@ const resources = {
 
        // Courses Section Translations
       "courses.featuredSubtitle": "Featured Courses",
-      "courses.title": "What's New in AsiaLMS",
+      "courses.title": "What's New in SMARTEDU HUB",
       "courses.description": "Discover our featured courses, specially curated to help you gain in-demand skills.",
       "courses.filterBy": "Filter By:",
       "courses.viewMore": "View More",
@@ -380,8 +380,8 @@ const resources = {
       "about.faqs.title": "Frequently Asked Questions",
       "about.faqs.description": "Explore detailed answers to the most common questions about our platform.",
       "about.faqs.imageAlt": "FAQ",
-      "about.faqs.q1": "What's DreamLMS want to give you?",
-      "about.faqs.a1": "DreamLMS aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
+      "about.faqs.q1": "What's SMARTEDU HUB want to give you?",
+      "about.faqs.a1": "SMARTEDU HUB aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
       "about.faqs.q2": "Why choose us for your education?",
       "about.faqs.a2": "We offer certified tutors, high-quality courses, and lifetime access with global recognition.",
       "about.faqs.q3": "How we provide service for you?",
@@ -390,7 +390,7 @@ const resources = {
        // About Hero Translations
       "aboutHero.subtitle": "About",
       "aboutHero.title": "Empowering Learning, Inspiring Growth",
-      "aboutHero.description": "At DreamLMS, we make education accessible to all with interactive courses and expert-led content. Learn anytime, anywhere, and achieve your goals seamlessly.",
+      "aboutHero.description": "At SMARTEDU HUB, we integrate education, events, donations, and e-commerce into a single ecosystem. Learn, participate, and shop seamlessly.",
       "aboutHero.imageAlt": "About us",
       
       // Features
@@ -613,7 +613,7 @@ const resources = {
 
       // Courses Section Malay Translations
       "courses.featuredSubtitle": "Kursus Terpilih",
-      "courses.title": "Apa Yang Baru di AsiaLMS",
+      "courses.title": "Apa Yang Baru di SMARTEDU HUB",
       "courses.description": "Temui kursus pilihan kami, yang dikurasi khas untuk membantu anda memperoleh kemahiran yang diperlukan.",
       "courses.filterBy": "Tapis Mengikut:",
       "courses.viewMore": "Lihat Lagi",
@@ -915,8 +915,8 @@ const resources = {
       "about.faqs.title": "Soalan Lazim",
       "about.faqs.description": "Terokai jawapan terperinci untuk soalan paling biasa mengenai platform kami.",
       "about.faqs.imageAlt": "Soalan Lazim",
-      "about.faqs.q1": "Apa yang DreamLMS ingin berikan kepada anda?",
-      "about.faqs.a1": "DreamLMS bertujuan untuk menyediakan anda platform pembelajaran yang komprehensif dan intuitif yang meningkatkan pengalaman pendidikan anda.",
+      "about.faqs.q1": "Apa yang SMARTEDU HUB ingin berikan kepada anda?",
+      "about.faqs.a1": "SMARTEDU HUB bertujuan untuk menyediakan anda platform pembelajaran yang komprehensif dan intuitif yang meningkatkan pengalaman pendidikan anda.",
       "about.faqs.q2": "Mengapa pilih kami untuk pendidikan anda?",
       "about.faqs.a2": "Kami menawarkan tutor bertauliah, kursus berkualiti tinggi, dan akses sepanjang hayat dengan pengiktirafan global.",
       "about.faqs.q3": "Bagaimana kami menyediakan perkhidmatan untuk anda?",
@@ -925,7 +925,7 @@ const resources = {
       // About Hero Malay Translations
       "aboutHero.subtitle": "Tentang",
       "aboutHero.title": "Memperkukuh Pembelajaran, Mendorong Pertumbuhan",
-      "aboutHero.description": "Di DreamLMS, kami menjadikan pendidikan boleh diakses oleh semua dengan kursus interaktif dan kandungan dipimpin pakar. Belajar bila-bila masa, di mana sahaja, dan capai matlamat anda dengan lancar.",
+      "aboutHero.description": "Di SMARTEDU HUB, kami mengintegrasikan pendidikan, acara, derma, dan e-dagang ke dalam satu ekosistem. Belajar, sertai, dan beli-belah dengan lancar.",
       "aboutHero.imageAlt": "Tentang kami",
       
       // Features Malay

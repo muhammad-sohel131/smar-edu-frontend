@@ -129,7 +129,7 @@ export default function ContactPage() {
                 Get in touch with us today
               </h2>
               <p className="text-gray-200 text-base leading-relaxed">
-                Get in touch with us to explore how our LMS solution can enhance your e-learning
+                Get in touch with us to explore how SMARTEDU HUB can enhance your e-learning
                 experience. We're here to help you build a seamless and engaging learning platform!
               </p>
             </div>

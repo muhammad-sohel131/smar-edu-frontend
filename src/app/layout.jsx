@@ -15,8 +15,8 @@ import { CartProvider } from "@/providers/CartProvider";
 // });
 
 export const metadata = {
-  title: "Asia LMS - Empowering E-Learning Excellence",
-  description: "A comprehensive learning management system for Asian educational institutions and businesses.",
+  title: "SMARTEDU HUB - Integrated LMS, Events, Donations & E-commerce",
+  description: "An integrated platform for learning management, event organization, donations, and tech e-commerce.",
 };
 
 export default function RootLayout({ children }) {

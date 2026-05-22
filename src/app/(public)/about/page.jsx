@@ -14,8 +14,8 @@ export default function About() {
 
     const faqs = [
         {
-            q: t("about.faqs.q1") || "What's DreamLMS want to give you?",
-            a: t("about.faqs.a1") || "DreamLMS aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
+            q: t("about.faqs.q1") || "What's SMARTEDU HUB want to give you?",
+            a: t("about.faqs.a1") || "SMARTEDU HUB aims to provide you with a comprehensive and intuitive learning platform that enhances your educational experience.",
         },
         {
             q: t("about.faqs.q2") || "Why choose us for your education?",
