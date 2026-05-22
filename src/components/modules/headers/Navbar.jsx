@@ -102,7 +102,7 @@ const Navbar = () => {
       key: "pages",
       dropdown: [
         // { name: t("pricing"), href: "/pricing" },
-        {name: t("Packages"), href:'/packages'},
+
         // { name: t("dashboard"), href: "/dashboard" },
         // { name: t("checkout"), href: "/checkout" },
         // { name: t("event"), href: "/event" },
@@ -132,7 +132,7 @@ const Navbar = () => {
           onClick={closeMenu}
           className="text-2xl font-extrabold text-[var(--color-secondary)]"
         >
-          <Image src="/logo.png" alt="Logo Image" width={120} height={90} />
+          <span className="text-2xl font-extrabold tracking-tight text-[var(--color-primary)]">SMARTEDU<span className="text-[var(--color-accent)]">HUB</span></span>
         </Link>
 
         {/* Desktop Menu - Unchanged */}
@@ -356,13 +356,7 @@ const Navbar = () => {
                 onClick={closeMenu}
                 className="text-2xl font-extrabold text-[var(--color-secondary)]"
               >
-                <Image
-                  src="/logo.png"
-                  alt="Logo Image"
-                  width={90}
-                  height={70}
-                  className="md:w-36"
-                />
+                <span className="text-2xl font-extrabold tracking-tight text-[var(--color-primary)] md:text-3xl">SMARTEDU<span className="text-[var(--color-accent)]">HUB</span></span>
               </Link>
               <LanguageSwitcher />
               <button

@@ -14,9 +14,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <h2 className="text-2xl font-bold mb-4 text-[var(--color-secondary)]">
-              <Image src="/logo.png" alt="SMARTEDU HUB" width={100} height={40}
-                className="h-[45px] w-auto object-contain"
-              />
+              <span className="text-2xl font-extrabold tracking-tight text-[var(--color-primary)]">SMARTEDU<span className="text-[var(--color-accent)]">HUB</span></span>
             </h2>
             <p className="text-[var(--color-text)] mb-6 leading-relaxed">
               {t("footer.companyDescription") || "Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities."}
@@ -58,7 +56,7 @@ const Footer = () => {
             <ul className="space-y-2 text-[var(--color-text)]">
               <li><Link href="/shop" className="hover:text-[var(--color-primary)] transition-colors">Shop</Link></li>
               <li><Link href="/events" className="hover:text-[var(--color-primary)] transition-colors">Events</Link></li>
-              <li><Link href="/packages" className="hover:text-[var(--color-primary)] transition-colors">Packages</Link></li>
+
              
             </ul>
           </div>

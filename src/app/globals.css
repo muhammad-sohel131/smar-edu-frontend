@@ -6,32 +6,32 @@ html {
 
 :root {
   /* ====== Brand Colors ====== */
-  --color-primary: #059669;
-  /* Emerald Green - CTA buttons, progress bars, active menu items */
-  --color-secondary: #2563EB;
-  /* Blue - Headers, navigation links, icons */
-  --color-accent: #FBBF24;
-  /* Yellow - Badges, XP points, achievements */
+  --color-primary: #2563EB;
+  /* Royal Blue - CTA buttons, progress bars, active menu items */
+  --color-secondary: #4F46E5;
+  /* Indigo - Headers, navigation links, icons */
+  --color-accent: #F97316;
+  /* Vibrant Orange - Badges, XP points, achievements */
 
   /* ====== Base Colors ====== */
-  --color-background: #ECFDF5;
-  /* Light Mint - Page backgrounds, sections, soft containers */
-  --color-text: #064E3B;
-  /* Dark Green - Body text, descriptions, headings, forms */
+  --color-background: #F8FAFC;
+  /* Slate 50 - Page backgrounds, sections, soft containers */
+  --color-text: #0F172A;
+  /* Slate 900 - Body text, descriptions, headings, forms */
 
   /* ====== Hover & Transparency ====== */
-  --color-primary-hover: #047857;
-  /* Darker Emerald for hover transitions */
-  --color-secondary-hover: #1E40AF;
-  /* Deeper Blue for hover states */
-  --color-accent-hover: #F59E0B;
-  /* Richer Yellow for active highlights */
-  --color-accent-special: #0f9293;
-  /* Richer Yellow for active highlights */
+  --color-primary-hover: #1D4ED8;
+  /* Darker Blue for hover transitions */
+  --color-secondary-hover: #4338CA;
+  /* Deeper Indigo for hover states */
+  --color-accent-hover: #EA580C;
+  /* Richer Orange for active highlights */
+  --color-accent-special: #C2410C;
+  /* Deep Orange for active highlights */
 
   /* ====== Shadows & Depth ====== */
-  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
   --container-opacity: 0.95;
   /* Slight transparency for depth */
 
