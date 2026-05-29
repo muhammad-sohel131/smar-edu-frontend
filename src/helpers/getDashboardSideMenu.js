@@ -1,4 +1,4 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, ShoppingBasket, Package, TrophyIcon } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, ShoppingBasket, Package, TrophyIcon, Heart } from "lucide-react";
 import { FaProductHunt } from "react-icons/fa";
 import { MdCategory, MdOutlineBorderStyle } from "react-icons/md";
 
@@ -32,6 +32,7 @@ const adminMenu = [
  { title: "Badges", href: "/dashboard/admin/badges", icon: BadgeCent },
   { title: "Products", href: "/dashboard/admin/products", icon: FaProductHunt },
   { title: "Manage Events", href: "/dashboard/admin/events", icon: TrophyIcon },
+  { title: "Donations", href: "/dashboard/admin/donations", icon: Heart },
   { title: "Orders", href: "/dashboard/admin/orders", icon: MdOutlineBorderStyle },
  { title: "Location", href: "/dashboard/admin/location", icon: LocateIcon},
   { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
