@@ -29,7 +29,6 @@ const adminMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
   
 { title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
-{ title: "Packages", href: "/dashboard/admin/packages", icon: Package },
  { title: "Badges", href: "/dashboard/admin/badges", icon: BadgeCent },
   { title: "Products", href: "/dashboard/admin/products", icon: FaProductHunt },
   { title: "Manage Events", href: "/dashboard/admin/events", icon: TrophyIcon },
