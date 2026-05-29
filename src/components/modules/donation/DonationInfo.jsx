@@ -12,19 +12,19 @@ const DonationInfo = () => {
         <ul className="space-y-3 text-gray-700">
           <li className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-2 h-2 bg-red-400 rounded-full flex-shrink-0"></div>
-            <span>Direct impact on community development</span>
+            <span>Creates opportunities through educational scholarships</span>
           </li>
           <li className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
-            <span>Creates educational opportunities for youth</span>
+            <span>Builds a tech-focused e-commerce learning ecosystem</span>
           </li>
           <li className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
-            <span>Supports sustainable environmental projects</span>
+            <span>Funds innovative student-led programs and tech workshops</span>
           </li>
           <li className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
-            <span>Builds partnerships for global change</span>
+            <span>Drives institutional development for modern learning</span>
           </li>
         </ul>
       </div>

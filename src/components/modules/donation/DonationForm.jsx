@@ -47,7 +47,7 @@ const DonationForm = ({
         fund: selectedFundData.id,
         amount: parseFloat(donationAmount),
         provider: selectedProvider,
-        currency: "USD"
+        currency: "BDT"
       };
 
       console.log("Processing donation:", donationData);
@@ -170,11 +170,11 @@ const DonationForm = ({
         {/* Custom Amount */}
         <div className="mt-6">
           <label className="block text-lg font-semibold text-gray-700 mb-3">
-            Or enter custom amount ($)
+            Or enter custom amount (৳)
           </label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg font-bold">
-              $
+              ৳
             </span>
             <input
               type="number"
@@ -271,7 +271,7 @@ const DonationForm = ({
         ) : (
           <>
             <FaHandHoldingUsd className="w-6 h-6" />
-            <span>Donate ${donationAmount}</span>
+            <span>Donate ৳{donationAmount}</span>
           </>
         )}
       </button>

@@ -13,7 +13,7 @@ import DonationInfo from '@/components/modules/donation/DonationInfo';
 import DonationSkeleton from '@/components/modules/donation/DonationSkeleton';
 
 const Donation = () => {
-  const [selectedFund, setSelectedFund] = useState('sdg-projects');
+  const [selectedFund, setSelectedFund] = useState('educational-scholarships');
   const [donationAmount, setDonationAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,61 +21,61 @@ const Donation = () => {
   const [pageLoading, setPageLoading] = useState(true);
 
   const donationOptions = [
-    { value: '50', label: '$50', popular: false },
-    { value: '100', label: '$100', popular: true },
-    { value: '250', label: '$250', popular: false },
-    { value: '500', label: '$500', popular: false },
-    { value: '1000', label: '$1000', popular: false },
+    { value: '500', label: '৳500', popular: false },
+    { value: '1000', label: '৳1000', popular: true },
+    { value: '2500', label: '৳2500', popular: false },
+    { value: '5000', label: '৳5000', popular: false },
+    { value: '10000', label: '৳10000', popular: false },
   ];
 
   const funds = [
     {
-      id: 'sdg-projects',
-      title: 'Support SDG Projects',
-      description: 'Fund innovative projects that address the 17 Sustainable Development Goals in our community',
-      icon: FaRocket,
-      color: 'from-emerald-500 to-teal-600',
-      textColor: 'text-emerald-600',
-      badge: 'Most Popular',
-      examples: [
-        'Clean water initiatives',
-        'Renewable energy projects',
-        'Environmental conservation',
-        'Community development'
-      ],
-      impact: 'Supports 3-5 community projects'
-    },
-    {
-      id: 'student-fund',
-      title: 'Student Fund',
-      description: 'Provide scholarships and financial aid to deserving students pursuing SDG-related studies',
+      id: 'educational-scholarships',
+      title: 'Educational Scholarships',
+      description: 'Provide scholarships and financial aid to deserving students pursuing their tech and educational journey.',
       icon: FaGraduationCap,
       color: 'from-blue-500 to-indigo-600',
       textColor: 'text-blue-600',
-      badge: 'Education Focus',
+      badge: 'Most Popular',
       examples: [
         'Tuition fee assistance',
-        'Research grants',
+        'Tech gadget grants',
         'Internship opportunities',
-        'Educational materials'
+        'Learning materials'
       ],
-      impact: 'Supports 2-3 students annually'
+      impact: 'Supports 50+ students annually'
     },
     {
-      id: 'edufest-impact',
-      title: 'Edufest Impact Fund',
-      description: 'Support our annual education festival that promotes SDG awareness and youth engagement',
+      id: 'institutional-development',
+      title: 'Institutional Development',
+      description: 'Support the development of modern learning facilities, platforms, and tech-focused ecosystems.',
+      icon: FaRocket,
+      color: 'from-emerald-500 to-teal-600',
+      textColor: 'text-emerald-600',
+      badge: 'Infrastructure',
+      examples: [
+        'E-learning platform upgrades',
+        'New tech-focused courses',
+        'Digital libraries',
+        'System integrations'
+      ],
+      impact: 'Benefits all SMARTEDU users'
+    },
+    {
+      id: 'funding-programs',
+      title: 'Special Funding Programs',
+      description: 'Fund innovative educational programs, tech workshops, and student-led initiatives.',
       icon: FaHandHoldingUsd,
       color: 'from-purple-500 to-pink-600',
       textColor: 'text-purple-600',
-      badge: 'Event Support',
+      badge: 'Innovation',
       examples: [
-        'Event organization',
-        'Speaker invitations',
-        'Workshop materials',
-        'Youth participation support'
+        'Tech workshops and seminars',
+        'Hackathons and competitions',
+        'Research and development',
+        'Startup incubation'
       ],
-      impact: 'Reaches 500+ participants'
+      impact: 'Empowers tech enthusiasts'
     }
   ];
 
@@ -123,7 +123,7 @@ const Donation = () => {
       
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      alert(`Redirecting to payment gateway with amount: $${donationAmount}`);
+      alert(`Redirecting to payment gateway with amount: ৳${donationAmount}`);
       
     } catch (error) {
       console.error('Donation error:', error);
@@ -143,8 +143,8 @@ const Donation = () => {
       <Navbar/>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
         <Head>
-          <title>Support SDG Initiatives - Make a Donation</title>
-          <meta name="description" content="Contribute to Sustainable Development Goals projects, student funds, and educational initiatives" />
+          <title>Support SMARTEDU HUB - Make a Donation</title>
+          <meta name="description" content="Contribute to educational causes such as scholarships, funding programs, and institutional development." />
         </Head>
 
         {/* Header Section */}

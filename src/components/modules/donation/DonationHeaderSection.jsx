@@ -21,11 +21,10 @@ const DonationHeaderSection = ({totalDonations,donorsCount}) => {
           </div>
 
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
-            Make an Impact
+            Support SMARTEDU HUB
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Your generosity fuels sustainable change. Choose your cause and
-            create lasting impact today.
+            Your generosity fuels our integrated educational ecosystem. Empower tech enthusiasts, support student scholarships, and drive institutional development today.
           </p>
 
           {/* Impact Stats */}
