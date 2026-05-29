@@ -18,13 +18,11 @@ const DonationForm = ({
   loading = false
 }) => {
   const { user } = useAuth();
-  const [selectedProvider, setSelectedProvider] = useState("stripe");
+  const [selectedProvider, setSelectedProvider] = useState("sslcommerz");
 
   // Payment providers
   const paymentProviders = [
-    { id: "stripe", name: "Stripe", icon: FaCreditCard, description: "Credit/Debit Cards" },
-    { id: "toyyibpay", name: "ToyyibPay", icon: FaBuilding, description: "Malaysian Payments" },
-    { id: "paypal", name: "PayPal", icon: FaGlobe, description: "International" }
+    { id: "sslcommerz", name: "SSLCommerz", icon: FaCreditCard, description: "Secure Payment Gateway" }
   ];
 
   const handleSubmit = async (e) => {

@@ -39,8 +39,7 @@ function formatPrice(price, currency = 'USD') {
 // Get payment method display name
 function getPaymentMethod(provider) {
   const methods = {
-    stripe: 'Credit Card',
-    paypal: 'PayPal',
+    sslcommerz: 'SSLCommerz',
     razorpay: 'Razorpay',
   };
   return methods[provider] || provider;

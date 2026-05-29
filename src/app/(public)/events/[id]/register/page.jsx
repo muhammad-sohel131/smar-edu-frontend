@@ -19,7 +19,7 @@ export default function EventRegisterPage() {
 
   const [processing, setProcessing] = useState(false);
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('sslcommerz');
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleFreeRegistration = async () => {
@@ -50,39 +50,13 @@ export default function EventRegisterPage() {
         paymentMethod: selectedPaymentMethod,
         currency: "USD"
       };
-      // For card payments, we'd typically integrate with Stripe/PayPal
-      if (selectedPaymentMethod === "stripe") {
-        // Create Stripe checkout session
+      if (selectedPaymentMethod === "sslcommerz") {
         const res = await api.post("/events/checkout", paymentData);
 
-        // Redirect to Stripe checkout
-        console.log(res.data?.data)
         if (res.data?.data?.checkoutUrl) {
           window.location.href = res.data?.data?.checkoutUrl;
         } else {
           toast.error("Payment initialization failed");
-        }
-      } else if (selectedPaymentMethod === "paypal") {
-        alert("Paypal is not configured yet. Please select another payment method.");
-        return
-        // Handle PayPal payment
-        const res = await api.post("/payments/create-paypal", paymentData);
-
-        // Redirect to PayPal
-        if (res.data.approvalUrl) {
-          window.location.href = res.data.approvalUrl;
-        } else {
-          toast.error("PayPal initialization failed");
-        }
-      } else if (selectedPaymentMethod === "wallet") {
-        // Handle wallet payment
-        const res = await api.post("/payments/wallet-purchase", paymentData);
-
-        if (res.data.success) {
-          toast.success("Purchase completed successfully!");
-          router.push(`/dashboard/learning?success=true`);
-        } else {
-          toast.error(res.data.message || "Payment failed");
         }
       }
     } catch (error) {
@@ -210,8 +184,8 @@ export default function EventRegisterPage() {
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="stripe"
-                      checked={selectedPaymentMethod === 'stripe'}
+                      value="sslcommerz"
+                      checked={selectedPaymentMethod === 'sslcommerz'}
                       onChange={(e) => setSelectedPaymentMethod(e.target.value)}
                       className="text-[var(--color-primary)]"
                     />
@@ -223,54 +197,8 @@ export default function EventRegisterPage() {
                           </svg>
                         </div>
                         <div>
-                          <p className="font-medium">Stripe</p>
-                          <p className="text-sm text-gray-500">Pay with your stripe account.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </label>
-
-                  <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer border-[var(--color-primary)] transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="paypal"
-                      checked={selectedPaymentMethod === 'paypal'}
-                      onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                      className="text-[var(--color-primary)]"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <span className="text-blue-600 font-bold">PayPal</span>
-                        </div>
-                        <div>
-                          <p className="font-medium">PayPal</p>
-                          <p className="text-sm text-gray-500">Pay with your PayPal account</p>
-                        </div>
-                      </div>
-                    </div>
-                  </label>
-
-                  <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer border-[var(--color-primary)] transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="toybpay"
-                      checked={selectedPaymentMethod === 'toybpay'}
-                      onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-                      className="text-[var(--color-primary)]"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                          <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <p className="font-medium">TaybPay</p>
-                          <p className="text-sm text-gray-500">Pay with your TaybPay account</p>
+                          <p className="font-medium">SSLCommerz</p>
+                          <p className="text-sm text-gray-500">Pay securely with SSLCommerz gateway.</p>
                         </div>
                       </div>
                     </div>
