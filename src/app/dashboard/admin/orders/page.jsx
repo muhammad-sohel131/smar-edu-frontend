@@ -182,7 +182,7 @@ export default function OrdersPage() {
                 </div>
               </div>
               <div className="text-2xl font-bold text-[var(--color-text)]">
-                ${orders.reduce((sum, o) => sum + (o.amount || 0), 0).toFixed(2)}
+                ৳{orders.reduce((sum, o) => sum + (o.amount || 0), 0).toFixed(2)}
               </div>
             </div>
 
@@ -375,7 +375,7 @@ export default function OrdersPage() {
                                 <div className="flex-1">
                                   <p className="font-medium text-[var(--color-text)]">{item.title}</p>
                                   <p className="text-sm text-gray-600">
-                                    {item.qty} × ${item.unitPrice} = <span className="font-medium">${item.qty * item.unitPrice}</span>
+                                    {item.qty} × ${item.unitPrice} = <span className="font-medium">৳{item.qty * item.unitPrice}</span>
                                   </p>
                                 </div>
                               </div>
@@ -392,18 +392,18 @@ export default function OrdersPage() {
                           <div className="space-y-2 bg-white p-4 rounded-lg border border-gray-200">
                             <div className="flex justify-between text-sm">
                               <span className="text-gray-600">Subtotal</span>
-                              <span>${order.ecommerce?.subtotal?.toFixed(2) || order.amount}</span>
+                              <span>৳{order.ecommerce?.subtotal?.toFixed(2) || order.amount}</span>
                             </div>
                             {order.ecommerce?.discount > 0 && (
                               <div className="flex justify-between text-sm text-green-600">
                                 <span>Discount</span>
-                                <span>-${order.ecommerce.discount.toFixed(2)}</span>
+                                <span>- ৳{order.ecommerce.discount.toFixed(2)}</span>
                               </div>
                             )}
                             {order.ecommerce?.tax > 0 && (
                               <div className="flex justify-between text-sm">
                                 <span className="text-gray-600">Tax</span>
-                                <span>${order.ecommerce.tax.toFixed(2)}</span>
+                                <span>৳{order.ecommerce.tax.toFixed(2)}</span>
                               </div>
                             )}
                             <div className="pt-2 border-t">

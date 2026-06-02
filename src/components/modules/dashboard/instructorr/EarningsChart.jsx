@@ -75,7 +75,7 @@ export default function EarningsChart({ data = [] }) {
           afterLabel: function (context) {
             const index = context.dataIndex;
             const orderCount = data[index]?.orderCount || 0;
-            return `Orders: ${orderCount}`;
+            return `Orders: ৳{orderCount}`;
           },
         },
       },

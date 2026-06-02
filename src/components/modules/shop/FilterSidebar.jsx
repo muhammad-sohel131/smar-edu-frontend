@@ -67,7 +67,7 @@ const FilterSidebar = ({
         className={`
           fixed inset-y-0 left-0 z-50  w-72 sm:w-80 bg-white shadow-2xl
           transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          ৳{isOpen ? "translate-x-0" : "-translate-x-full"}
           lg:static lg:z-auto lg:w-64 lg:translate-x-0 lg:shadow-lg
           overflow-hidden
         `}
@@ -155,8 +155,8 @@ const FilterSidebar = ({
             </h4>
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm text-gray-600">
-                <span>${filters.priceRange[0]}</span>
-                <span>${filters.priceRange[1]}</span>
+                <span>৳{filters.priceRange[0]}</span>
+                <span>৳{filters.priceRange[1]}</span>
               </div>
 
               <div className="space-y-2">
@@ -199,19 +199,19 @@ const FilterSidebar = ({
                   onClick={() => handlePriceRangeChange(0, 50)}
                   className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
-                  Under $50
+                  Under ৳50
                 </button>
                 <button
                   onClick={() => handlePriceRangeChange(50, 200)}
                   className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
-                  $50 - $200
+                  ৳50 - ৳200
                 </button>
                 <button
                   onClick={() => handlePriceRangeChange(200, 500)}
                   className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm hover:border-blue-500 hover:bg-blue-50 transition-colors"
                 >
-                  $200 - $500
+                  ৳200 - ৳500
                 </button>
               </div>
             </div>

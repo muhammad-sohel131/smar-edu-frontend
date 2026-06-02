@@ -165,8 +165,8 @@ function CustomSelect({
                             }}
                             className={`
                                 px-4 py-2 cursor-pointer flex items-center justify-between text-[var(--color-text)]
-                                ${hi === -1 ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
-                                ${!value ? "font-medium" : ""}
+                                ৳{hi === -1 ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
+                                ৳{!value ? "font-medium" : ""}
                             `}
                         >
                             All Categories
@@ -189,8 +189,8 @@ function CustomSelect({
                                     }}
                                     className={`
                                         px-4 py-2 cursor-pointer flex items-center justify-between text-[var(--color-text)]
-                                        ${highlighted ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
-                                        ${active ? "font-medium" : ""}
+                                        ৳{highlighted ? "bg-[var(--color-primary)]/10" : "hover:bg-[var(--color-primary)]/10"}
+                                        ৳{active ? "font-medium" : ""}
                                     `}
                                 >
                                     {opt.label}

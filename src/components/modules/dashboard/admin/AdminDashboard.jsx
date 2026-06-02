@@ -49,7 +49,7 @@ export default function AdminDashboard() {
     { title: "Total Students", value: statsData?.data?.totalStudents || "0", icon: Users, color: "bg-emerald-100 text-emerald-700" },
     { title: "Total Instructors", value: statsData?.data?.totalInstructors || "0", icon: UserCheck, color: "bg-blue-100 text-blue-700" },
     { title: "Total Courses", value: statsData?.data?.totalCourses || "0", icon: BookOpen, color: "bg-yellow-100 text-yellow-700" },
-    // { title: "Revenue", value: `$${statsData?.data?.totalRevenue || "0"}`, icon: DollarSign, color: "bg-emerald-100 text-emerald-700" },
+    // { title: "Revenue", value: `৳${statsData?.data?.totalRevenue || "0"}`, icon: DollarSign, color: "bg-emerald-100 text-emerald-700" },
     // { title: "Pending Courses", value: statsData?.data?.pendingCourses || "0", icon: Clock, color: "bg-red-100 text-red-700" },
   ];
 

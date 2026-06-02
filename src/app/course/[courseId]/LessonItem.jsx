@@ -11,7 +11,7 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
     if (!durationSec) return "No timer";
     const minutes = Math.floor(durationSec / 60);
     const seconds = durationSec % 60;
-    return minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}s`;
+    return minutes > 0 ? `${minutes}: ৳{seconds.toString().padStart(2, '0')}` : `${seconds}s`;
   };
 
   const duration = formatDuration(lesson.durationSec);

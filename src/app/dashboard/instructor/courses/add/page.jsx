@@ -102,7 +102,7 @@ export default function AddCoursePage() {
     //   // Format duration for display
     //   const minutes = Math.floor(duration / 60);
     //   const seconds = duration % 60;
-    //   setVideoDuration(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+    //   setVideoDuration(`${minutes}: ৳{seconds.toString().padStart(2, '0')}`);
     // };
     // video.src = URL.createObjectURL(file);
 
@@ -207,13 +207,13 @@ export default function AddCoursePage() {
                     <label
                       htmlFor="thumbnailInput"
                       className={`flex flex-col items-center justify-center aspect-video rounded-[var(--radius-default)] border-3 border-dashed transition-all duration-300 cursor-pointer group
-                        ${isUploadingThumbnail
+                        ৳{isUploadingThumbnail
                           ? 'border-emerald-300 bg-emerald-50'
                           : 'border-emerald-200 hover:border-[var(--color-primary)] hover:bg-emerald-50/50'
                         }`}
                     >
                       <div className={`p-4 rounded-full mb-4 transition-all duration-300
-                        ${isUploadingThumbnail
+                        ৳{isUploadingThumbnail
                           ? 'animate-pulse bg-emerald-100'
                           : 'bg-emerald-100 group-hover:bg-emerald-200 group-hover:scale-110'
                         }`}
@@ -225,7 +225,7 @@ export default function AddCoursePage() {
                         )}
                       </div>
                       <span className={`text-lg font-medium mb-2 transition-colors duration-300
-                        ${isUploadingThumbnail ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] group-hover:text-[var(--color-primary)]'}
+                        ৳{isUploadingThumbnail ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] group-hover:text-[var(--color-primary)]'}
                       `}>
                         {isUploadingThumbnail ? "Uploading..." : "Upload Thumbnail"}
                       </span>
@@ -310,13 +310,13 @@ export default function AddCoursePage() {
                   <label
                     htmlFor="videoInput"
                     className={`flex flex-col items-center justify-center aspect-video rounded-[var(--radius-default)] border-3 border-dashed transition-all duration-300 cursor-pointer group
-                      ${isUploadingVideo
+                      ৳{isUploadingVideo
                         ? 'border-blue-300 bg-blue-50'
                         : 'border-blue-200 hover:border-[var(--color-secondary)] hover:bg-blue-50/50'
                       }`}
                   >
                     <div className={`p-4 rounded-full mb-4 transition-all duration-300
-                      ${isUploadingVideo
+                      ৳{isUploadingVideo
                         ? 'animate-pulse bg-blue-100'
                         : 'bg-blue-100 group-hover:bg-blue-200 group-hover:scale-110'
                       }`}
@@ -328,7 +328,7 @@ export default function AddCoursePage() {
                       )}
                     </div>
                     <span className={`text-lg font-medium mb-2 transition-colors duration-300
-                      ${isUploadingVideo ? 'text-[var(--color-secondary)]' : 'text-[var(--color-text)] group-hover:text-[var(--color-secondary)]'}
+                      ৳{isUploadingVideo ? 'text-[var(--color-secondary)]' : 'text-[var(--color-text)] group-hover:text-[var(--color-secondary)]'}
                     `}>
                       {isUploadingVideo ? "Uploading Video..." : "Upload Intro Video"}
                     </span>
@@ -486,7 +486,7 @@ export default function AddCoursePage() {
                           Price (BDT)
                         </label>
                         <div className="relative">
-                          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500">$</span>
+                          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500">৳</span>
                           <input
                             type="number"
                             {...register("price", { required: isPaid })}

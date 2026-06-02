@@ -117,7 +117,7 @@ export default function AdminEventsPage() {
         <div className="bg-white rounded-xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition hover:-translate-y-0.5">
           <p className="text-sm text-gray-600">Total Revenue</p>
           <p className="text-2xl font-bold text-[var(--color-primary)]">
-            ${events?.data?.reduce((sum, e) => sum + (e.price * (e.attendees?.length || 0)), 0) || 0}
+            ৳{events?.data?.reduce((sum, e) => sum + (e.price * (e.attendees?.length || 0)), 0) || 0}
           </p>
         </div>
       </div>

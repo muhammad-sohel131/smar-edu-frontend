@@ -71,8 +71,8 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
           </label>
           <div className="space-y-4">
             <div className="flex justify-between text-sm text-gray-600">
-              <span>${filters.priceRange[0]}</span>
-              <span>${filters.priceRange[1]}</span>
+              <span>৳{filters.priceRange[0]}</span>
+              <span>৳{filters.priceRange[1]}</span>
             </div>
             <input
               type="range"
@@ -91,13 +91,13 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
                 onClick={() => onFiltersChange({ ...filters, priceRange: [0, 50] })}
                 className="flex-1 text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100"
               >
-                {t('events.filters.under50') || 'Under $50'}
+                {t('events.filters.under50') || 'Under ৳50'}
               </button>
               <button
                 onClick={() => onFiltersChange({ ...filters, priceRange: [50, 200] })}
                 className="flex-1 text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100"
               >
-                {t('events.filters.fiftyTo200') || '$50-200'}
+                {t('events.filters.fiftyTo200') || '৳50-200'}
               </button>
             </div>
           </div>

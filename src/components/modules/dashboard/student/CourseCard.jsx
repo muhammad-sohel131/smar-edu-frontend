@@ -62,7 +62,7 @@ export default function CourseCard({ course }) {
           </div> */}
           <div>
             <span className="text-[var(--color-primary)] font-bold">
-              {course?.course?.price ? `$${course.course.price}` : 'Free'}
+              {course?.course?.price ? `৳${course.course.price}` : 'Free'}
             </span>
           </div>
         </div>

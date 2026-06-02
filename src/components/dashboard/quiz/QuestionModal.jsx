@@ -63,7 +63,7 @@ const QuestionModal = ({
                       {isEditing ? "Edit Question" : "Create New Question"}
                     </h3>
                     <p className="text-sm text-[var(--color-text)]/70">
-                      {isEditing ? "Update question details" : `Add to "${selectedQuiz?.title || 'Quiz'}"`}
+                      {isEditing ? "Update question details" : `Add to "৳{selectedQuiz?.title || 'Quiz'}"`}
                     </p>
                   </div>
                 </div>

@@ -120,7 +120,7 @@ export default function MembershipSection() {
                             </h3>
 
                             <p className={`text-3xl font-bold mb-6 ${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-primary)]"}`}>
-                                ${billing === "monthly" ? tier.priceMonthly : tier.priceYearly}
+                                ৳{billing === "monthly" ? tier.priceMonthly : tier.priceYearly}
                                 <span className="text-sm font-normal">
                                     /{billing === "monthly" ? t("pricing.perMonth") || "mo" : t("pricing.perYear") || "yr"}
                                 </span>

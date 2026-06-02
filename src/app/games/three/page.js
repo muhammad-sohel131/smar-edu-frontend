@@ -238,7 +238,7 @@ export default function SustainableCitiesGame() {
                     ? "🏆 SDG-11 Achieved! Your city is inclusive, safe, resilient, and sustainable."
                     : "🔎 Progress made, but SDG-11 targets were missed.";
 
-            newLog.push(`Final Score: ${finalScore}/100 — ${verdict}`);
+            newLog.push(`Final Score: ৳{finalScore}/100 — ${verdict}`);
             setState(next);
             setLog(newLog);
             setGameOver(true);
@@ -281,7 +281,7 @@ export default function SustainableCitiesGame() {
 
         setState(next);
         setSelected(action.id);
-        endTurn(`Action: ${action.title} — ${action.desc}`);
+        endTurn(`Action: ৳{action.title} — ${action.desc}`);
     }
 
     function reset() {

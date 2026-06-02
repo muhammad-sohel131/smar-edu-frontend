@@ -149,7 +149,7 @@ export default function TopCategories() {
             disabled={!canPrev}
             onClick={() => scrollStep("left")}
             className={`hidden md:flex absolute left-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
-              ${canPrev ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
+              ৳{canPrev ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
           >
             <ArrowLeft size={18} />
           </button>
@@ -160,7 +160,7 @@ export default function TopCategories() {
             disabled={!canNext}
             onClick={() => scrollStep("right")}
             className={`hidden md:flex absolute right-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
-              ${canNext ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
+              ৳{canNext ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
           >
             <ArrowRight size={18} />
           </button>

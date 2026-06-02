@@ -71,11 +71,11 @@ export default function PurchaseHistoryPage() {
         </div>
         <div className="p-4 bg-white rounded-[--radius-card] shadow-md flex items-center gap-3">
           <div className="p-3 bg-[--color-accent] text-white rounded-full">
-            $
+            ৳
           </div>
           <div>
             <p className="text-sm text-gray-500">Revenue</p>
-            <p className="text-xl font-bold">$42,750</p>
+            <p className="text-xl font-bold">৳42,750</p>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@ export default function PurchaseHistoryPage() {
                 <td className="p-3 font-medium">{purchase.id}</td>
                 <td className="p-3">{purchase.student}</td>
                 <td className="p-3">{purchase.course}</td>
-                <td className="p-3 font-semibold">${purchase.price}</td>
+                <td className="p-3 font-semibold">৳{purchase.price}</td>
                 <td className="p-3">{purchase.date}</td>
                 <td className="p-3">
                   <span

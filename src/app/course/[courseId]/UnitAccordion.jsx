@@ -127,7 +127,7 @@ export default function UnitAccordion({
       <AnimatePresence initial={false}>
         {openModules === moduleIndex && (
           <motion.div
-            key={`ul-${module._id}`}
+            key={`ul- ৳{module._id}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

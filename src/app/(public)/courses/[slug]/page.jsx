@@ -101,35 +101,35 @@ export default function CourseSinglePage() {
         if (courseStats?.enrollmentCount !== undefined) {
             features.push({
                 icon: <FiUsers className="w-4 h-4" />,
-                text: `Enrolled: ${courseStats.enrollmentCount} student${courseStats.enrollmentCount !== 1 ? 's' : ''}`
+                text: `Enrolled: ৳{courseStats.enrollmentCount} student${courseStats.enrollmentCount !== 1 ? 's' : ''}`
             });
         }
         
         if (totalDurationSeconds > 0) {
             features.push({
                 icon: <FiClock className="w-4 h-4" />,
-                text: `Duration: ${formatDurationShort(totalDurationSeconds)}`
+                text: `Duration: ৳{formatDurationShort(totalDurationSeconds)}`
             });
         }
         
         if (units.length > 0) {
             features.push({
                 icon: <FiBarChart2 className="w-4 h-4" />,
-                text: `Chapters: ${units.length}`
+                text: `Chapters: ৳{units.length}`
             });
         }
         
         if (videoDurationSeconds > 0) {
             features.push({
                 icon: <FiPlay className="w-4 h-4" />,
-                text: `Video: ${formatDurationShort(videoDurationSeconds)}`
+                text: `Video: ৳{formatDurationShort(videoDurationSeconds)}`
             });
         }
         
         if (course?.level) {
             features.push({
                 icon: <FiAward className="w-4 h-4" />,
-                text: `Level: ${course.level.charAt(0).toUpperCase() + course.level.slice(1)}`
+                text: `Level: ৳{course.level.charAt(0).toUpperCase() + course.level.slice(1)}`
             });
         }
         
@@ -254,9 +254,9 @@ export default function CourseSinglePage() {
                                 {course?.price ? (
                                     <div className="flex items-baseline gap-2">
                                         <span className="text-3xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-blue-600 bg-clip-text text-transparent">
-                                            ${course?.price}
+                                            ৳{course?.price}
                                         </span>
-                                        <span className="text-sm text-gray-500 line-through">${(course?.price * 2).toFixed(2)}</span>
+                                        <span className="text-sm text-gray-500 line-through">৳{(course?.price * 2).toFixed(2)}</span>
                                     </div>
                                 ) : (
                                     <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">

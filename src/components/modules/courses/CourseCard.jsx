@@ -49,11 +49,11 @@ export default function CourseCard({ course }) {
                     ) : (
                         <>
                             <span className="text-[var(--color-primary)] font-bold">
-                                ${course?.price || "0.00"}
+                                ৳{course?.price || "0.00"}
                             </span>
                             {course.oldPrice && (
                                 <span className="line-through text-gray-400 text-sm ml-2">
-                                    ${course.oldPrice}
+                                    ৳{course.oldPrice}
                                 </span>
                             )}
                         </>

@@ -266,7 +266,7 @@ export default function InstructorProfile() {
                       <FiMail className="w-5 h-5 text-blue-600" />
                     </div>
                     <a 
-                      href={`mailto:${email}`} 
+                      href={`mailto: ৳{email}`} 
                       className="text-sm text-gray-700 hover:text-blue-600 font-medium transition-colors truncate"
                     >
                       {email}
@@ -279,7 +279,7 @@ export default function InstructorProfile() {
                       <FiPhone className="w-5 h-5 text-green-600" />
                     </div>
                     <a 
-                      href={`tel:${phone}`} 
+                      href={`tel: ৳{phone}`} 
                       className="text-sm text-gray-700 hover:text-green-600 font-medium transition-colors"
                     >
                       {phone}

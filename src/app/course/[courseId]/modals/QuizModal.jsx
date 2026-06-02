@@ -152,7 +152,7 @@ export default function QuizModal({ quizzes, onClose }) {
   const formatTime = (secs) => {
     const m = Math.floor(secs / 60);
     const s = secs % 60;
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
+    return `${m}: ৳{s < 10 ? "0" : ""}${s}`;
   };
 
   // ✅ Multi-select MCQ toggle

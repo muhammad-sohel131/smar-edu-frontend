@@ -39,13 +39,13 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
     
     // Format card number with spaces
     if (field === "number") {
-      formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+      formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '৳1 ').trim();
       if (formattedValue.length > 19) formattedValue = formattedValue.slice(0, 19);
     }
     
     // Format expiry date
     if (field === "expiry") {
-      formattedValue = value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '$1/$2');
+      formattedValue = value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '৳1/৳2');
       if (formattedValue.length > 5) formattedValue = formattedValue.slice(0, 5);
     }
     
@@ -219,7 +219,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                         </div>
                       </div>
                       <p className="font-semibold text-gray-800">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ৳{(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   ))}
@@ -227,7 +227,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                     <div className="space-y-2">
                       <div className="flex justify-between text-gray-600">
                         <span>Subtotal</span>
-                        <span>${total.toFixed(2)}</span>
+                        <span>৳{total.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-gray-600">
                         <span>Shipping</span>
@@ -235,7 +235,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                       </div>
                       <div className="flex justify-between font-semibold text-gray-800 text-lg">
                         <span>Total</span>
-                        <span>${total.toFixed(2)}</span>
+                        <span>৳{total.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -282,7 +282,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                         </div>
                         <div className="text-right">
                           <div className="text-sm text-gray-500">
-                            Fee: ${method.fee.toFixed(2)}
+                            Fee: ৳{method.fee.toFixed(2)}
                           </div>
                           {selectedPayment === method.id && (
                             <div className="text-blue-600 text-sm font-medium">
@@ -306,12 +306,12 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                     <div className="space-y-2">
                       <div className="flex justify-between text-gray-600">
                         <span>Subtotal</span>
-                        <span>${total.toFixed(2)}</span>
+                        <span>৳{total.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-gray-600">
                         <span>Payment Fee</span>
                         <span>
-                          $
+                          ৳
                           {paymentMethods
                             .find((m) => m.id === selectedPayment)
                             ?.fee.toFixed(2)}
@@ -320,7 +320,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                       <div className="border-t border-gray-300 pt-2">
                         <div className="flex justify-between font-semibold text-gray-800 text-lg">
                           <span>Total Amount</span>
-                          <span>${getTotalWithFee().toFixed(2)}</span>
+                          <span>৳{getTotalWithFee().toFixed(2)}</span>
                         </div>
                       </div>
                     </div>
@@ -363,7 +363,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                   <p className="text-gray-600 mb-6">
                     {paymentProcessing 
                       ? "Please wait while we process your payment..." 
-                      : `You selected: ${paymentMethods.find(m => m.id === selectedPayment)?.name}`
+                      : `You selected: ৳{paymentMethods.find(m => m.id === selectedPayment)?.name}`
                     }
                   </p>
 
@@ -372,7 +372,7 @@ const CheckoutModal = ({ isOpen, onClose, cart, total, clearCart }) => {
                       <div className="text-center mb-4">
                         <FaReceipt className="text-3xl text-gray-400 mx-auto mb-2" />
                         <div className="text-2xl font-bold text-gray-800">
-                          ${getTotalWithFee().toFixed(2)}
+                          ৳{getTotalWithFee().toFixed(2)}
                         </div>
                         <div className="text-sm text-gray-500">
                           Total amount to pay

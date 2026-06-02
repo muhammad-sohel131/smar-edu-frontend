@@ -912,7 +912,7 @@ export default function LocationsGrid() {
                         <option value="">Select a city</option>
                         {cities.map(city => (
                           <option key={city._id} value={city._id}>
-                            {city.name} {city.country && `(${city.country})`}
+                            {city.name} {city.country && `(৳{city.country})`}
                           </option>
                         ))}
                       </select>

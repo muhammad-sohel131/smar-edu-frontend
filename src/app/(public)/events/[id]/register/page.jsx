@@ -218,21 +218,21 @@ export default function EventRegisterPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Event Fee</span>
-                  <span className="font-medium">${event.price}</span>
+                  <span className="font-medium">৳{event.price}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Platform Fee</span>
-                  <span className="font-medium">$0.00</span>
+                  <span className="font-medium">৳0.00</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tax</span>
-                  <span className="font-medium">$0.00</span>
+                  <span className="font-medium">৳0.00</span>
                 </div>
                 <div className="border-t pt-4">
                   <div className="flex justify-between">
                     <span className="text-lg font-bold text-[var(--color-text)]">Total</span>
                     <span className="text-2xl font-bold text-[var(--color-text)]">
-                      ${event.price}
+                      ৳{event.price}
                     </span>
                   </div>
                 </div>

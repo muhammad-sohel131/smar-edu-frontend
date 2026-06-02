@@ -47,7 +47,7 @@ const Sponsorship = () => {
     {
       id: 'bronze',
       name: 'Bronze',
-      price: '$1,000',
+      price: '৳1,000',
       duration: '/year',
       icon: 'FaMedal',
       color: 'from-amber-600 to-amber-700',
@@ -68,7 +68,7 @@ const Sponsorship = () => {
     {
       id: 'silver',
       name: 'Silver',
-      price: '$2,500',
+      price: '৳2,500',
       duration: '/year',
       icon: 'FaGem',
       color: 'from-gray-400 to-gray-600',
@@ -90,7 +90,7 @@ const Sponsorship = () => {
     {
       id: 'gold',
       name: 'Gold',
-      price: '$5,000',
+      price: '৳5,000',
       duration: '/year',
       icon: 'FaStar',
       color: 'from-yellow-500 to-amber-500',
@@ -113,7 +113,7 @@ const Sponsorship = () => {
     {
       id: 'platinum',
       name: 'Platinum',
-      price: '$10,000',
+      price: '৳10,000',
       duration: '/year',
       icon: 'FaCrown',
       color: 'from-purple-500 to-indigo-600',

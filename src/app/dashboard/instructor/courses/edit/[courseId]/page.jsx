@@ -138,23 +138,23 @@ export default function EditCoursePage() {
               <label
                 htmlFor="thumbnailInput"
                 className={`flex flex-col items-center justify-center aspect-video rounded-[var(--radius-default)] border-3 border-dashed transition-all duration-300 cursor-pointer group
-                  ${isUploading 
+                  ৳{isUploading 
                     ? 'border-emerald-300 bg-emerald-50' 
                     : 'border-emerald-200 hover:border-[var(--color-primary)] hover:bg-emerald-50/50'
                   }`}
               >
                 <div className={`p-4 rounded-full mb-4 transition-all duration-300
-                  ${isUploading 
+                  ৳{isUploading 
                     ? 'animate-pulse bg-emerald-100' 
                     : 'bg-emerald-100 group-hover:bg-emerald-200 group-hover:scale-110'
                   }`}
                 >
                   <Upload className={`w-8 h-8 transition-colors duration-300
-                    ${isUploading ? 'text-[var(--color-primary)]' : 'text-emerald-400 group-hover:text-[var(--color-primary)]'}
+                    ৳{isUploading ? 'text-[var(--color-primary)]' : 'text-emerald-400 group-hover:text-[var(--color-primary)]'}
                   `} />
                 </div>
                 <span className={`text-lg font-medium mb-2 transition-colors duration-300
-                  ${isUploading ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] group-hover:text-[var(--color-primary)]'}
+                  ৳{isUploading ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] group-hover:text-[var(--color-primary)]'}
                 `}>
                   {isUploading ? "Uploading..." : "Upload Thumbnail"}
                 </span>

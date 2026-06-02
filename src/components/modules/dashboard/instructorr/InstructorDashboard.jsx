@@ -181,7 +181,7 @@ export default function InstructorDashboard() {
                 </div>
               </div>
               <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                ${stats?.totalEarnings?.toFixed(2) || "0.00"}
+                ৳{stats?.totalEarnings?.toFixed(2) || "0.00"}
               </h3>
               <p className="text-gray-600 text-sm">Total Earnings</p>
             </div>
@@ -275,14 +275,14 @@ export default function InstructorDashboard() {
                               </span>
                               <span className="text-sm text-gray-600 flex items-center gap-1">
                                 <DollarSign className="w-4 h-4" />
-                                ${course.price?.toFixed(2) || "0.00"}
+                                ৳{course.price?.toFixed(2) || "0.00"}
                               </span>
                             </div>
                           </div>
                         </div>
                         <div className="text-right">
                           <div className="text-lg font-bold text-gray-900">
-                            ${course.totalRevenue?.toFixed(2) || "0.00"}
+                            ৳{course.totalRevenue?.toFixed(2) || "0.00"}
                           </div>
                           <div className="text-xs text-gray-500">Total Revenue</div>
                         </div>

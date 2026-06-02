@@ -128,7 +128,7 @@ export default function PurchasedProductsPage() {
               </div>
             </div>
             <div className="text-2xl font-bold text-[var(--color-text)]">
-              ${products.reduce((sum, p) => sum + (p.purchaseInfo.totalPrice || 0), 0)}
+              ৳{products.reduce((sum, p) => sum + (p.purchaseInfo.totalPrice || 0), 0)}
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@ export default function PurchasedProductsPage() {
                       {product.title}
                     </h3>
                     <span className="text-lg font-bold text-[var(--color-text)]">
-                      ${product.price}
+                      ৳{product.price}
                     </span>
                   </div>
 
@@ -216,7 +216,7 @@ export default function PurchasedProductsPage() {
                         <span>Qty: {product.purchaseInfo.quantity}</span>
                       </div>
                       <div className="text-[var(--color-text)] font-medium">
-                        Total: ${product.purchaseInfo.totalPrice}
+                        Total: ৳{product.purchaseInfo.totalPrice}
                       </div>
                     </div>
                   </div>

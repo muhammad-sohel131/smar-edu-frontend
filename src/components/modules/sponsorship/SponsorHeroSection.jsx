@@ -38,7 +38,7 @@ const SponsorHeroSection = () => {
               <div className="text-sm text-blue-200">Partners</div>
             </div>
             <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">
-              <div className="text-2xl font-bold text-blue-300">$2M+</div>
+              <div className="text-2xl font-bold text-blue-300">৳2M+</div>
               <div className="text-sm text-blue-200">Impact Generated</div>
             </div>
             <div className="text-center p-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl border border-white border-opacity-20">

@@ -49,7 +49,7 @@ export default function TaskItem({ task, onOpen, completed = false, dueDate, pri
       case 'reviewed':
         return {
           status: 'reviewed',
-          label: `Reviewed (${submission.pointsAwarded || 0} pts)`,
+          label: `Reviewed (৳{submission.pointsAwarded || 0} pts)`,
           color: 'text-green-700',
           bgColor: 'bg-green-100',
           icon: <CheckCircle className="w-3 h-3" />

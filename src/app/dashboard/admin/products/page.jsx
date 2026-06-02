@@ -99,7 +99,7 @@ export default function ProductsPage() {
 
   // Handle delete
   const handleDelete = (product) => {
-    if (window.confirm(`Are you sure you want to delete "${product.title}"?`)) {
+    if (window.confirm(`Are you sure you want to delete "৳{product.title}"?`)) {
       deleteMutation.mutate(product._id);
     }
   };
@@ -379,12 +379,12 @@ export default function ProductsPage() {
                     </td>
                     <td className="p-4">
                       <div className="font-bold text-lg text-[var(--color-text)]">
-                        ${product.price?.toFixed(2) || "0.00"}
+                        ৳{product.price?.toFixed(2) || "0.00"}
                       </div>
                       {product.compareAtPrice && product.compareAtPrice > product.price && (
                         <div className="flex items-center gap-2">
                           <span className="text-xs text-gray-500 line-through">
-                            ${product.compareAtPrice.toFixed(2)}
+                            ৳{product.compareAtPrice.toFixed(2)}
                           </span>
                           <span className="text-xs font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded">
                             Save ${(product.compareAtPrice - product.price).toFixed(2)}
@@ -508,7 +508,7 @@ export default function ProductsPage() {
                 <div className="space-y-1">
                   <div className="text-gray-600">Price</div>
                   <div className="font-bold text-lg text-[var(--color-text)]">
-                    ${product.price?.toFixed(2) || "0.00"}
+                    ৳{product.price?.toFixed(2) || "0.00"}
                   </div>
                 </div>
                 <div className="space-y-1">
@@ -669,14 +669,14 @@ function ProductDetailsModal({ product, onClose }) {
                   <div>
                     <label className="text-sm text-gray-600">Current Price</label>
                     <div className="mt-1 text-2xl font-bold text-[var(--color-primary)]">
-                      ${product.price?.toFixed(2) || "0.00"}
+                      ৳{product.price?.toFixed(2) || "0.00"}
                     </div>
                   </div>
                   {product.compareAtPrice && (
                     <div>
                       <label className="text-sm text-gray-600">Compare Price</label>
                       <div className="mt-1 text-lg text-gray-500 line-through">
-                        ${product.compareAtPrice.toFixed(2)}
+                        ৳{product.compareAtPrice.toFixed(2)}
                       </div>
                     </div>
                   )}
@@ -765,7 +765,7 @@ function ProductDetailsModal({ product, onClose }) {
                     <img
                       key={index}
                       src={image}
-                      alt={`${product.title} - ${index + 1}`}
+                      alt={`${product.title} - ৳{index + 1}`}
                       className="w-full h-32 object-cover rounded-lg"
                     />
                   ))}

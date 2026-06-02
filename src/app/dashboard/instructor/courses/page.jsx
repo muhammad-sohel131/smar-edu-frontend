@@ -30,7 +30,7 @@ import { TbLabel } from "react-icons/tb";
 
 const PAGE_SIZE = 6;
 const STATUS_OPTIONS = ["All", "Published", "Draft"];
-const PRICE_OPTIONS = ["All", "Free", "Paid", "Under $1000", "$1000-$5000", "Over 5000"];
+const PRICE_OPTIONS = ["All", "Free", "Paid", "Under ৳1000", "৳1000-৳5000", "Over 5000"];
 
 export default function InstructorCourses() {
     const { user } = useAuth();
@@ -78,10 +78,10 @@ export default function InstructorCourses() {
                     case "Paid":
                         if (price <= 0) return false;
                         break;
-                    case "Under $1000":
+                    case "Under ৳1000":
                         if (price >= 1000) return false;
                         break;
-                    case "$1000-$5000":
+                    case "৳1000-৳5000":
                         if (price < 1000 || price > 5000) return false;
                         break;
                     case "Over 5000":
@@ -206,16 +206,16 @@ export default function InstructorCourses() {
                                     <h3 className="font-semibold text-[var(--color-text)]">Filtered Results</h3>
                                     <p className="text-sm text-[var(--color-text)]/70">
                                         Showing {filteredCourses.length} of {courses.length} courses
-                                        {statusFilter !== "All" && ` • Status: ${statusFilter}`}
-                                        {categoryFilter !== "All" && ` • Category: ${categoryFilter}`}
-                                        {priceFilter !== "All" && ` • Price: ${priceFilter}`}
-                                        {query && ` • Search: "${query}"`}
+                                        {statusFilter !== "All" && ` • Status: ৳{statusFilter}`}
+                                        {categoryFilter !== "All" && ` • Category: ৳{categoryFilter}`}
+                                        {priceFilter !== "All" && ` • Price: ৳{priceFilter}`}
+                                        {query && ` • Search: "৳{query}"`}
                                     </p>
                                 </div>
                             </div>
                             <div className="text-right">
                                 <p className="text-2xl font-bold text-blue-600">
-                                    ${filteredCourses.reduce((sum, course) => sum + (course.price || 0), 0).toLocaleString()}
+                                    ৳{filteredCourses.reduce((sum, course) => sum + (course.price || 0), 0).toLocaleString()}
                                 </p>
                                 <p className="text-xs text-[var(--color-text)]/70">Total Value</p>
                             </div>

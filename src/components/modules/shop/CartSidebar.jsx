@@ -75,7 +75,7 @@ const CartSidebar = ({
                       {item.name}
                     </h4>
                     <p className="text-lg font-bold text-blue-600">
-                      ${item.price}
+                      ৳{item.price}
                     </p>
                     <div className="mt-2 flex items-center gap-3">
                       <div className="flex items-center gap-2">
@@ -119,7 +119,7 @@ const CartSidebar = ({
             <div className="mb-4 flex items-center justify-between">
               <span className="text-gray-600">{t("cart.subtotal")}</span>
               <span className="text-xl font-bold text-gray-800">
-                ${total.toFixed(2)}
+                ৳{total.toFixed(2)}
               </span>
             </div>
             <div className="mb-4 flex items-center justify-between">
@@ -133,7 +133,7 @@ const CartSidebar = ({
                 {t("cart.total")}
               </span>
               <span className="text-2xl font-bold text-blue-600">
-                ${total.toFixed(2)}
+                ৳{total.toFixed(2)}
               </span>
             </div>
             <button

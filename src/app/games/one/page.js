@@ -272,7 +272,7 @@ export default function SDGTrivia() {
                   </button>
                 </div>
                 <div className={`hint ${showHint ? "show" : ""}`}>
-                  {showHint ? `💡 Hint: ${currentQ.hint}` : ""}
+                  {showHint ? `💡 Hint: ৳{currentQ.hint}` : ""}
                 </div>
               </div>
 
@@ -417,7 +417,7 @@ function ResultScreen({ score, onRestart, onSave, getLB }) {
               <div className="copy">No scores yet. Be the first!</div>
             ) : (
               board.map((r, i) => (
-                <div className="lb-item" key={`${r.name}-${i}`}>
+                <div className="lb-item" key={`${r.name}- ৳{i}`}>
                   <div>
                     <span className="sr">#{i + 1}</span> <strong>{escapeHTML(r.name)}</strong>
                   </div>

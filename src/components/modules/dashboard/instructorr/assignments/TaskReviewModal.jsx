@@ -312,7 +312,7 @@ export default function TaskReviewModal({
                         className={`w-full p-3 pl-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)] transition-all ${
                           submission?.status === 'reviewed' ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''
                         }`}
-                        placeholder={`Max: ${submission?.task?.maxPoints || 0}`}
+                        placeholder={`Max: ৳{submission?.task?.maxPoints || 0}`}
                       />
                       <Award className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                     </div>

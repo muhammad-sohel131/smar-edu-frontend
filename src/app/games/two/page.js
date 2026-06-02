@@ -192,11 +192,11 @@ export default function GenderEqualityQuiz() {
     const copyResult = async () => {
         const pct = Math.round((score / QUESTIONS.length) * 100);
         const summary =
-            `Gender Equality Quiz — Score: ${score}/${QUESTIONS.length} (${pct}%)\n` +
+            `Gender Equality Quiz — Score: ৳{score}/${QUESTIONS.length} (৳{pct}%)\n` +
             answers
                 .map(
                     (a, i) =>
-                        `${i + 1}. ${a.question}\n   Your answer: ${a.picked}\n   ${a.correct ? "✅ Correct" : "❌ Not correct"} — ${a.explain}`
+                        `${i + 1}. ${a.question}\n   Your answer: ৳{a.picked}\n   ${a.correct ? "✅ Correct" : "❌ Not correct"} — ${a.explain}`
                 )
                 .join("\n");
         try {

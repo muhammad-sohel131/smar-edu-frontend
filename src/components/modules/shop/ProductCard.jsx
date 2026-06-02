@@ -141,11 +141,11 @@ const ProductCard = ({ product, onAddToCart }) => {
           {/* Price */}
           <div className="flex items-center gap-2 mb-3">
             <span className="text-xl font-bold text-gray-800">
-              ${product.price.toFixed(2)}
+              ৳{product.price.toFixed(2)}
             </span>
             {product.originalPrice > product.price && (
               <span className="text-sm text-gray-500 line-through">
-                ${product.originalPrice.toFixed(2)}
+                ৳{product.originalPrice.toFixed(2)}
               </span>
             )}
           </div>
@@ -276,11 +276,11 @@ const ProductCard = ({ product, onAddToCart }) => {
                   {/* Price */}
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-3xl font-bold text-gray-800">
-                      ${product.price.toFixed(2)}
+                      ৳{product.price.toFixed(2)}
                     </span>
                     {product.originalPrice > product.price && (
                       <span className="text-xl text-gray-500 line-through">
-                        ${product.originalPrice.toFixed(2)}
+                        ৳{product.originalPrice.toFixed(2)}
                       </span>
                     )}
                   </div>

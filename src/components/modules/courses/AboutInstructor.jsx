@@ -74,7 +74,7 @@ export default function AboutInstructor({ instructor }) {
                   </a>
                 )}
                 {instructor?.email && (
-                  <a href={`mailto:${instructor.email}`} className="p-2 bg-emerald-50 text-[var(--color-primary)] hover:bg-emerald-100 rounded-lg transition-colors">
+                  <a href={`mailto: ৳{instructor.email}`} className="p-2 bg-emerald-50 text-[var(--color-primary)] hover:bg-emerald-100 rounded-lg transition-colors">
                     <FiMail className="w-5 h-5" />
                   </a>
                 )}

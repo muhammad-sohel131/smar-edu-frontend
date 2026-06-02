@@ -496,8 +496,8 @@ const resources = {
       "events.filters.type": "Type",
       "events.filters.all": "All",
       "events.filters.eventCount": "{{count}} events",
-      "events.filters.under50": "Under $50",
-      "events.filters.fiftyTo200": "$50-200",
+      "events.filters.under50": "Under ৳50",
+      "events.filters.fiftyTo200": "৳50-200",
       "events.filters.clearAll": "Clear All Filters",
 
       // Shop Hero Translations
@@ -523,8 +523,8 @@ const resources = {
       "shop.filters.sports": "Sports",
       "shop.filters.homeGarden": "Home & Garden",
       "shop.filters.priceRange": "Price Range",
-      "shop.filters.under50": "Under $50",
-      "shop.filters.fiftyTo200": "$50-$200",
+      "shop.filters.under50": "Under ৳50",
+      "shop.filters.fiftyTo200": "৳50-৳200",
       "shop.filters.minimumRating": "Minimum Rating",
       "shop.filters.andUp": "& Up",
       "shop.filters.clearAll": "Clear All Filters",
@@ -1032,8 +1032,8 @@ const resources = {
       "events.filters.type": "Jenis",
       "events.filters.all": "Semua",
       "events.filters.eventCount": "{{count}} acara",
-      "events.filters.under50": "Bawah $50",
-      "events.filters.fiftyTo200": "$50-200",
+      "events.filters.under50": "Bawah ৳50",
+      "events.filters.fiftyTo200": "৳50-200",
       "events.filters.clearAll": "Kosongkan Semua Penapis",
 
       // Shop Hero Malay Translations
@@ -1059,8 +1059,8 @@ const resources = {
       "shop.filters.sports": "Sukan",
       "shop.filters.homeGarden": "Rumah & Taman",
       "shop.filters.priceRange": "Julat Harga",
-      "shop.filters.under50": "Bawah $50",
-      "shop.filters.fiftyTo200": "$50-$200",
+      "shop.filters.under50": "Bawah ৳50",
+      "shop.filters.fiftyTo200": "৳50-৳200",
       "shop.filters.minimumRating": "Rating Minimum",
       "shop.filters.andUp": "& Ke Atas",
       "shop.filters.clearAll": "Kosongkan Semua Penapis",
@@ -1093,15 +1093,10 @@ const resources = {
 
 i18n
   .use(initReactI18next)
-  .use(LanguageDetector)
   .init({
     resources,
-    supportedLngs: ["en", "ms"],
+    lng: "en",
     fallbackLng: "en",
-    detection: {
-      order: ["querystring", "cookie", "localStorage", "navigator", "htmlTag"],
-      caches: ["cookie"],
-    },
     react: { 
       useSuspense: false 
     },

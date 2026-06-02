@@ -34,7 +34,7 @@ export default function EventCard({ event }) {
               ? 'bg-green-500 text-white'
               : 'bg-[var(--color-accent)] text-[var(--color-text)]'
           }`}>
-            {event.price === 0 ? 'FREE' : `$${event.price}`}
+            {event.price === 0 ? 'FREE' : `৳${event.price}`}
           </span>
         </div>
 

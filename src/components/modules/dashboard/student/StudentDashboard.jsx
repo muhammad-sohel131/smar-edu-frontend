@@ -104,7 +104,7 @@ export default function Dashboard() {
         />
         <StatusCard
           icon={<CreditCard className="w-6 h-6" />}
-          value={`$${stats?.totalFeesPaid || 0}`}
+          value={`৳${stats?.totalFeesPaid || 0}`}
           label="Total Fees Paid"
           color="from-amber-500 to-orange-500"
           trend="Learning investment"

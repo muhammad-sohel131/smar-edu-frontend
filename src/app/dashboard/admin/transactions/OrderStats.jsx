@@ -88,7 +88,7 @@ export default function OrderStats() {
           <div>
             <p className="text-sm text-gray-500">Total Revenue</p>
             <p className="text-2xl font-bold text-gray-900">
-              ${stats.totalRevenue.toFixed(2)}
+              ৳{stats.totalRevenue.toFixed(2)}
             </p>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function OrderStats() {
           <div>
             <p className="text-sm text-gray-500">Avg Order Value</p>
             <p className="text-2xl font-bold text-gray-900">
-              ${stats.avgOrderValue.toFixed(2)}
+              ৳{stats.avgOrderValue.toFixed(2)}
             </p>
           </div>
         </div>

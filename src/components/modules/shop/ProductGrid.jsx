@@ -135,7 +135,7 @@ const ProductGrid = ({
         
         {filters.priceRange[0] > 0 || filters.priceRange[1] < 1000 ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1.5 text-sm text-green-700">
-            Price: ${filters.priceRange[0]} - ${filters.priceRange[1]}
+            Price: ৳{filters.priceRange[0]} - ৳{filters.priceRange[1]}
             <button
               onClick={() => onFiltersChange({ priceRange: [0, 1000] })}
               className="ml-1 text-green-500 hover:text-green-700"

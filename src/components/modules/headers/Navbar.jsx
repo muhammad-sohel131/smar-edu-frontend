@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
-import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 
 
 const Navbar = () => {
@@ -97,29 +96,10 @@ const Navbar = () => {
     { name: t("leaderboard"), href: "/leaderboard" },
     { name: t("instructors"), href: "/instructors" },
     // { name: t("games"), href: "/games" },
-    {
-      name: t("pages"),
-      key: "pages",
-      dropdown: [
-        // { name: t("pricing"), href: "/pricing" },
+    // { name: t("Events"), href: "/events" },
+    // { name: t("shop"), href: "/shop" },
 
-        // { name: t("dashboard"), href: "/dashboard" },
-        // { name: t("checkout"), href: "/checkout" },
-        // { name: t("event"), href: "/event" },
-        { name: t("Events"), href: "/events" },
-        { name: t("shop"), href: "/shop" },
-        { name: t("about"), href: "/about" },
-        { name: t("contact"), href: "/contact" },
-        // { name: t("blog"), href: "/blog" },
-        // { name: t("sponsorship"), href: "/sponsorship" },
-        { name: t("terms"), href: "/terms" },
-        { name: t("privacy"), href: "/privacy" },
-        { name: t("faq"), href: "/faq" },
-        { name: "404", href: "/404" },
-        // { name: t("success"), href: "/success-history" },
-      ],
-    },
-    { name: t("donation"), href: "/donation" },
+    // { name: t("donation"), href: "/donation" },
   ];
 
   const isActive = (href) => pathname === href;
@@ -235,7 +215,6 @@ const Navbar = () => {
               ))}
             </div>
           </div> */}
-<LanguageSwitcher />
           {!user ? (<>
             <Link
             href="/login"
@@ -358,7 +337,6 @@ const Navbar = () => {
               >
                 <span className="text-2xl font-extrabold tracking-tight text-[var(--color-primary)] md:text-3xl">SMARTEDU<span className="text-[var(--color-accent)]">HUB</span></span>
               </Link>
-              <LanguageSwitcher />
               <button
                 onClick={closeMenu}
                 className="p-2 text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors duration-200"

@@ -33,8 +33,8 @@ const EventsPage = () => {
       date: "Dec 15, 2024",
       duration: "3 Hours",
       level: "Beginner",
-      price: "$49.99",
-      originalPrice: "$79.99",
+      price: "৳49.99",
+      originalPrice: "৳79.99",
       attendees: 2500,
       rating: 4.8,
       reviews: 1247,
@@ -65,8 +65,8 @@ const EventsPage = () => {
       date: "Jan 20, 2024",
       duration: "8 Weeks",
       level: "Intermediate",
-      price: "$199.99",
-      originalPrice: "$299.99",
+      price: "৳199.99",
+      originalPrice: "৳299.99",
       attendees: 1800,
       rating: 4.9,
       reviews: 892,
@@ -97,8 +97,8 @@ const EventsPage = () => {
       date: "Feb 10, 2024",
       duration: "2 Days",
       level: "Advanced",
-      price: "$299.99",
-      originalPrice: "$399.99",
+      price: "৳299.99",
+      originalPrice: "৳399.99",
       attendees: 3200,
       rating: 4.7,
       reviews: 1563,
@@ -129,8 +129,8 @@ const EventsPage = () => {
       date: "Mar 5, 2024",
       duration: "4 Hours",
       level: "Beginner",
-      price: "$39.99",
-      originalPrice: "$59.99",
+      price: "৳39.99",
+      originalPrice: "৳59.99",
       attendees: 1200,
       rating: 4.6,
       reviews: 743,
@@ -161,8 +161,8 @@ const EventsPage = () => {
       date: "Apr 18, 2024",
       duration: "3 Days",
       level: "Intermediate",
-      price: "$399.99",
-      originalPrice: "$499.99",
+      price: "৳399.99",
+      originalPrice: "৳499.99",
       attendees: 2800,
       rating: 4.8,
       reviews: 934,
@@ -193,8 +193,8 @@ const EventsPage = () => {
       date: "May 12, 2024",
       duration: "6 Hours",
       level: "Intermediate",
-      price: "$79.99",
-      originalPrice: "$99.99",
+      price: "৳79.99",
+      originalPrice: "৳99.99",
       attendees: 1900,
       rating: 4.5,
       reviews: 678,
@@ -270,7 +270,7 @@ const EventsPage = () => {
 
   const handleRegister = (event) => {
     console.log("Registering for:", event.title);
-    alert(`Registering for: ${event.title}`);
+    alert(`Registering for: ৳{event.title}`);
   };
 
   const shareEvent = (event) => {
@@ -282,7 +282,7 @@ const EventsPage = () => {
         url: window.location.href,
       });
     } else {
-      alert(`Share this event: ${event.title}`);
+      alert(`Share this event: ৳{event.title}`);
     }
   };
 
