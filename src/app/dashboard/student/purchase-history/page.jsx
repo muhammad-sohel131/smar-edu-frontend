@@ -27,8 +27,9 @@ function formatDate(dateString) {
 }
 
 // Format price
-function formatPrice(price, currency = 'USD') {
+function formatPrice(price, currency = 'BDT') {
   const symbols = {
+    BDT: '৳',
     USD: '$',
     GBP: '£',
     EUR: '€',

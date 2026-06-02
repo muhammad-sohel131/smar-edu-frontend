@@ -483,7 +483,7 @@ export default function AddCoursePage() {
                           <div className="p-1.5 bg-cyan-100 rounded-lg">
                             <DollarSign className="w-4 h-4 text-[var(--color-accent-special)]" />
                           </div>
-                          Price (USD)
+                          Price (BDT)
                         </label>
                         <div className="relative">
                           <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-500">$</span>

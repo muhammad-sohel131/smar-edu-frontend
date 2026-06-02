@@ -48,7 +48,7 @@ export default function ProductCheckoutPage() {
   };
 
   const getConvertedPrice = (usd) =>
-    i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `$${usd.toFixed(2)}`;
+    i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `৳${usd.toFixed(2)}`;
 
   const subtotal = getCartTotal();
   const hasPhysicalProducts = cart.some(item => item.shippingRequired);

@@ -48,7 +48,7 @@ export default function EventRegisterPage() {
       const paymentData = {
         eventId: id,
         paymentMethod: selectedPaymentMethod,
-        currency: "USD"
+        currency: "BDT"
       };
       if (selectedPaymentMethod === "sslcommerz") {
         const res = await api.post("/events/checkout", paymentData);

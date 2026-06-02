@@ -264,7 +264,7 @@ export default function EditCoursePage() {
                   <div className="p-1.5 bg-amber-100 rounded-lg">
                     <DollarSign className="w-4 h-4 text-amber-600" />
                   </div>
-                  Price (USD)
+                  Price (BDT)
                 </label>
                 <input
                   type="number"

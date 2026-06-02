@@ -81,7 +81,7 @@ export default function CartPage() {
               {/* Right Section */}
               <div className="flex items-center gap-4 mt-4 sm:mt-0">
                 <p className="text-[var(--color-primary)] font-semibold">
-                  ${course.price}
+                  ৳{course.price}
                 </p>
                 <button
                   onClick={() => removeItem(course.id)}
@@ -99,7 +99,7 @@ export default function CartPage() {
           <div className="mt-6 border-t pt-4">
             <div className="flex justify-between text-sm text-gray-600 mb-2">
               <span>Subtotal</span>
-              <span className="font-semibold text-[var(--color-text)]">${subtotal}</span>
+              <span className="font-semibold text-[var(--color-text)]">৳{subtotal}</span>
             </div>
             <p className="text-xs text-gray-500">
               All Courses have a{" "}

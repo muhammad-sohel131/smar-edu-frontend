@@ -46,7 +46,7 @@ export default function CheckoutPage() {
   }
 
   const getConvertedPrice = (usd) =>
-    i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `$${usd.toFixed(2)}`;
+    i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `৳${usd.toFixed(2)}`;
 
 
   const subTotal = course.price
