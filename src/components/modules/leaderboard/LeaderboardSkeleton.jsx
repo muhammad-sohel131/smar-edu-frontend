@@ -4,7 +4,7 @@ import React from 'react';
 
 const LeaderboardSkeleton = () => {
   return (
-    <div className="min-h-screen bg-[#ECFDF5] animate-pulse">
+    <div className="min-h-screen bg-[#F8FAFC] animate-pulse">
       {/* Navbar Skeleton */}
       <nav className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4">
@@ -24,7 +24,7 @@ const LeaderboardSkeleton = () => {
       </nav>
 
       {/* Hero Section Skeleton */}
-      <section className="relative bg-gradient-to-br from-[#059669] to-[#2563EB] text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#4F46E5] to-[#2563EB] text-white overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
           <div className="text-center max-w-4xl mx-auto">
             {/* Animated Badge Skeleton */}
@@ -57,7 +57,7 @@ const LeaderboardSkeleton = () => {
       {/* Main Content Skeleton */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
         {/* User Rank Card Skeleton */}
-        <div className="my-8 bg-gradient-to-br from-[#059669] to-[#2563EB] rounded-3xl p-6 text-white shadow-2xl">
+        <div className="my-8 bg-gradient-to-br from-[#4F46E5] to-[#2563EB] rounded-3xl p-6 text-white shadow-2xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-16 h-16 bg-white/30 rounded-2xl"></div>
@@ -119,7 +119,7 @@ const LeaderboardSkeleton = () => {
         {/* Leaderboard Table Skeleton */}
         <div className="bg-white rounded-[1rem] shadow-[0_4px_12px_rgba(0,0,0,0.1)] overflow-hidden border border-gray-100">
           {/* Table Header Skeleton */}
-          <div className="hidden lg:block bg-gradient-to-r from-[#ECFDF5] to-green-50 px-6 py-4 border-b border-gray-200">
+          <div className="hidden lg:block bg-gradient-to-r from-[#F8FAFC] to-slate-50 px-6 py-4 border-b border-gray-200">
             <div className="grid grid-cols-12 gap-4">
               {[1, 2, 3, 4, 5].map((item) => (
                 <div key={item} className="col-span-2 h-4 bg-gray-200 rounded"></div>
@@ -128,7 +128,7 @@ const LeaderboardSkeleton = () => {
           </div>
 
           {/* Mobile Header Skeleton */}
-          <div className="lg:hidden bg-gradient-to-r from-[#ECFDF5] to-green-50 px-4 py-3 border-b border-gray-200">
+          <div className="lg:hidden bg-gradient-to-r from-[#F8FAFC] to-slate-50 px-4 py-3 border-b border-gray-200">
             <div className="text-center">
               <div className="h-4 bg-gray-200 rounded w-48 mx-auto mb-1"></div>
               <div className="h-3 bg-gray-200 rounded w-32 mx-auto"></div>

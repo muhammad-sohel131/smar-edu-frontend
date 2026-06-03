@@ -105,7 +105,7 @@ const LeaderboardHeroSection = () => {
   ];
 
   return (
-    <section className="relative bg-gradient-to-br from-[#059669] to-[#2563EB] text-white overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#4F46E5] to-[#2563EB] text-white overflow-hidden">
       <div className="absolute inset-0">
         {/* Animated Background Elements */}
         <div className="absolute top-10 left-10 w-72 h-72 bg-white opacity-5 rounded-full animate-pulse"></div>
@@ -118,12 +118,12 @@ const LeaderboardHeroSection = () => {
           {/* Animated Badge */}
           <div className="flex justify-center mb-8">
             <div className="relative">
-              <div className="w-28 h-28 bg-gradient-to-r from-[#0f9293] to-[#059669] rounded-3xl flex items-center justify-center transform rotate-12 shadow-2xl animate-float">
+              <div className="w-28 h-28 bg-gradient-to-r from-[#4F46E5] to-[#2563EB] rounded-3xl flex items-center justify-center transform rotate-12 shadow-2xl animate-float">
                 <FaTrophy className="w-14 h-14 text-white" />
               </div>
               <div className="absolute -top-3 -right-3">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg animate-bounce">
-                  <FaCrown className="w-6 h-6 text-[#059669]" />
+                  <FaCrown className="w-6 h-6 text-[#4F46E5]" />
                 </div>
               </div>
               <div className="absolute -bottom-2 -left-2">
@@ -134,8 +134,8 @@ const LeaderboardHeroSection = () => {
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white to-[#ECFDF5] bg-clip-text text-transparent leading-tight">
-            SDG Rankings
+          <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white to-[#F8FAFC] bg-clip-text text-transparent leading-tight">
+            SmartEdu Hub Rankings
           </h1>
           <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto leading-relaxed mb-8 font-light">
             Compete with global changemakers. Track your impact. Lead the sustainable revolution.

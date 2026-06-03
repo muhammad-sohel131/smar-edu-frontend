@@ -35,11 +35,11 @@ const LeaderboardTable = ({
     return (
       <section className="bg-white rounded-[1rem] shadow-[0_4px_12px_rgba(0,0,0,0.1)] overflow-hidden border border-gray-100">
         <div className="p-12 text-center">
-          <div className="w-24 h-24 mx-auto bg-[#ECFDF5] rounded-full flex items-center justify-center mb-6">
+          <div className="w-24 h-24 mx-auto bg-[#F8FAFC] rounded-full flex items-center justify-center mb-6">
             <FaUsers className="w-12 h-12 text-[#059669]" />
           </div>
-          <h3 className="text-2xl font-bold text-[#064E3B] mb-3">No Data Available</h3>
-          <p className="text-[#064E3B] opacity-80">No rankings available for the selected filters.</p>
+          <h3 className="text-2xl font-bold text-[#0F172A] mb-3">No Data Available</h3>
+          <p className="text-[#0F172A] opacity-80">No rankings available for the selected filters.</p>
         </div>
       </section>
     );
@@ -48,8 +48,8 @@ const LeaderboardTable = ({
   return (
     <section className="bg-white rounded-[1rem] shadow-[0_4px_12px_rgba(0,0,0,0.1)] overflow-hidden border border-gray-100 backdrop-opacity-95">
       {/* Table Header */}
-      <div className="hidden lg:block bg-gradient-to-r from-[#ECFDF5] to-green-50 px-6 py-4 border-b border-gray-200">
-        <div className="grid grid-cols-12 gap-4 text-sm font-semibold text-[#064E3B]">
+      <div className="hidden lg:block bg-gradient-to-r from-[#F8FAFC] to-slate-50 px-6 py-4 border-b border-gray-200">
+        <div className="grid grid-cols-12 gap-4 text-sm font-semibold text-[#0F172A]">
           <div className="col-span-1 text-center">Rank</div>
           <div className="col-span-4">
             {activeCategory === "school" && !leaderboardData[0]?.schoolName
@@ -74,9 +74,9 @@ const LeaderboardTable = ({
       </div>
 
       {/* Mobile Header */}
-      <div className="lg:hidden bg-gradient-to-r from-[#ECFDF5] to-green-50 px-4 py-3 border-b border-gray-200">
+      <div className="lg:hidden bg-gradient-to-r from-[#F8FAFC] to-slate-50 px-4 py-3 border-b border-gray-200">
         <div className="text-center">
-          <div className="text-sm font-semibold text-[#064E3B]">
+          <div className="text-sm font-semibold text-[#0F172A]">
             {activeCategory === "school" && !leaderboardData[0]?.schoolName
               ? "School Rankings"
               : activeCategory === "city" && !leaderboardData[0]?.cityName
@@ -85,7 +85,7 @@ const LeaderboardTable = ({
               ? "Regional Rankings"
               : "Player Rankings"}
           </div>
-          <div className="text-xs text-[#064E3B] opacity-60 mt-1">
+          <div className="text-xs text-[#0F172A] opacity-60 mt-1">
             {leaderboardData.length} entries
           </div>
         </div>
@@ -101,7 +101,7 @@ const LeaderboardTable = ({
             <div
               key={item.id}
               onClick={() => isClickable && handleClick(item)}
-              className={`px-4 sm:px-6 py-4 hover:bg-[#ECFDF5] transition-colors duration-150 ${
+              className={`px-4 sm:px-6 py-4 hover:bg-[#F8FAFC] transition-colors duration-150 ${
                 isClickable ? 'cursor-pointer hover:shadow-md' : ''
               }`}
             >
@@ -120,11 +120,11 @@ const LeaderboardTable = ({
                       {item.rank <= 3 ? getRankIcon(item.rank) : item.rank}
                     </div>
                     {item.type === 'student' ? (
-                      <div className="w-10 h-10 bg-gradient-to-r from-[#059669] to-[#2563EB] rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                      <div className="w-10 h-10 bg-gradient-to-r from-[#4F46E5] to-[#2563EB] rounded-full flex items-center justify-center text-white font-semibold text-sm">
                         {item.name.charAt(0)}
                       </div>
                     ) : (
-                      <div className="w-10 h-10 bg-gradient-to-r from-[#0f9293] to-[#059669] rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-r from-[#F97316] to-[#4F46E5] rounded-full flex items-center justify-center">
                         {item.type === 'school' ? (
                           <FaSchool className="w-5 h-5 text-white" />
                         ) : (
@@ -136,36 +136,36 @@ const LeaderboardTable = ({
 
                   {/* Points */}
                   <div className="text-right">
-                    <div className="text-xl font-bold text-[#064E3B]">
+                    <div className="text-xl font-bold text-[#0F172A]">
                       {formatPoints(item.points)}
                     </div>
-                    <div className="text-xs text-[#064E3B] opacity-60">points</div>
+                    <div className="text-xs text-[#0F172A] opacity-60">points</div>
                   </div>
                 </div>
 
                 {/* Name and Info */}
                 <div className="mb-3">
-                  <div className="font-semibold text-[#064E3B] text-lg mb-1 flex items-center">
+                  <div className="font-semibold text-[#0F172A] text-lg mb-1 flex items-center">
                     {item.name}
-                    {isClickable && <span className="ml-2 text-xs bg-[#059669] text-white px-2 py-1 rounded-full">View</span>}
+                    {isClickable && <span className="ml-2 text-xs bg-[#4F46E5] text-white px-2 py-1 rounded-full">View</span>}
                   </div>
                   
                   {item.school && item.type === 'student' && (
-                    <div className="text-sm text-[#064E3B] opacity-80 flex items-center space-x-1 mb-1">
+                    <div className="text-sm text-[#0F172A] opacity-80 flex items-center space-x-1 mb-1">
                       <FaUniversity className="w-3 h-3" />
                       <span>{item.school}</span>
                     </div>
                   )}
                   
                   {item.city && item.type === 'student' && (
-                    <div className="text-sm text-[#064E3B] opacity-80 flex items-center space-x-1 mb-1">
+                    <div className="text-sm text-[#0F172A] opacity-80 flex items-center space-x-1 mb-1">
                       <FaCity className="w-3 h-3" />
                       <span>{item.city}</span>
                     </div>
                   )}
                   
                   {item.region && item.type === 'student' && (
-                    <div className="text-sm text-[#064E3B] opacity-80 flex items-center space-x-1">
+                    <div className="text-sm text-[#0F172A] opacity-80 flex items-center space-x-1">
                       <FaMapMarkerAlt className="w-3 h-3" />
                       <span>{item.region}</span>
                     </div>
@@ -175,18 +175,18 @@ const LeaderboardTable = ({
                   {(item.type === 'school' || item.type === 'city') && (
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="text-center">
-                        <div className="font-semibold text-[#064E3B] text-sm">
+                        <div className="font-semibold text-[#0F172A] text-sm">
                           {item.studentCount}
                         </div>
-                        <div className="text-xs text-[#064E3B] opacity-60">
+                        <div className="text-xs text-[#0F172A] opacity-60">
                           students
                         </div>
                       </div>
                       <div className="text-center">
-                        <div className="font-semibold text-[#064E3B] text-sm">
+                        <div className="font-semibold text-[#0F172A] text-sm">
                           {formatPoints(item.averagePoints)}
                         </div>
-                        <div className="text-xs text-[#064E3B] opacity-60">
+                        <div className="text-xs text-[#0F172A] opacity-60">
                           avg points
                         </div>
                       </div>
@@ -214,7 +214,7 @@ const LeaderboardTable = ({
                         );
                       })}
                       {item.badges.length > 3 && (
-                        <div className="w-6 h-6 bg-[#ECFDF5] rounded-full flex items-center justify-center text-[#064E3B] text-xs font-bold">
+                        <div className="w-6 h-6 bg-[#F8FAFC] rounded-full flex items-center justify-center text-[#0F172A] text-xs font-bold">
                           +{item.badges.length - 3}
                         </div>
                       )}
@@ -243,11 +243,11 @@ const LeaderboardTable = ({
                 <div className="col-span-4">
                   <div className="flex items-center space-x-3">
                     {item.type === 'student' ? (
-                      <div className="w-10 h-10 bg-gradient-to-br from-[#059669] to-[#2563EB] rounded-full flex items-center justify-center text-white font-semibold">
+                      <div className="w-10 h-10 bg-gradient-to-br from-[#4F46E5] to-[#2563EB] rounded-full flex items-center justify-center text-white font-semibold">
                         {item.name.charAt(0)}
                       </div>
                     ) : (
-                      <div className="w-10 h-10 bg-gradient-to-br from-[#0f9293] to-[#059669] rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-br from-[#F97316] to-[#4F46E5] rounded-full flex items-center justify-center">
                         {item.type === 'school' ? (
                           <FaSchool className="w-5 h-5 text-white" />
                         ) : (
@@ -256,10 +256,10 @@ const LeaderboardTable = ({
                       </div>
                     )}
                     <div>
-                      <div className="font-semibold text-[#064E3B] flex items-center">
+                      <div className="font-semibold text-[#0F172A] flex items-center">
                         {item.name}
                         {isClickable && (
-                          <span className="ml-2 text-xs bg-[#059669] text-white px-2 py-1 rounded-full">View Details</span>
+                          <span className="ml-2 text-xs bg-[#4F46E5] text-white px-2 py-1 rounded-full">View Details</span>
                         )}
                       </div>
                       
@@ -267,13 +267,13 @@ const LeaderboardTable = ({
                       {item.type === 'student' && (
                         <>
                           {item.school && (
-                            <div className="text-sm text-[#064E3B] opacity-80 flex items-center space-x-1">
+                            <div className="text-sm text-[#0F172A] opacity-80 flex items-center space-x-1">
                               <FaUniversity className="w-3 h-3" />
                               <span>{item.school}</span>
                             </div>
                           )}
                           {item.city && (
-                            <div className="text-sm text-[#064E3B] opacity-80 flex items-center space-x-1">
+                            <div className="text-sm text-[#0F172A] opacity-80 flex items-center space-x-1">
                               <FaCity className="w-3 h-3" />
                               <span>{item.city}</span>
                             </div>
@@ -285,18 +285,18 @@ const LeaderboardTable = ({
                       {(item.type === 'school' || item.type === 'city') && (
                         <div className="flex items-center space-x-4 mt-1">
                           <div className="text-center">
-                            <div className="font-semibold text-[#064E3B] text-sm">
+                            <div className="font-semibold text-[#0F172A] text-sm">
                               {item.studentCount}
                             </div>
-                            <div className="text-xs text-[#064E3B] opacity-60">
+                            <div className="text-xs text-[#0F172A] opacity-60">
                               students
                             </div>
                           </div>
                           <div className="text-center">
-                            <div className="font-semibold text-[#064E3B] text-sm">
+                            <div className="font-semibold text-[#0F172A] text-sm">
                               {formatPoints(item.averagePoints)}
                             </div>
-                            <div className="text-xs text-[#064E3B] opacity-60">
+                            <div className="text-xs text-[#0F172A] opacity-60">
                               avg points
                             </div>
                           </div>
@@ -308,10 +308,10 @@ const LeaderboardTable = ({
 
                 {/* Points */}
                 <div className="col-span-3 text-center">
-                  <div className="text-2xl font-bold text-[#064E3B]">
+                  <div className="text-2xl font-bold text-[#0F172A]">
                     {formatPoints(item.points)}
                   </div>
-                  <div className="text-sm text-[#064E3B] opacity-60">points</div>
+                  <div className="text-sm text-[#0F172A] opacity-60">points</div>
                 </div>
 
                 {/* Badges or Count */}
@@ -333,10 +333,10 @@ const LeaderboardTable = ({
                       })
                   ) : (
                     <div className="text-center">
-                      <div className="font-semibold text-[#064E3B]">
+                      <div className="font-semibold text-[#0F172A]">
                         {item.studentCount}
                       </div>
-                      <div className="text-sm text-[#064E3B] opacity-60">
+                      <div className="text-sm text-[#0F172A] opacity-60">
                         students
                       </div>
                     </div>
@@ -349,11 +349,11 @@ const LeaderboardTable = ({
                     <div className="text-center">
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div
-                          className="bg-gradient-to-br from-[#059669] to-[#2563EB] h-2 rounded-full transition-all duration-500"
+                          className="bg-gradient-to-br from-[#4F46E5] to-[#2563EB] h-2 rounded-full transition-all duration-500"
                           style={{ width: `${item.progress}%` }}
                         ></div>
                       </div>
-                      <div className="text-xs text-[#064E3B] opacity-60 mt-1">
+                      <div className="text-xs text-[#0F172A] opacity-60 mt-1">
                         {item.progress}%
                       </div>
                     </div>

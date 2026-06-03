@@ -276,7 +276,7 @@ const Leaderboard = () => {
       case 1: return 'from-[#FBBF24] to-amber-500';
       case 2: return 'from-gray-400 to-gray-600';
       case 3: return 'from-amber-700 to-amber-800';
-      default: return 'from-[#2563EB] to-[#059669]';
+      default: return 'from-[#2563EB] to-[#4F46E5]';
     }
   };
 
@@ -310,10 +310,10 @@ const Leaderboard = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-[#ECFDF5]">
+      <div className="min-h-screen bg-[#F8FAFC]">
         <Head>
-          <title>Leaderboard - SDG Oasis Rankings</title>
-          <meta name="description" content="Track your progress and compete with others in SDG Oasis leaderboard" />
+          <title>Leaderboard - SmartEdu Hub Rankings</title>
+          <meta name="description" content="Track your progress and compete with others in SmartEdu Hub leaderboard" />
         </Head>
 
         {/* Hero Section */}
