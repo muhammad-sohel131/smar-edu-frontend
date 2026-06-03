@@ -260,7 +260,7 @@ export default function StudentProfilePage() {
     return (
       <div className="min-h-screen p-4 md:p-6 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-emerald-600 mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-[var(--color-primary)] mx-auto mb-4" />
           <p className="text-gray-600">Loading profile...</p>
         </div>
       </div>
@@ -316,8 +316,8 @@ export default function StudentProfilePage() {
             <button
               onClick={() => setIsEditing(!isEditing)}
               className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${isEditing 
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:shadow-lg' 
-                : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:shadow-lg hover:scale-105'
+                ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white hover:shadow-lg' 
+                : 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white hover:shadow-lg hover:scale-105'
               }`}
             >
               {isEditing ? (
@@ -344,7 +344,7 @@ export default function StudentProfilePage() {
             >
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                 {/* Profile Header */}
-                <div className="relative h-32 bg-gradient-to-r from-emerald-500 to-teal-600">
+                <div className="relative h-32 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)]">
                   <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
                     <div className="relative">
                       <div className="w-32 h-32 rounded-full border-4 border-white bg-white overflow-hidden shadow-2xl">
@@ -387,7 +387,7 @@ export default function StudentProfilePage() {
                         )}
                       </div>
                       {currentProfile.isVerified && (
-                        <div className="absolute bottom-2 right-2 bg-emerald-500 text-white p-1.5 rounded-full border-2 border-white">
+                        <div className="absolute bottom-2 right-2 bg-[var(--color-primary)] text-white p-1.5 rounded-full border-2 border-white">
                           <CheckCircle className="w-5 h-5" />
                         </div>
                       )}
@@ -402,7 +402,7 @@ export default function StudentProfilePage() {
                       {isEditing ? (
                         <input
                           {...register("name")}
-                          className="w-full text-center bg-transparent border-b border-gray-300 focus:border-emerald-500 focus:outline-none text-2xl font-bold"
+                          className="w-full text-center bg-transparent border-b border-gray-300 focus:border-[var(--color-primary)] focus:outline-none text-2xl font-bold"
                         />
                       ) : (
                         currentProfile.name
@@ -414,7 +414,7 @@ export default function StudentProfilePage() {
                           <input
                             {...register("grade")}
                             placeholder="Grade/Class"
-                            className="w-full text-center bg-transparent border-b border-gray-300 focus:border-emerald-500 focus:outline-none text-gray-600"
+                            className="w-full text-center bg-transparent border-b border-gray-300 focus:border-[var(--color-primary)] focus:outline-none text-gray-600"
                           />
                         ) : (
                           currentProfile.grade || "Student"
@@ -424,7 +424,7 @@ export default function StudentProfilePage() {
                     
                     {currentProfile.joinDate && (
                       <div className="flex items-center justify-center gap-2 mt-3">
-                        <div className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
+                        <div className="px-3 py-1 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-medium">
                           <Calendar className="w-3 h-3 inline mr-1" />
                           Joined {currentProfile.joinDate}
                         </div>
@@ -440,7 +440,7 @@ export default function StudentProfilePage() {
                         <input
                           {...register("email", { pattern: /^\S+@\S+$/i })}
                           type="email"
-                          className="flex-1 bg-transparent border-b border-gray-300 focus:border-emerald-500 focus:outline-none"
+                          className="flex-1 bg-transparent border-b border-gray-300 focus:border-[var(--color-primary)] focus:outline-none"
                         />
                       ) : (
                         <span>{currentProfile.email}</span>
@@ -452,7 +452,7 @@ export default function StudentProfilePage() {
                         <input
                           {...register("phone")}
                           type="tel"
-                          className="flex-1 bg-transparent border-b border-gray-300 focus:border-emerald-500 focus:outline-none"
+                          className="flex-1 bg-transparent border-b border-gray-300 focus:border-[var(--color-primary)] focus:outline-none"
                           placeholder="Phone number"
                         />
                       ) : (
@@ -475,7 +475,7 @@ export default function StudentProfilePage() {
                         <button
                           type="button"
                           onClick={() => setShowSocialFields(!showSocialFields)}
-                          className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+                          className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium"
                         >
                           {showSocialFields ? "Hide" : "Show Fields"}
                         </button>
@@ -533,7 +533,7 @@ export default function StudentProfilePage() {
                           href={currentProfile.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-100 transition-colors"
+                          className="p-2 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary)]/20 transition-colors"
                           title="Website"
                         >
                           <Globe className="w-5 h-5" />
@@ -562,7 +562,7 @@ export default function StudentProfilePage() {
                             <input
                               {...register("linkedin")}
                               placeholder="LinkedIn URL"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-emerald-500 focus:outline-none text-sm"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:outline-none text-sm"
                             />
                           </div>
                           <div className="flex items-center gap-2">
@@ -570,7 +570,7 @@ export default function StudentProfilePage() {
                             <input
                               {...register("twitter")}
                               placeholder="Twitter URL"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-emerald-500 focus:outline-none text-sm"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:outline-none text-sm"
                             />
                           </div>
                           <div className="flex items-center gap-2">
@@ -578,15 +578,15 @@ export default function StudentProfilePage() {
                             <input
                               {...register("github")}
                               placeholder="GitHub URL"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-emerald-500 focus:outline-none text-sm"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:outline-none text-sm"
                             />
                           </div>
                           <div className="flex items-center gap-2">
-                            <Globe className="w-4 h-4 text-emerald-500" />
+                            <Globe className="w-4 h-4 text-[var(--color-primary)]" />
                             <input
                               {...register("website")}
                               placeholder="Personal Website"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-emerald-500 focus:outline-none text-sm"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:outline-none text-sm"
                             />
                           </div>
                         </motion.div>
@@ -629,7 +629,7 @@ export default function StudentProfilePage() {
                   <div className="mb-8">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                        <BookOpen className="w-5 h-5 text-emerald-600" />
+                        <BookOpen className="w-5 h-5 text-[var(--color-primary)]" />
                         About Me
                       </h3>
                       {isEditing && (
@@ -642,7 +642,7 @@ export default function StudentProfilePage() {
                       <textarea
                         {...register("bio", { maxLength: 500 })}
                         rows={4}
-                        className="w-full p-4 border border-gray-300 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none resize-none"
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none resize-none"
                         placeholder="Tell us about yourself... (Max 500 characters)"
                       />
                     ) : (
@@ -656,8 +656,8 @@ export default function StudentProfilePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <MapPin className="w-5 h-5 text-blue-600" />
-                        Location & School
+                        <MapPin className="w-5 h-5 text-[var(--color-primary)]" />
+                        Location &amp; School
                       </h3>
                       <div className="space-y-4">
                         {isEditing ? (
@@ -668,12 +668,12 @@ export default function StudentProfilePage() {
                               </label>
                               <select
                                 {...register("city")}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none"
                               >
                                 <option value="">Select City</option>
                                 {cities.map(city => (
                                   <option key={city._id} value={city._id}>
-                                    {city.name} {city.country && `(৳{city.country})`}
+                                    {city.name} {city.country && `(৳${city.country})`}
                                   </option>
                                 ))}
                               </select>
@@ -684,7 +684,7 @@ export default function StudentProfilePage() {
                               </label>
                               <select
                                 {...register("school")}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none"
                                 disabled={!selectedCityId}
                               >
                                 <option value="">Select School</option>
@@ -703,15 +703,15 @@ export default function StudentProfilePage() {
                           </>
                         ) : (
                           <>
-                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                              <MapPin className="w-5 h-5 text-blue-600" />
+                            <div className="flex items-center gap-3 p-3 bg-[var(--color-primary)]/5 rounded-lg">
+                              <MapPin className="w-5 h-5 text-[var(--color-primary)]" />
                               <div>
                                 <p className="text-sm text-gray-600">City</p>
                                 <p className="font-medium text-gray-900">{currentProfile.city || "Not set"}</p>
                               </div>
                             </div>
-                            <div className="flex items-center gap-3 p-3 bg-emerald-50 rounded-lg">
-                              <School className="w-5 h-5 text-emerald-600" />
+                            <div className="flex items-center gap-3 p-3 bg-[var(--color-primary)]/5 rounded-lg">
+                              <School className="w-5 h-5 text-[var(--color-primary)]" />
                               <div>
                                 <p className="text-sm text-gray-600">School</p>
                                 <p className="font-medium text-gray-900">{currentProfile.school || "Not set"}</p>
@@ -737,7 +737,7 @@ export default function StudentProfilePage() {
                               <input
                                 {...register("grade")}
                                 type="text"
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none"
                                 placeholder="e.g., 10th Grade"
                               />
                             </div> */}
@@ -748,7 +748,7 @@ export default function StudentProfilePage() {
                               <input
                                 {...register("dateOfBirth")}
                                 type="date"
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none"
                               />
                             </div>
                             <div>
@@ -757,7 +757,7 @@ export default function StudentProfilePage() {
                               </label>
                               <select
                                 {...register("gender")}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none"
                               >
                                 <option value="">Select Gender</option>
                                 <option value="male">Male</option>
@@ -777,8 +777,8 @@ export default function StudentProfilePage() {
                               </div>
                             </div> */}
                             {currentProfile.dateOfBirth && (
-                              <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-lg">
-                                <Calendar className="w-5 h-5 text-amber-600" />
+                              <div className="flex items-center gap-3 p-3 bg-[var(--color-accent)]/10 rounded-lg">
+                                <Calendar className="w-5 h-5 text-[var(--color-accent-special)]" />
                                 <div>
                                   <p className="text-sm text-gray-600">Date of Birth</p>
                                   <p className="font-medium text-gray-900">
@@ -792,8 +792,8 @@ export default function StudentProfilePage() {
                               </div>
                             )}
                             {currentProfile.gender && (
-                              <div className="flex items-center gap-3 p-3 bg-pink-50 rounded-lg">
-                                <User className="w-5 h-5 text-pink-600" />
+                              <div className="flex items-center gap-3 p-3 bg-[var(--color-secondary)]/5 rounded-lg">
+                                <User className="w-5 h-5 text-[var(--color-secondary)]" />
                                 <div>
                                   <p className="text-sm text-gray-600">Gender</p>
                                   <p className="font-medium text-gray-900 capitalize">
@@ -825,7 +825,7 @@ export default function StudentProfilePage() {
                       {interests.map((interest, index) => (
                         <span
                           key={index}
-                          className="px-4 py-2 bg-red-50 text-red-700 rounded-full text-sm font-medium flex items-center gap-2"
+                          className="px-4 py-2 bg-[var(--color-accent)]/10 text-[var(--color-accent-special)] rounded-full text-sm font-medium flex items-center gap-2"
                         >
                           {interest}
                           {isEditing && (
@@ -853,12 +853,12 @@ export default function StudentProfilePage() {
                           onChange={(e) => setNewInterest(e.target.value)}
                           onKeyPress={(e) => e.key === 'Enter' && addInterest()}
                           placeholder="Add new interest..."
-                          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:border-emerald-500 focus:outline-none"
+                          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:border-[var(--color-primary)] focus:outline-none"
                         />
                         <button
                           type="button"
                           onClick={addInterest}
-                          className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors font-medium"
+                          className="px-4 py-2 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-lg hover:bg-[var(--color-primary)]/20 transition-colors font-medium"
                         >
                           Add
                         </button>
@@ -876,7 +876,7 @@ export default function StudentProfilePage() {
                       <textarea
                         {...register("goals")}
                         rows={3}
-                        className="w-full p-4 border border-gray-300 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none resize-none"
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:outline-none resize-none"
                         placeholder="What are your learning goals? What do you want to achieve?"
                       />
                     ) : (
@@ -902,7 +902,7 @@ export default function StudentProfilePage() {
                         type="button"
                         onClick={handleSubmit(onSubmit)}
                         disabled={isSubmitting || updateProfile.isPending}
-                        className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-6 py-3 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white rounded-xl font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {(isSubmitting || updateProfile.isPending) ? (
                           <>

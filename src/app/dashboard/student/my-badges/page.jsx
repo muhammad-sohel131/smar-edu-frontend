@@ -89,13 +89,13 @@ export default function StudentBadges() {
     return (
       <div className="space-y-6">
         {/* Header Loading */}
-        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-[--radius-card] shadow-lg p-6 animate-pulse">
+        <div className="bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-[--radius-card] shadow-lg p-6 animate-pulse">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
-              <div className="h-8 bg-emerald-400/30 rounded w-48"></div>
-              <div className="h-4 bg-emerald-400/30 rounded w-64"></div>
+              <div className="h-8 bg-white/20 rounded w-48"></div>
+              <div className="h-4 bg-white/20 rounded w-64"></div>
             </div>
-            <div className="h-12 w-12 bg-emerald-400/30 rounded-full"></div>
+            <div className="h-12 w-12 bg-white/20 rounded-full"></div>
           </div>
         </div>
 
@@ -141,14 +141,14 @@ export default function StudentBadges() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-[--radius-card] shadow-lg overflow-hidden">
+      <div className="bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-[--radius-card] shadow-lg overflow-hidden">
         <div className="p-6 md:p-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex-1">
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
                 My Achievement Badges
               </h1>
-              <p className="text-emerald-100 text-sm md:text-base">
+              <p className="text-white/80 text-sm md:text-base">
                 Celebrate your learning journey with earned badges
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function StudentBadges() {
               <Trophy className="w-8 h-8 text-yellow-300" />
               <div className="text-right">
                 <div className="text-2xl font-bold text-white">{totalBadges}</div>
-                <div className="text-sm text-emerald-100">Badges Earned</div>
+                <div className="text-sm text-white/80">Badges Earned</div>
               </div>
             </div>
           </div>
@@ -167,8 +167,8 @@ export default function StudentBadges() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-[--radius-card] shadow-md p-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-emerald-100 rounded-lg">
-              <Award className="w-5 h-5 text-emerald-600" />
+            <div className="p-2 bg-[var(--color-primary)]/10 rounded-lg">
+              <Award className="w-5 h-5 text-[var(--color-primary)]" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900">Total Badges</h3>
           </div>
@@ -183,8 +183,8 @@ export default function StudentBadges() {
 
         <div className="bg-white rounded-[--radius-card] shadow-md p-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Target className="w-5 h-5 text-blue-600" />
+            <div className="p-2 bg-[var(--color-primary)]/10 rounded-lg">
+              <Target className="w-5 h-5 text-[var(--color-primary)]" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900">Total Points</h3>
           </div>
@@ -199,8 +199,8 @@ export default function StudentBadges() {
 
         <div className="bg-white rounded-[--radius-card] shadow-md p-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Medal className="w-5 h-5 text-purple-600" />
+            <div className="p-2 bg-[var(--color-secondary)]/10 rounded-lg">
+              <Medal className="w-5 h-5 text-[var(--color-secondary)]" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900">Average Level</h3>
           </div>
@@ -236,8 +236,8 @@ export default function StudentBadges() {
                       onClick={() => setSelectedBadge(userBadge)}
                       className={`aspect-square rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden transition-all ${
                         selectedBadge?._id === userBadge._id
-                          ? 'ring-2 ring-emerald-500 ring-offset-2'
-                          : 'hover:ring-2 hover:ring-emerald-500/50 hover:ring-offset-2'
+                          ? 'ring-2 ring-[var(--color-primary)] ring-offset-2'
+                          : 'hover:ring-2 hover:ring-[var(--color-primary)]/50 hover:ring-offset-2'
                       }`}
                     >
                       {/* Background Gradient */}
@@ -270,7 +270,7 @@ export default function StudentBadges() {
 
                       {/* Earned Indicator */}
                       <div className="absolute top-2 right-2">
-                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <CheckCircle className="w-4 h-4 text-[var(--color-primary)]" />
                       </div>
                     </motion.button>
                   ))}
@@ -282,7 +282,7 @@ export default function StudentBadges() {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">No badges yet</h3>
                   <p className="text-gray-500 mb-4">Start learning to earn your first badge!</p>
-                  <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium transition-colors">
+                  <button className="px-4 py-2 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] hover:shadow-md text-white rounded-lg font-medium transition-all">
                     Explore Courses
                   </button>
                 </div>

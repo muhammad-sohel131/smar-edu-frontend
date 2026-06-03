@@ -1,85 +1,94 @@
 "use client";
 
-import { Heart } from "lucide-react";
+import { PlayCircle, CheckCircle, Clock } from "lucide-react";
 import Link from "next/link";
 
-
 export default function CourseCard({ course }) {
-  return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div className="relative">
-        <img
-          src={course?.course?.thumbnail}
-          alt={course?.course?.title}
-          className="w-full h-40 object-cover"
-        />
-        {/* <button className="absolute top-2 right-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
-          <Heart size={16} className="text-gray-600" />
-        </button> */}
-      </div>
+  const isCompleted = course?.status === "completed";
+  const isEnrolled = course?.status === "enrolled";
+  const progress = course?.progress || 0;
 
-      <div className="p-4">
-        <div className="flex items-center space-x-2">
-          <span className="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold text-yellow-800">
-            {/* {course?.course?.instructor} */}
-          </span>
-          {/* <p className="text-sm text-gray-600">{course.instructor}</p> */}
-          <span className={`text-xs px-2 py-1 rounded-md ${
-            course?.status === 'completed'
-              ? 'bg-green-100 text-green-800'
-              : course?.status === 'enrolled'
-              ? 'bg-blue-100 text-blue-800'
-              : 'bg-gray-100 text-gray-800'
-          }`}>
-            {course?.status === 'completed' ? 'Completed' : course?.status === 'enrolled' ? 'In Progress' : course?.course?.category}
+  return (
+    <div className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+      {/* Thumbnail */}
+      <div className="relative h-40 overflow-hidden bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-secondary)]/10">
+        {course?.course?.thumbnail ? (
+          <img
+            src={course.course.thumbnail}
+            alt={course?.course?.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <PlayCircle className="w-12 h-12 text-[var(--color-primary)]/40" />
+          </div>
+        )}
+        {/* Status overlay badge */}
+        <div className="absolute top-3 right-3">
+          <span
+            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold shadow-sm ${
+              isCompleted
+                ? "bg-emerald-500 text-white"
+                : isEnrolled
+                ? "bg-[var(--color-primary)] text-white"
+                : "bg-white/90 text-gray-700"
+            }`}
+          >
+            {isCompleted ? (
+              <><CheckCircle className="w-3 h-3" /> Completed</>
+            ) : isEnrolled ? (
+              <><Clock className="w-3 h-3" /> In Progress</>
+            ) : (
+              course?.course?.category
+            )}
           </span>
         </div>
+      </div>
 
-        <h3 className="mt-2 font-semibold text-[var(--color-text)]">
+      {/* Content */}
+      <div className="p-4">
+        <h3 className="font-semibold text-[var(--color-text)] text-sm leading-snug line-clamp-2 group-hover:text-[var(--color-primary)] transition-colors">
           {course?.course?.title}
         </h3>
 
         {/* Progress Bar */}
-        <div className="mt-2 mb-3">
-          <div className="flex justify-between items-center text-xs text-gray-600 mb-1">
+        <div className="mt-3">
+          <div className="flex justify-between items-center text-xs text-gray-500 mb-1.5">
             <span>Progress</span>
-            <span>{course?.progress || 0}%</span>
+            <span className="font-semibold text-[var(--color-text)]">{progress}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
             <div
-              className="bg-[var(--color-primary)] h-2 rounded-full transition-all duration-300"
-              style={{ width: `${course?.progress || 0}%` }}
-            ></div>
+              className={`h-full rounded-full transition-all duration-500 ${
+                isCompleted
+                  ? "bg-gradient-to-r from-emerald-400 to-emerald-500"
+                  : "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]"
+              }`}
+              style={{ width: `${progress}%` }}
+            />
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-sm text-gray-600 mt-2">
-          {/* <div className="flex items-center">
-            <span className="text-yellow-500">⭐</span>
-            <span className="ml-1">
-              {course?.course?.rating || 0} ({course?.course?.reviews || 0} Reviews)
-            </span>
-          </div> */}
-          <div>
-            <span className="text-[var(--color-primary)] font-bold">
-              {course?.course?.price ? `৳${course.course.price}` : 'Free'}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center mt-3">
-          <button className={`px-4 py-2 rounded-full text-sm font-medium ${
-            course?.status === 'completed'
-              ? 'bg-green-600 hover:bg-green-700 text-white'
-              : 'bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white'
-          }`}>
-            <Link href={`/course/${course?.course?.slug}`}>
-              {course?.status === 'completed' ? 'Review Course' : 'Continue Learning'}
-            </Link>
-          </button>
-          {/* <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200">
-            <Link href='/dashboard/student/leader-board'>Leaderboard</Link>
-          </button> */}
+        {/* Footer */}
+        <div className="mt-4 flex items-center justify-between">
+          <span className="text-sm font-bold text-[var(--color-primary)]">
+            {course?.course?.price ? `৳${course.course.price}` : "Free"}
+          </span>
+          <Link href={`/course/${course?.course?.slug}`}>
+            <button
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 ${
+                isCompleted
+                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
+                  : "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white hover:shadow-md hover:shadow-[var(--color-primary)]/25"
+              }`}
+            >
+              {isCompleted ? (
+                <><CheckCircle className="w-3.5 h-3.5" /> Review</>
+              ) : (
+                <><PlayCircle className="w-3.5 h-3.5" /> Continue</>
+              )}
+            </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Book, Users, CheckCircle, CreditCard, TrendingUp, Target, Clock, Award, Trophy, Star } from "lucide-react";
+import { Book, Users, CheckCircle, CreditCard, TrendingUp, Target, Clock, Award, Trophy, Star, Sparkles } from "lucide-react";
 import StatusCard from "@/components/modules/dashboard/student/StatsCard";
 import CourseTable from "@/components/modules/dashboard/student/CourseTable";
 import { useAuth } from "@/hooks/useAuth";
@@ -13,10 +13,8 @@ export default function Dashboard() {
   const { data: pointsData } = useMyPoints();
   const myRank = useMyRank();
 
-  // Calculate display values from dashboard data
   const stats = useMemo(() => {
     if (!dashboardData?.stats) return null;
-
     return {
       totalCourses: dashboardData.stats.totalCourses || 0,
       enrolledCourses: dashboardData.stats.enrolledCourses || 0,
@@ -32,101 +30,147 @@ export default function Dashboard() {
 
   if (authLoading || dashboardLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)]">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your dashboard...</p>
+          <div className="relative mx-auto mb-6 w-16 h-16">
+            <div className="w-16 h-16 border-4 border-[var(--color-primary)]/20 border-t-[var(--color-primary)] rounded-full animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Sparkles className="w-6 h-6 text-[var(--color-primary)] animate-pulse" />
+            </div>
+          </div>
+          <p className="text-[var(--color-text)]/60 font-medium">Loading your dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen container mx-auto px-4 sm:px-6 py-8">
-      {/* Header Section */}
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-          Welcome back, {user?.name || 'Student'}! 👋
-        </h1>
-        <p className="text-gray-600 mt-2">Track your learning journey and progress</p>
+    <div className="min-h-screen bg-[var(--color-background)]">
+      {/* Hero Header Band */}
+      <div className="relative bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-[-40px] left-[-40px] w-72 h-72 bg-white/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-[-60px] right-[-30px] w-80 h-80 bg-white/5 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
+        </div>
 
-        {/* Quick Stats Bar */}
-        {stats && (
-          <div className="flex flex-wrap items-center gap-3 mt-6 text-sm">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full">
-              <TrendingUp className="w-4 h-4" />
-              <span>Progress: {stats.progress}%</span>
+        <div className="relative container mx-auto px-4 sm:px-6 py-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p className="text-white/70 text-sm font-medium uppercase tracking-widest mb-1">Student Portal</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-white">
+                Welcome back, {user?.name?.split(" ")[0] || "Student"}! 👋
+              </h1>
+              <p className="text-white/80 mt-2 text-base">
+                Track your learning journey and celebrate your progress.
+              </p>
             </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full">
-              <Target className="w-4 h-4" />
-              <span>{stats.activeCourses} active course{stats.activeCourses !== 1 ? 's' : ''}</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full">
-              <Clock className="w-4 h-4" />
-              <span>{stats.studyTime}h this week</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-50 text-yellow-700 rounded-full">
-              <Award className="w-4 h-4" />
-              <span>{stats.totalPoints} points</span>
-            </div>
-            {stats.rank && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full">
-                <Trophy className="w-4 h-4" />
-                <span>Rank #{stats.rank}</span>
+
+            {/* Quick stat pills */}
+            {stats && (
+              <div className="flex flex-wrap gap-2">
+                <QuickPill icon={<TrendingUp className="w-3.5 h-3.5" />} label={`${stats.progress}% progress`} />
+                <QuickPill icon={<Target className="w-3.5 h-3.5" />} label={`${stats.activeCourses} active`} />
+                <QuickPill icon={<Clock className="w-3.5 h-3.5" />} label={`${stats.studyTime}h this week`} />
+                <QuickPill icon={<Award className="w-3.5 h-3.5" />} label={`${stats.totalPoints} pts`} />
+                {stats.rank && (
+                  <QuickPill icon={<Trophy className="w-3.5 h-3.5" />} label={`Rank #${stats.rank}`} highlight />
+                )}
               </div>
             )}
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-10">
-        <StatusCard
-          icon={<Book className="w-6 h-6" />}
-          value={stats?.totalCourses || 0}
-          label="Total Courses Taken"
-          color="from-blue-500 to-cyan-500"
-          trend={`+${stats?.enrolledCourses || 0} enrolled`}
-        />
-        <StatusCard
-          icon={<Users className="w-6 h-6" />}
-          value={stats?.enrolledCourses || 0}
-          label="Courses Enrolled"
-          color="from-emerald-500 to-green-500"
-          trend="Active now"
-        />
-        <StatusCard
-          icon={<CheckCircle className="w-6 h-6" />}
-          value={`${stats?.completionRate || 0}%`}
-          label="Completion Rate"
-          color="from-violet-500 to-purple-500"
-          trend={`${stats?.completedCourses || 0} completed`}
-        />
-        <StatusCard
-          icon={<CreditCard className="w-6 h-6" />}
-          value={`৳${stats?.totalFeesPaid || 0}`}
-          label="Total Fees Paid"
-          color="from-amber-500 to-orange-500"
-          trend="Learning investment"
-        />
-        <StatusCard
-          icon={<Award className="w-6 h-6" />}
-          value={stats?.totalPoints || 0}
-          label="Total Points Earned"
-          color="from-yellow-500 to-amber-500"
-          trend="Keep learning!"
-        />
-        <StatusCard
-          icon={<Trophy className="w-6 h-6" />}
-          value={stats?.rank ? `#${stats.rank}` : 'N/A'}
-          label="Leaderboard Rank"
-          color={stats?.rank && stats.rank <= 3 ? "from-yellow-500 to-orange-500" : "from-purple-500 to-pink-500"}
-          trend={stats?.rank && stats.rank <= 3 ? "🏆 Top performer!" : "Global ranking"}
-        />
-      </div>
+      <div className="container mx-auto px-4 sm:px-6 py-8 space-y-8">
+        {/* Stats Grid */}
+        <div>
+          <SectionLabel>Overview</SectionLabel>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-3">
+            <StatusCard
+              icon={<Book className="w-5 h-5" />}
+              value={stats?.totalCourses || 0}
+              label="Total Courses"
+              color="from-[var(--color-primary)] to-[var(--color-secondary)]"
+              trend={`${stats?.enrolledCourses || 0} enrolled`}
+            />
+            <StatusCard
+              icon={<Users className="w-5 h-5" />}
+              value={stats?.enrolledCourses || 0}
+              label="Enrolled"
+              color="from-[var(--color-secondary)] to-[var(--color-primary)]"
+              trend="Active now"
+            />
+            <StatusCard
+              icon={<CheckCircle className="w-5 h-5" />}
+              value={`${stats?.completionRate || 0}%`}
+              label="Completion Rate"
+              color="from-[var(--color-accent-special)] to-[var(--color-secondary)]"
+              trend={`${stats?.completedCourses || 0} completed`}
+            />
+            <StatusCard
+              icon={<CreditCard className="w-5 h-5" />}
+              value={`৳${stats?.totalFeesPaid || 0}`}
+              label="Fees Paid"
+              color="from-[var(--color-accent)] to-[var(--color-accent-special)]"
+              trend="Investment"
+            />
+            <StatusCard
+              icon={<Award className="w-5 h-5" />}
+              value={stats?.totalPoints || 0}
+              label="Points Earned"
+              color="from-[var(--color-primary)] to-[var(--color-accent)]"
+              trend="Keep learning!"
+            />
+            <StatusCard
+              icon={<Trophy className="w-5 h-5" />}
+              value={stats?.rank ? `#${stats.rank}` : "N/A"}
+              label="Leaderboard Rank"
+              color={
+                stats?.rank && stats.rank <= 3
+                  ? "from-[var(--color-accent)] to-[var(--color-accent-special)]"
+                  : "from-[var(--color-secondary)] to-[var(--color-primary)]"
+              }
+              trend={stats?.rank && stats.rank <= 3 ? "🏆 Top performer!" : "Global ranking"}
+            />
+          </div>
+        </div>
 
-      {/* Main Content Area */}
-     <CourseTable enrollments={dashboardData?.recentEnrollments || []} />
+        {/* Course Table */}
+        <div>
+          <SectionLabel>My Enrolled Courses</SectionLabel>
+          <div className="mt-3">
+            <CourseTable enrollments={dashboardData?.recentEnrollments || []} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ——— Sub-components ——— */
+
+function QuickPill({ icon, label, highlight = false }) {
+  return (
+    <div
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+        highlight
+          ? "bg-[var(--color-accent)] text-white shadow-md"
+          : "bg-white/15 text-white backdrop-blur-sm border border-white/20"
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </div>
+  );
+}
+
+function SectionLabel({ children }) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="h-5 w-1 rounded-full bg-gradient-to-b from-[var(--color-primary)] to-[var(--color-secondary)]" />
+      <h2 className="text-lg font-bold text-[var(--color-text)]">{children}</h2>
     </div>
   );
 }

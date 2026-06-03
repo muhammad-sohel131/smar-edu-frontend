@@ -72,23 +72,31 @@ export default function PurchasedProductsPage() {
   return (
     <div className="min-h-screen p-4">
       <div className="container mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-text)]">
-            My Purchased Products
-          </h1>
-          <p className="text-[var(--color-text)]/70 text-sm md:text-base mt-2">
-            All digital and physical products you have purchased
-          </p>
+      {/* Page Header */}
+        <div className="relative bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-2xl overflow-hidden mb-8 p-6">
+          <div className="absolute inset-0">
+            <div className="absolute -top-8 -right-8 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
+            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-white/10 rounded-full blur-xl" />
+          </div>
+          <div className="relative flex items-center gap-4">
+            <div className="p-3 bg-white/15 backdrop-blur-sm rounded-xl">
+              <ShoppingBag className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <p className="text-white/70 text-xs uppercase tracking-widest font-semibold mb-0.5">Dashboard</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-white">My Purchased Products</h1>
+              <p className="text-white/80 text-sm mt-0.5">All digital and physical products you have purchased</p>
+            </div>
+          </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-xl p-4 shadow-md">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Total Products</span>
-              <div className="p-2 bg-[var(--color-secondary)] rounded-lg text-white">
-                <ShoppingBag className="h-5 w-5" />
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Products</span>
+              <div className="p-2 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-lg text-white">
+                <ShoppingBag className="h-4 w-4" />
               </div>
             </div>
             <div className="text-2xl font-bold text-[var(--color-text)]">
@@ -96,11 +104,11 @@ export default function PurchasedProductsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 shadow-md">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Digital</span>
-              <div className="p-2 bg-[var(--color-accent-special)] rounded-lg text-white">
-                <FileText className="h-5 w-5" />
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Digital</span>
+              <div className="p-2 bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-lg text-white">
+                <FileText className="h-4 w-4" />
               </div>
             </div>
             <div className="text-2xl font-bold text-[var(--color-text)]">
@@ -108,11 +116,11 @@ export default function PurchasedProductsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 shadow-md">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Physical</span>
-              <div className="p-2 bg-[var(--color-primary)] rounded-lg text-white">
-                <Package className="h-5 w-5" />
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Physical</span>
+              <div className="p-2 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-lg text-white">
+                <Package className="h-4 w-4" />
               </div>
             </div>
             <div className="text-2xl font-bold text-[var(--color-text)]">
@@ -120,11 +128,11 @@ export default function PurchasedProductsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 shadow-md">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Total Spent</span>
-              <div className="p-2 bg-[var(--color-accent)] rounded-lg text-white">
-                <DollarSign className="h-5 w-5" />
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Spent</span>
+              <div className="p-2 bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-accent-special)] rounded-lg text-white">
+                <DollarSign className="h-4 w-4" />
               </div>
             </div>
             <div className="text-2xl font-bold text-[var(--color-text)]">
@@ -134,15 +142,15 @@ export default function PurchasedProductsPage() {
         </div>
 
         {/* Search Bar */}
-        <div className="bg-white rounded-xl shadow-md p-4 mb-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <input
               type="text"
               placeholder="Search by product name or slug..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
+              className="w-full pl-11 pr-4 py-2.5 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 focus:border-[var(--color-primary)] transition text-[var(--color-text)] placeholder-gray-400 text-sm"
             />
           </div>
         </div>
@@ -226,10 +234,10 @@ export default function PurchasedProductsPage() {
                     {product.type === "digital" && product.downloadUrl && (
                       <button
                         onClick={() => handleDownload(product)}
-                        className="w-full flex items-center justify-center gap-2 bg-[var(--color-primary)] text-white py-3 rounded-xl hover:bg-[var(--color-primary-hover)] transition-all shadow-md hover:shadow-lg"
+                        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white py-2.5 rounded-xl hover:shadow-md hover:shadow-[var(--color-primary)]/25 hover:-translate-y-0.5 transition-all text-sm font-semibold"
                       >
-                        <Download className="h-5 w-5" />
-                        <span className="font-medium">Download File</span>
+                        <Download className="h-4 w-4" />
+                        <span>Download File</span>
                       </button>
                     )}
                   </div>
