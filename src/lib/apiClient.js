@@ -9,12 +9,16 @@ const api = axios.create({
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    // Suppress expected 401 unauthenticated check on /user/me
+    // Suppress expected 401/403 unauthenticated session checks
+    const status = err.response?.status;
+    const url = err.config?.url || "";
     const isSessionCheck =
-      err.response?.status === 401 && err.config?.url?.includes("/user/me");
+      (status === 401 || status === 403) &&
+      (url.includes("/user/me") || url.includes("/auth/"));
 
     if (!isSessionCheck) {
-      console.error("API Error:", err.response?.data || err.message);
+      const errMsg = err.response?.data?.message || err.message || "Unknown error";
+      console.warn("API Error:", errMsg);
     }
     return Promise.reject(err);
   }
