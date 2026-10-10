@@ -9,7 +9,13 @@ const api = axios.create({
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    console.error("API Error:", err.response?.data || err.message);
+    // Suppress expected 401 unauthenticated check on /user/me
+    const isSessionCheck =
+      err.response?.status === 401 && err.config?.url?.includes("/user/me");
+
+    if (!isSessionCheck) {
+      console.error("API Error:", err.response?.data || err.message);
+    }
     return Promise.reject(err);
   }
 );

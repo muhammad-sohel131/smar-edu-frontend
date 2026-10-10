@@ -115,6 +115,7 @@ export default function InstructorProfile() {
                     src={profileImage}
                     alt={name}
                     fill
+                    unoptimized
                     className="object-cover"
                   />
                 </div>
