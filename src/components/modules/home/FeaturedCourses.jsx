@@ -4,6 +4,7 @@ import CourseCard from "../courses/CourseCard";
 import Link from "next/link";
 import { TbCategoryPlus } from "react-icons/tb";
 import { usePublicCourses } from "@/hooks/useCourse";
+import { motion } from "framer-motion";
 
 export const courses = [
   // ===== UI/UX =====
@@ -361,20 +362,36 @@ export default function FeaturedCourses() {
   return (
     <section className="w-full bg-white py-16 px-4">
       <div className="container px-4 mx-auto text-center">
-        <p className="text-[var(--color-primary)] font-medium text-sm mb-2">
-          Featured Courses
-        </p>
-        <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-          What's New in SMARTEDU HUB
-        </h2>
-        <p className="text-gray-600 mb-6">
-          Discover our featured courses, specially curated to help you gain in-demand skills.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <p className="text-[var(--color-primary)] font-semibold text-sm mb-2">
+            Featured Courses
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
+            What's New in SMARTEDU HUB
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Discover our featured courses, specially curated to help you gain in-demand skills.
+          </p>
+        </motion.div>
 
-        {/* Course Cards */}
+        {/* Course Cards Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {courses.slice(0, 8).map((c, i) => (
-            <CourseCard course={c} key={i} />
+            <motion.div
+              key={c._id || i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: (i % 4) * 0.1, ease: "easeOut" }}
+              className="h-full flex"
+            >
+              <CourseCard course={c} />
+            </motion.div>
           ))}
         </div>
         
@@ -387,11 +404,20 @@ export default function FeaturedCourses() {
           </div>
         )}
         
-        <button className="px-6 py-2 rounded-full bg-[var(--color-primary)] text-white font-semibold hover:bg-[var(--color-primary-hover)] transition mt-12">
-          <Link href="/courses">
-            View More
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-12"
+        >
+          <Link
+            href="/courses"
+            className="inline-block px-8 py-3 rounded-full bg-[var(--color-primary)] text-white font-semibold hover:bg-[var(--color-primary-hover)] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+          >
+            View More Courses
           </Link>
-        </button>
+        </motion.div>
       </div>
     </section>
   );

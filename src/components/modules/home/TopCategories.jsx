@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import api from "@/lib/apiClient";
+import { motion } from "framer-motion";
 
 const useCategories = () => {
   return useQuery({
@@ -170,18 +171,31 @@ export default function TopCategories() {
   return (
     <section className="w-full bg-[var(--color-background)] py-14 relative overflow-hidden">
       <div className="container mx-auto px-4 text-center">
-        <p className="text-[var(--color-primary)] font-semibold text-sm mb-2">
-          Our Categories
-        </p>
-        <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-          Top Courses & Categories
-        </h2>
-        <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-          The right course, guided by an expert mentor, can provide invaluable insights, practical skills.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <p className="text-[var(--color-primary)] font-semibold text-sm mb-2">
+            Our Categories
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
+            Top Courses & Categories
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            The right course, guided by an expert mentor, can provide invaluable insights, practical skills.
+          </p>
+        </motion.div>
 
         {/* Carousel Container */}
-        <div className="relative group/carousel">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+          className="relative group/carousel"
+        >
           {/* Gradient edges for visual fading */}
           <div className="pointer-events-none absolute left-0 top-0 h-full w-14 bg-gradient-to-r from-[var(--color-background)] to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 h-full w-14 bg-gradient-to-l from-[var(--color-background)] to-transparent z-10" />
@@ -240,7 +254,7 @@ export default function TopCategories() {
           >
             <ArrowRight size={18} />
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
