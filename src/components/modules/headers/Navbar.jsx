@@ -68,6 +68,7 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "Courses", href: "/courses" },
     { name: "Events", href: "/events" },
+    { name: "Donation", href: "/donation" },
     { name: "Leaderboard", href: "/leaderboard" },
     { name: "Instructors", href: "/instructors" },
   ];
@@ -88,8 +89,8 @@ const Navbar = () => {
           <span className="text-2xl font-extrabold tracking-tight text-[var(--color-primary)]">SMARTEDU<span className="text-[var(--color-accent)]">HUB</span></span>
         </Link>
 
-        {/* Desktop Menu - Unchanged */}
-        <div className="hidden lg:flex items-center gap-8">
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex items-center gap-5 xl:gap-7">
           {menuLinks.map((link) =>
             link.dropdown ? (
               <div key={link.name} className="relative" ref={pagesDropdownRef}>

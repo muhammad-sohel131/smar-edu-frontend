@@ -37,6 +37,7 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2 text-[var(--color-text)]">
               <li><Link href="/events" className="hover:text-[var(--color-primary)] transition-colors">Events</Link></li>
+              <li><Link href="/donation" className="hover:text-[var(--color-primary)] transition-colors">Donation</Link></li>
             </ul>
           </div>
 
