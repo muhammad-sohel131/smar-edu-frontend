@@ -56,16 +56,22 @@ export default function CourseCard({ course }) {
 
                 {/* Instructor */}
                 <div className="flex items-center">
-                   {course?.instructorImage ? (
-                    <img
-                        src={course?.instructorImage}
-                        alt={course?.author || "Instructor"}
-                        className="w-8 h-8 rounded-full object-cover mr-2"
-                    />
+                    {(course?.instructorImage || course?.instructor?.picture || course?.instructor?.image || course?.authorImg || course?.authorImage) ? (
+                        <img
+                            src={course?.instructorImage || course?.instructor?.picture || course?.instructor?.image || course?.authorImg || course?.authorImage}
+                            alt={course?.instructor?.name || course?.author || "Instructor"}
+                            className="w-8 h-8 rounded-full object-cover mr-2 border border-gray-100 shadow-sm"
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = "/images/ins1.jpg";
+                            }}
+                        />
                     ) : (
-                    <FaUserCircle className="w-8 h-8 text-gray-400 mr-2" />
+                        <FaUserCircle className="w-8 h-8 text-gray-400 mr-2" />
                     )}
-                    <span className="text-sm text-[var(--color-text)]">{course?.author || course?.instructor?.name || "Unknown Instructor"}</span>
+                    <span className="text-sm text-[var(--color-text)] font-medium">
+                        {course?.instructor?.name || course?.author || "Unknown Instructor"}
+                    </span>
                 </div>
             </div>
             <div className='absolute bottom-0 w-full flex justify-center items-center text-center'>

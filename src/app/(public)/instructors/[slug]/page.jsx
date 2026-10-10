@@ -236,7 +236,14 @@ export default function InstructorProfile() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {coursesData.items.map((course) => (
-                  <CourseCard key={course._id} course={course} />
+                  <CourseCard
+                    key={course._id}
+                    course={{
+                      ...course,
+                      instructorImage: course.instructor?.picture || profileImage,
+                      author: course.instructor?.name || name,
+                    }}
+                  />
                 ))}
               </div>
             </div>

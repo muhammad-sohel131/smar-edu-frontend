@@ -34,9 +34,13 @@ export default function AboutInstructor({ instructor }) {
           <div className="relative">
             <div className="w-24 h-24 rounded-2xl overflow-hidden border-4 border-white shadow-lg">
               <img
-                src={instructor?.picture || '/images/teacher.png'}
+                src={instructor?.userId?.picture || instructor?.picture || '/images/teacher.png'}
                 alt={instructor?.userId?.name || 'Instructor'}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "/images/teacher.png";
+                }}
               />
             </div>
             <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-[var(--color-primary)] to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">

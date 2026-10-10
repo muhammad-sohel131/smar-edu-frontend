@@ -194,11 +194,13 @@ export default function PublicCourseListing() {
                       <div className="transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl">
                         <CourseCard
                           course={{
+                            ...course,
                             title: course.title,
                             thumbnail:
                               course.thumbnail ||
                               "https://via.placeholder.com/400x250?text=No+Image",
-                            instructorImage: course.instructor?.picture || null,
+                            instructor: course.instructor,
+                            instructorImage: course.instructor?.picture || course.instructorImage || null,
                             category: course.category || "Uncategorized",
                             author: course.instructor?.name || course.instructor?.email || "Unknown Instructor",
                             price: course.price || 0,

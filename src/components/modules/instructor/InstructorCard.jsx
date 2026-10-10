@@ -10,9 +10,13 @@ export default function InstructorCard({ instructor }) {
       {/* Image */}
       <div className="relative w-full h-40">
         <img
-          src={instructor?.userId?.picture || './images/ins1.jpg'}
-          alt={instructor?.userId?.name}
+          src={instructor?.userId?.picture || '/images/ins1.jpg'}
+          alt={instructor?.userId?.name || 'Instructor'}
           className="w-full h-full object-cover"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = "/images/ins1.jpg";
+          }}
         />
       </div>
 
