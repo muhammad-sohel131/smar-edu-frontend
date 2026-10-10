@@ -80,15 +80,6 @@ export default function Page() {
         totalLabel = "Total Price";
         buttonText = "View Events";
         footerText = "See you at the event!";
-        Icon = CheckCircle;
-    } else if (data.itemType === "ecommerce") {
-        title = "Order Placed Successfully 🛍️";
-        subtitle = "Thank you for your purchase! Your order has been confirmed and payment was successful.";
-        summaryTitle = "Order Summary";
-        totalLabel = "Total Paid";
-        buttonText = "View Order History";
-        footerText = "Thank you for your purchase!";
-        Icon = CheckCircle;
     }
 
     return (

@@ -1,47 +1,45 @@
 "use client";
 import { useState } from "react";
 import { FaCheck, FaInfoCircle } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
 
 export default function MembershipSection() {
-    const { t } = useTranslation();
     const [billing, setBilling] = useState("monthly");
     const [activeTooltip, setActiveTooltip] = useState(null);
 
     const tiers = [
         {
-            name: t("pricing.tiers.free.name") || "Free",
+            name: "Free",
             priceMonthly: 0,
             priceYearly: 0,
             benefits: [
-                t("pricing.tiers.free.benefits.0") || "Access to limited courses",
-                t("pricing.tiers.free.benefits.1") || "Community support"
+                "Access to limited courses",
+                "Community support"
             ],
-            tooltip: t("pricing.tiers.free.tooltip") || "Free tier with basic access",
+            tooltip: "Free tier with basic access",
             color: "bg-gray-100",
         },
         {
-            name: t("pricing.tiers.premium.name") || "Premium",
+            name: "Premium",
             priceMonthly: 29,
             priceYearly: 299,
             benefits: [
-                t("pricing.tiers.premium.benefits.0") || "All courses access",
-                t("pricing.tiers.premium.benefits.1") || "Certificate of completion",
-                t("pricing.tiers.premium.benefits.2") || "Priority support"
+                "All courses access",
+                "Certificate of completion",
+                "Priority support"
             ],
-            tooltip: t("pricing.tiers.premium.tooltip") || "Best for individual learners",
+            tooltip: "Best for individual learners",
             color: "bg-white",
         },
         {
-            name: t("pricing.tiers.institutional.name") || "Institutional",
+            name: "Institutional",
             priceMonthly: 99,
             priceYearly: 999,
             benefits: [
-                t("pricing.tiers.institutional.benefits.0") || "Multiple users",
-                t("pricing.tiers.institutional.benefits.1") || "Analytics dashboard",
-                t("pricing.tiers.institutional.benefits.2") || "Dedicated support"
+                "Multiple users",
+                "Analytics dashboard",
+                "Dedicated support"
             ],
-            tooltip: t("pricing.tiers.institutional.tooltip") || "For schools, companies, or universities",
+            tooltip: "For schools, companies, or universities",
             color: "bg-[var(--color-primary)] text-white",
         },
     ];
@@ -55,10 +53,10 @@ export default function MembershipSection() {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold text-[var(--color-text)] mb-4">
-                        {t("pricing.title") || "Choose Your Membership"}
+                        Choose Your Membership
                     </h2>
                     <p className="text-[var(--color-text)]/80 text-lg">
-                        {t("pricing.description") || "Select the plan that fits you best. Monthly or yearly options available."}
+                        Select the plan that fits you best. Monthly or yearly options available.
                     </p>
                 </div>
 
@@ -70,14 +68,14 @@ export default function MembershipSection() {
                             className={`px-6 py-2 rounded-full transition-colors ${billing === "monthly" ? "bg-[var(--color-primary)] text-white" : "text-[var(--color-text)]"
                                 }`}
                         >
-                            {t("pricing.monthly") || "Monthly"}
+                            Monthly
                         </button>
                         <button
                             onClick={() => setBilling("yearly")}
                             className={`px-6 py-2 rounded-full transition-colors ${billing === "yearly" ? "bg-[var(--color-primary)] text-white" : "text-[var(--color-text)]"
                                 }`}
                         >
-                            {t("pricing.yearly") || "Yearly"}
+                            Yearly
                         </button>
                     </div>
                 </div>
@@ -96,7 +94,7 @@ export default function MembershipSection() {
                                     onMouseEnter={() => setActiveTooltip(index)}
                                     onMouseLeave={() => setActiveTooltip(null)}
                                     className={`p-1 rounded-full transition-colors ${
-                                        tier.name === t("pricing.tiers.institutional.name") 
+                                        tier.name === "Institutional"
                                             ? "text-white hover:bg-white/20" 
                                             : "text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10"
                                     }`}
@@ -115,33 +113,33 @@ export default function MembershipSection() {
                                 )}
                             </div>
 
-                            <h3 className={`text-2xl font-bold mb-4 ${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-secondary)]"}`}>
+                            <h3 className={`text-2xl font-bold mb-4 ${tier.name === "Institutional" ? "text-white" : "text-[var(--color-secondary)]"}`}>
                                 {tier.name}
                             </h3>
 
-                            <p className={`text-3xl font-bold mb-6 ${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-primary)]"}`}>
+                            <p className={`text-3xl font-bold mb-6 ${tier.name === "Institutional" ? "text-white" : "text-[var(--color-primary)]"}`}>
                                 ৳{billing === "monthly" ? tier.priceMonthly : tier.priceYearly}
                                 <span className="text-sm font-normal">
-                                    /{billing === "monthly" ? t("pricing.perMonth") || "mo" : t("pricing.perYear") || "yr"}
+                                    /{billing === "monthly" ? "mo" : "yr"}
                                 </span>
                             </p>
 
-                            <ul className={`flex-1 mb-6 space-y-2 ${tier.name === t("pricing.tiers.institutional.name") ? "text-white/90" : "text-[var(--color-text)]/80"}`}>
+                            <ul className={`flex-1 mb-6 space-y-2 ${tier.name === "Institutional" ? "text-white/90" : "text-[var(--color-text)]/80"}`}>
                                 {tier.benefits.map((benefit, benefitIndex) => (
                                     <li key={benefitIndex} className="flex items-center gap-2">
-                                        <FaCheck className={`${tier.name === t("pricing.tiers.institutional.name") ? "text-white" : "text-[var(--color-accent)]"}`} />
+                                        <FaCheck className={`${tier.name === "Institutional" ? "text-white" : "text-[var(--color-accent)]"}`} />
                                         {benefit}
                                     </li>
                                 ))}
                             </ul>
 
                             <button
-                                className={`mt-auto px-6 py-3 rounded-full font-semibold transition-colors ${tier.name === t("pricing.tiers.institutional.name")
+                                className={`mt-auto px-6 py-3 rounded-full font-semibold transition-colors ${tier.name === "Institutional"
                                         ? "bg-white text-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] hover:text-white"
                                         : "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)]"
                                     }`}
                             >
-                                {t("pricing.selectButton") || "Select"}
+                                Select
                             </button>
                         </div>
                     ))}

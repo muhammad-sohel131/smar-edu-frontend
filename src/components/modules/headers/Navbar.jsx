@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { FaBars, FaTimes, FaGlobe, FaChevronDown } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,14 +11,12 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const { user, loading, logout } = useAuth();
-  const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const pathname = usePathname();
 
   // Refs for dropdowns
   const dropdownRef = useRef(null);
-  const languageDropdownRef = useRef(null);
   const mobileDropdownRef = useRef(null);
   const pagesDropdownRef = useRef(null);
 
@@ -32,16 +29,6 @@ const Navbar = () => {
         !pagesDropdownRef.current.contains(event.target)
       ) {
         if (openDropdown === "pages") {
-          setOpenDropdown(null);
-        }
-      }
-
-      // Close language dropdown
-      if (
-        languageDropdownRef.current &&
-        !languageDropdownRef.current.contains(event.target)
-      ) {
-        if (openDropdown === "language") {
           setOpenDropdown(null);
         }
       }
@@ -77,32 +64,18 @@ const Navbar = () => {
     setOpenDropdown(null);
   };
 
-  const languages = [
-    { code: "en", label: "English", flag: "🇺🇸" },
-    { code: "ms", label: "Malay", flag: "🇲🇾" },
-  ];
-
-  const currentLanguage = languages.find((lang) => lang.code === i18n.language);
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    setOpenDropdown(null);
-    closeMenu();
-  };
-
   const menuLinks = [
-    { name: t("home"), href: "/" },
-    { name: t("courses"), href: "/courses" },
-    { name: t("leaderboard"), href: "/leaderboard" },
-    { name: t("instructors"), href: "/instructors" },
-    // { name: t("games"), href: "/games" },
-    // { name: t("Events"), href: "/events" },
-    // { name: t("shop"), href: "/shop" },
-
-    // { name: t("donation"), href: "/donation" },
+    { name: "Home", href: "/" },
+    { name: "Courses", href: "/courses" },
+    { name: "Events", href: "/events" },
+    { name: "Leaderboard", href: "/leaderboard" },
+    { name: "Instructors", href: "/instructors" },
   ];
 
-  const isActive = (href) => pathname === href;
+  const isActive = (href) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
     <nav className="bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow sticky top-0 z-50 backdrop-blur-lg">
@@ -171,58 +144,16 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Desktop Language Selector & Auth Buttons */}
+        {/* Desktop Auth Buttons */}
         <div className="hidden lg:flex items-center gap-4">
-          {/* <div className="relative" ref={languageDropdownRef}>
-            <button
-              onClick={() => toggleDropdown("language")}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-200 group"
-            >
-              <div className="flex items-center gap-2">
-                <FaGlobe className="text-[var(--color-primary)] group-hover:text-white transition-colors duration-200" />
-                <span className="text-sm font-medium flex items-center gap-1">
-                  <span className="text-base">{currentLanguage?.flag}</span>
-                  <span className="hidden xl:block">
-                    {currentLanguage?.label}
-                  </span>
-                </span>
-              </div>
-              <FaChevronDown
-                className={`w-3 h-3 transition-transform duration-200 ${openDropdown === "language" ? "rotate-180" : ""
-                  }`}
-              />
-            </button>
-
-                 
-            <div
-              className={`absolute right-0 mt-2 bg-white border border-[var(--color-primary)] rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden transition-all duration-200 transform origin-top ${openDropdown === "language"
-                  ? "opacity-100 scale-100 translate-y-0"
-                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                }`}
-            >
-              {languages.map((lng) => (
-                <button
-                  key={lng.code}
-                  onClick={() => changeLanguage(lng.code)}
-                  className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 ${i18n.language === lng.code
-                      ? "bg-[var(--color-primary)] text-white"
-                      : "hover:bg-[var(--color-background)] text-[var(--color-text)]"
-                    }`}
-                >
-                  <span className="text-base">{lng.flag}</span>
-                  <span className="font-medium">{lng.label}</span>
-                </button>
-              ))}
-            </div>
-          </div> */}
           {!user ? (<>
             <Link
             href="/login"
             onClick={closeMenu}
             className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200"
-            title={t("login")}
+            title="Login"
           >
-            <span className="hidden xl:inline">{t("login")}</span>
+            <span className="hidden xl:inline">Login</span>
             <span className="xl:hidden">
               <svg
                 className="w-5 h-5"
@@ -244,9 +175,9 @@ const Navbar = () => {
             href="/register"
             onClick={closeMenu}
             className="flex items-center justify-center px-4 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-medium shadow-sm transition-all duration-200"
-            title={t("register")}
+            title="Register"
           >
-            <span className="hidden xl:inline">{t("register")}</span>
+            <span className="hidden xl:inline">Register</span>
             <span className="xl:hidden">
               <svg
                 className="w-5 h-5"
@@ -275,9 +206,9 @@ const Navbar = () => {
             href="/dashboard"
             onClick={closeMenu}
             className="flex items-center justify-center px-4 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-medium shadow-sm transition-all duration-200"
-            title={t("dashboard")}
+            title="Dashboard"
           >
-            <span className="hidden xl:inline">{t("dashboard")}</span>
+            <span className="hidden xl:inline">Dashboard</span>
             <span className="xl:hidden">
               <svg
                 className="w-5 h-5"
@@ -430,31 +361,6 @@ const Navbar = () => {
                   )}
                 </div>
 
-                {/* Language Selector */}
-                
-                {/* <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm font-semibold text-[var(--color-text)] mb-3 flex items-center gap-2">
-                    <FaGlobe className="text-[var(--color-primary)]" />
-                    {t("language") || "Select Language"}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    {languages.map((lng) => (
-                      <button
-                        key={lng.code}
-                        onClick={() => changeLanguage(lng.code)}
-                        className={`flex items-center justify-center gap-2 px-3 py-3 text-sm rounded-lg border-2 transition-all duration-200 active:scale-95 ${i18n.language === lng.code
-                            ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md"
-                            : "bg-white text-gray-700 border-gray-300 hover:bg-[var(--color-background)] hover:border-[var(--color-primary)]"
-                          }`}
-                      >
-                        <span className="text-base">{lng.flag}</span>
-                        <span className="font-medium">{lng.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div> */}
-
                 {/* Auth Buttons */}
                 <div className="flex flex-col gap-3">
                   {!user ? (<><Link
@@ -462,28 +368,28 @@ const Navbar = () => {
                     onClick={closeMenu}
                     className="text-center px-4 py-3 rounded-lg border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200 active:scale-95"
                   >
-                    {t("login")}
+                    Login
                   </Link>
                     <Link
                       href="/register"
                       onClick={closeMenu}
                       className="text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium shadow-md transition-all duration-200 active:scale-95"
                     >
-                      {t("register")}
+                      Register
                     </Link></>) : (<>
                       <Link
                         href="/logout"
                         onClick={closeMenu}
                         className="text-center px-4 py-3 rounded-lg border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200 active:scale-95"
                       >
-                        {t("logout")}
+                        Logout
                       </Link>
                       <Link
                         href="/dashboard"
                         onClick={closeMenu}
                         className="text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium shadow-md transition-all duration-200 active:scale-95"
                       >
-                        {t("dashboard")}
+                        Dashboard
                       </Link>
                     </>)}
                 </div>

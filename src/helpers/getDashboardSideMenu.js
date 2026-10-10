@@ -1,16 +1,14 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, ShoppingBasket, Package, TrophyIcon, Heart } from "lucide-react";
-import { FaProductHunt } from "react-icons/fa";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, Package, TrophyIcon, Heart } from "lucide-react";
 import { MdCategory, MdOutlineBorderStyle } from "react-icons/md";
 
 // ===== Menu Configs with Icons ===== //
 const studentMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
     { title: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
-     { title: "My Shop", href: "/dashboard/student/purchased-products", icon: ShoppingBasket },
     { title: "Assignments", href: "/dashboard/student/assignments", icon: ShoppingBag },
     { title: "My Badges", href: "/dashboard/student/my-badges", icon: Badge },
     // { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
-    {title: "Purchase History", href: "/dashboard/student/purchase-history", icon: BarChart3},
+    { title: "Purchase History", href: "/dashboard/student/purchase-history", icon: BarChart3},
     { title: "Profile", href: "/dashboard/student/profile", icon: Settings },
 ];
 
@@ -20,7 +18,6 @@ const instructorMenu = [
     { title: "Students", href: "/dashboard/instructor/students", icon: Users },
     { title: "Task", href: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: "Quizzes", href: "/dashboard/instructor/quize", icon: HelpCircle },
-    { title: "My Shop", href: "/dashboard/instructor/purchased-products", icon: ShoppingBasket },
     { title: "Profile", href: "/dashboard/instructor/profile", icon: User },
     // { title: "Certificate", href: "/dashboard/instructor/certificate", icon: Award },
 ];
@@ -28,16 +25,14 @@ const instructorMenu = [
 const adminMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
   
-{ title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
- { title: "Badges", href: "/dashboard/admin/badges", icon: BadgeCent },
-  { title: "Products", href: "/dashboard/admin/products", icon: FaProductHunt },
+  { title: "Categories", href: "/dashboard/admin/categories", icon: MdCategory },
+  { title: "Badges", href: "/dashboard/admin/badges", icon: BadgeCent },
   { title: "Manage Events", href: "/dashboard/admin/events", icon: TrophyIcon },
   { title: "Donations", href: "/dashboard/admin/donations", icon: Heart },
   { title: "Orders", href: "/dashboard/admin/orders", icon: MdOutlineBorderStyle },
- { title: "Location", href: "/dashboard/admin/location", icon: LocateIcon},
+  { title: "Location", href: "/dashboard/admin/location", icon: LocateIcon},
   { title: "Manage Students", href: "/dashboard/admin/students", icon: Users },
   { title: "Manage Instructors", href: "/dashboard/admin/instructors", icon: UserCheck },
-  { title: "My Shop", href: "/dashboard/admin/purchased-products", icon: ShoppingBasket },
   { title: "Manage Admins", href: "/dashboard/admin/admins", icon: Shield },
 
 

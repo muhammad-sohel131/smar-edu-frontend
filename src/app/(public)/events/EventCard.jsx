@@ -1,17 +1,31 @@
-import { useRegistrationStatus } from '@/hooks/useEvent';
+import { useAuth } from '@/hooks/useAuth';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
 export default function EventCard({ event }) {
-  const { data: registrationStatus } = useRegistrationStatus(event._id);
-  const isRegistered = registrationStatus?.isRegistered || false;
+  const { user } = useAuth();
+  const isRegistered = Boolean(
+    user?._id && event?.attendees?.some((att) => (att?._id || att) === user._id)
+  );
 
   const formatDate = (dateString) => {
-    return format(new Date(dateString), 'MMM dd, yyyy');
+    if (!dateString) return 'TBA';
+    try {
+      const d = new Date(dateString);
+      return isNaN(d.getTime()) ? 'TBA' : format(d, 'MMM dd, yyyy');
+    } catch {
+      return 'TBA';
+    }
   };
 
   const formatTime = (dateString) => {
-    return format(new Date(dateString), 'hh:mm a');
+    if (!dateString) return '';
+    try {
+      const d = new Date(dateString);
+      return isNaN(d.getTime()) ? '' : format(d, 'hh:mm a');
+    } catch {
+      return '';
+    }
   };
 
   return (

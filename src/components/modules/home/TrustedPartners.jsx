@@ -1,10 +1,6 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
-
 export default function TrustedPartners() {
-  const { t } = useTranslation();
-
   const partners = [
     { name: "Loom", logo: "/logos/loom.svg" },
     { name: "Lattice", logo: "/logos/lattice.svg" },
@@ -16,9 +12,9 @@ export default function TrustedPartners() {
 
   return (
     <section className="w-full bg-white py-16">
-      <div className="container mx-auto text-center px-4">
+      <div className="container mx-auto px-4 text-center">
         <p className="text-[var(--color-secondary)] font-medium text-sm mb-4">
-          {t("partners.title") || "Trusted by 20+ Institutions Around the World"}
+          Trusted by 20+ Institutions Around the World
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">

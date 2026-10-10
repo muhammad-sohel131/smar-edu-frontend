@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { FaGraduationCap } from "react-icons/fa";
 import { MdVerified, MdPerson } from "react-icons/md";
 import SearchBar from "@/components/modules/special/Searchbar";
-import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
 
@@ -22,7 +21,6 @@ const useCategories = () => {
 
 // 🎯 Main Hero Section (Default Export)
 export default function HeroSection() {
-  const { t } = useTranslation();
   const router = useRouter();
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
@@ -76,13 +74,13 @@ export default function HeroSection() {
                 boxShadow: "var(--shadow-soft)",
               }}
             >
-              {t("hero.leader") || "The Leader in Online Learning"}
+              The Leader in Online Learning
             </span>
 
             <h1 className="mb-3 text-4xl font-bold leading-tight text-[var(--color-text)] md:text-4xl">
-              {t("hero.title1") || "Find the"}{" "}
+              Find the{" "}
               <span className="relative text-[var(--color-accent-special)]">
-                {t("hero.bestCourses") || "Best Courses"}
+                Best Courses
                 <svg
                   className="absolute left-0 -bottom-4 w-full"
                   xmlns="http://www.w3.org/2000/svg"
@@ -94,15 +92,15 @@ export default function HeroSection() {
                   />
                 </svg>
               </span>{" "}
-              {t("hero.title2") || "from the"}{" "}
+              from the{" "}
               <span className="text-[var(--color-accent-special)]">
-                {t("hero.bestMentors") || "Best Mentors"}
+                Best Mentors
               </span>{" "}
-              {t("hero.aroundWorld") || "Around the World"}
+              Around the World
             </h1>
 
             <p className="mb-4 max-w-xl text-[var(--color-text)]/85">
-              {t("hero.description") || "Our specialized online courses are designed to bring the classroom experience to you, no matter where you are."}
+              Our specialized online courses are designed to bring the classroom experience to you, no matter where you are.
             </p>
 
             {/* 🔍 Search Bar */}
@@ -130,7 +128,7 @@ export default function HeroSection() {
                   <span className="font-bold text-[var(--color-text)]">10K</span>
                   <br />
                   <span className="text-sm text-[var(--color-text)]/70">
-                    {t("hero.stats.courses") || "Online Courses"}
+                    Online Courses
                   </span>
                 </p>
               </div>
@@ -143,7 +141,7 @@ export default function HeroSection() {
                   <span className="font-bold text-[var(--color-text)]">6K</span>
                   <br />
                   <span className="text-sm text-[var(--color-text)]/70">
-                    {t("hero.stats.certified") || "Certified Courses"}
+                    Certified Courses
                   </span>
                 </p>
               </div>
@@ -156,7 +154,7 @@ export default function HeroSection() {
                   <span className="font-bold text-[var(--color-text)]">2K</span>
                   <br />
                   <span className="text-sm text-[var(--color-text)]/70">
-                    {t("hero.stats.tutors") || "Experienced Tutors"}
+                    Experienced Tutors
                   </span>
                 </p>
               </div>

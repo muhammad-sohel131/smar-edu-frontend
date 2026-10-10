@@ -3,14 +3,11 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/apiClient";
 import {
-  Package,
-  Truck,
   Calendar,
   DollarSign,
   CheckCircle,
   XCircle,
   Clock,
-  RefreshCw,
   Search,
   ChevronDown,
   ChevronUp,
@@ -19,8 +16,8 @@ import {
   ShoppingBag,
   TrendingUp,
   FileText,
-  Box,
-  Truck as TruckIcon
+  CreditCard,
+  Heart
 } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -29,11 +26,9 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [expandedOrder, setExpandedOrder] = useState(null);
-  const [updateLoading, setUpdateLoading] = useState(null);
   const [filters, setFilters] = useState({
     status: "all",
     itemType: "all",
-    fulfillmentStatus: "all"
   });
 
   useEffect(() => {
@@ -46,7 +41,6 @@ export default function OrdersPage() {
       const res = await api.get("/orders", {
         params: {
           status: filters.status !== "all" ? filters.status : undefined,
-          fulfillmentStatus: filters.fulfillmentStatus !== "all" ? filters.fulfillmentStatus : undefined,
           itemType: filters.itemType !== "all" ? filters.itemType : undefined
         }
       });
@@ -56,23 +50,6 @@ export default function OrdersPage() {
       toast.error("Failed to load orders");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleUpdateFulfillment = async (orderId, status) => {
-    try {
-      setUpdateLoading(orderId);
-      
-      await api.patch(`/orders/${orderId}/fulfill`, { status });
-      
-      toast.success(`Order marked as ${status}`);
-      fetchOrders();
-      setExpandedOrder(null);
-    } catch (error) {
-      console.error("Error updating fulfillment:", error);
-      toast.error("Failed to update order status");
-    } finally {
-      setUpdateLoading(null);
     }
   };
 
@@ -99,23 +76,21 @@ export default function OrdersPage() {
     }
   };
 
-  const getFulfillmentColor = (status) => {
-    switch (status) {
-      case "delivered": return "bg-[#05966915] text-[var(--color-primary)] border border-[#05966930]";
-      case "shipped": return "bg-[#2563EB15] text-[var(--color-secondary)] border border-[#2563EB30]";
-      case "processing": return "bg-[#FBBF2415] text-[var(--color-accent)] border border-[#FBBF2430]";
-      case "unfulfilled": return "bg-gray-100 text-gray-700 border border-gray-200";
-      case "cancelled": return "bg-red-100 text-red-700 border border-red-200";
-      default: return "bg-gray-100 text-gray-700 border border-gray-200";
-    }
-  };
-
   const getStatusIcon = (status) => {
     switch (status) {
       case "paid": return <CheckCircle className="h-4 w-4" />;
       case "pending": return <Clock className="h-4 w-4" />;
       case "failed": return <XCircle className="h-4 w-4" />;
       default: return null;
+    }
+  };
+
+  const getItemTypeIcon = (itemType) => {
+    switch (itemType) {
+      case "course": return <FileText className="h-4 w-4" />;
+      case "event": return <Calendar className="h-4 w-4" />;
+      case "Donation": return <Heart className="h-4 w-4" />;
+      default: return <CreditCard className="h-4 w-4" />;
     }
   };
 
@@ -188,18 +163,6 @@ export default function OrdersPage() {
 
             <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">E-commerce</span>
-                <div className="p-2 bg-[var(--color-accent-special)]/10 rounded-lg">
-                  <Package className="h-5 w-5 text-[var(--color-accent-special)]" />
-                </div>
-              </div>
-              <div className="text-2xl font-bold text-[var(--color-text)]">
-                {orders.filter(o => o.itemType === "ecommerce").length}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-              <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-gray-700">Courses</span>
                 <div className="p-2 bg-[var(--color-accent)]/10 rounded-lg">
                   <FileText className="h-5 w-5 text-[var(--color-accent)]" />
@@ -209,13 +172,25 @@ export default function OrdersPage() {
                 {orders.filter(o => o.itemType === "course").length}
               </div>
             </div>
+
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-700">Events</span>
+                <div className="p-2 bg-[var(--color-accent-special)]/10 rounded-lg">
+                  <Calendar className="h-5 w-5 text-[var(--color-accent-special)]" />
+                </div>
+              </div>
+              <div className="text-2xl font-bold text-[var(--color-text)]">
+                {orders.filter(o => o.itemType === "event").length}
+              </div>
+            </div>
           </div>
 
           {/* Search & Filters */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
               {/* Search */}
-              <div className="lg:col-span-4">
+              <div className="lg:col-span-6">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                   <input
@@ -229,17 +204,16 @@ export default function OrdersPage() {
               </div>
 
               {/* Filters */}
-              {/* <div className="lg:col-span-8 flex flex-wrap gap-3">
+              <div className="lg:col-span-6 flex flex-wrap gap-3">
                 <select
                   value={filters.itemType}
                   onChange={(e) => setFilters({...filters, itemType: e.target.value})}
                   className="flex-1 min-w-[150px] px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition appearance-none bg-white"
                 >
                   <option value="all">All Types</option>
-                  <option value="ecommerce">E-commerce</option>
                   <option value="course">Course</option>
-                  <option value="package">Package</option>
                   <option value="event">Event</option>
+                  <option value="Donation">Donation</option>
                 </select>
 
                 <select
@@ -254,27 +228,14 @@ export default function OrdersPage() {
                   <option value="refunded">Refunded</option>
                   <option value="canceled">Canceled</option>
                 </select>
-
-                <select
-                  value={filters.fulfillmentStatus}
-                  onChange={(e) => setFilters({...filters, fulfillmentStatus: e.target.value})}
-                  className="flex-1 min-w-[150px] px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition appearance-none bg-white"
-                >
-                  <option value="all">All Fulfillment</option>
-                  <option value="unfulfilled">Unfulfilled</option>
-                  <option value="processing">Processing</option>
-                  <option value="shipped">Shipped</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
-              </div> */}
+              </div>
             </div>
           </div>
 
           {/* Orders List */}
           {filteredOrders.length === 0 ? (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
-              <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <ShoppingBag className="h-16 w-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-700 mb-2">
                 No orders found
               </h3>
@@ -300,15 +261,11 @@ export default function OrdersPage() {
                               {getStatusIcon(order.status)}
                               {order.status}
                             </span>
-                            {order.ecommerce?.fulfillment?.status && (
-                              <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${getFulfillmentColor(order.ecommerce.fulfillment.status)}`}>
-                                {order.ecommerce.fulfillment.status}
-                              </span>
-                            )}
                           </div>
                           
                           {/* Order Type Badge */}
-                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200 flex items-center gap-1">
+                            {getItemTypeIcon(order.itemType)}
                             {order.itemType}
                           </span>
                         </div>
@@ -317,7 +274,7 @@ export default function OrdersPage() {
                         <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                           <div className="flex items-center gap-2">
                             <User className="h-4 w-4 text-gray-400" />
-                            <span className="font-medium">{order.userName}</span>
+                            <span className="font-medium">{order.userName || "Customer"}</span>
                             <span className="text-gray-400">•</span>
                             <Mail className="h-4 w-4 text-gray-400" />
                             <span>{order.userEmail}</span>
@@ -335,9 +292,8 @@ export default function OrdersPage() {
                           <div className="text-lg font-bold text-[var(--color-text)]">
                             {order.amountFormatted}
                           </div>
-                          <div className="text-sm text-gray-500 flex items-center gap-1">
-                            <Box className="h-3 w-3" />
-                            <span>{order.ecommerce?.items?.length || 1} item{order.ecommerce?.items?.length > 1 ? 's' : ''}</span>
+                          <div className="text-xs text-gray-500">
+                            {order.provider ? `via ${order.provider}` : ""}
                           </div>
                         </div>
 
@@ -359,156 +315,51 @@ export default function OrdersPage() {
                   {/* Expanded Order Details */}
                   {expandedOrder === order._id && (
                     <div className="border-t px-5 py-4 bg-gray-50/50">
-                      {/* Order Items */}
-                      {order.ecommerce?.items && (
-                        <div className="mb-6">
-                          <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
-                            <ShoppingBag className="h-4 w-4" />
-                            Order Items
-                          </h4>
-                          <div className="space-y-3">
-                            {order.ecommerce.items.map((item, index) => (
-                              <div key={index} className="flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-200">
-                                {item.image && (
-                                  <img src={item.image} alt={item.title} className="w-12 h-12 object-cover rounded" />
-                                )}
-                                <div className="flex-1">
-                                  <p className="font-medium text-[var(--color-text)]">{item.title}</p>
-                                  <p className="text-sm text-gray-600">
-                                    {item.qty} × ${item.unitPrice} = <span className="font-medium">৳{item.qty * item.unitPrice}</span>
-                                  </p>
-                                </div>
-                              </div>
-                            ))}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div className="bg-white p-4 rounded-lg border border-gray-200 space-y-2">
+                          <h4 className="font-semibold text-gray-800 mb-2">Order Details</h4>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Order ID:</span>
+                            <span className="font-mono text-gray-700">{order._id}</span>
                           </div>
-                        </div>
-                      )}
-
-                      {/* Order Details Grid */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        {/* Order Summary */}
-                        <div>
-                          <h4 className="font-medium text-gray-700 mb-3">Order Summary</h4>
-                          <div className="space-y-2 bg-white p-4 rounded-lg border border-gray-200">
-                            <div className="flex justify-between text-sm">
-                              <span className="text-gray-600">Subtotal</span>
-                              <span>৳{order.ecommerce?.subtotal?.toFixed(2) || order.amount}</span>
-                            </div>
-                            {order.ecommerce?.discount > 0 && (
-                              <div className="flex justify-between text-sm text-green-600">
-                                <span>Discount</span>
-                                <span>- ৳{order.ecommerce.discount.toFixed(2)}</span>
-                              </div>
-                            )}
-                            {order.ecommerce?.tax > 0 && (
-                              <div className="flex justify-between text-sm">
-                                <span className="text-gray-600">Tax</span>
-                                <span>৳{order.ecommerce.tax.toFixed(2)}</span>
-                              </div>
-                            )}
-                            <div className="pt-2 border-t">
-                              <div className="flex justify-between font-medium">
-                                <span>Total</span>
-                                <span className="text-[var(--color-text)]">{order.amountFormatted}</span>
-                              </div>
-                            </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Transaction ID:</span>
+                            <span className="font-mono text-gray-700">{order.transactionId || "N/A"}</span>
                           </div>
-                        </div>
-
-                        {/* Shipping Info */}
-                        {order.ecommerce?.shippingAddress && (
-                          <div>
-                            <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
-                              <TruckIcon className="h-4 w-4" />
-                              Shipping Information
-                            </h4>
-                            <div className="bg-white p-4 rounded-lg border border-gray-200 text-sm">
-                              {order.ecommerce.shippingAddress.name && (
-                                <p className="font-medium text-[var(--color-text)]">{order.ecommerce.shippingAddress.name}</p>
-                              )}
-                              <p className="text-gray-600">{order.ecommerce.shippingAddress.line1}</p>
-                              {order.ecommerce.shippingAddress.line2 && (
-                                <p className="text-gray-600">{order.ecommerce.shippingAddress.line2}</p>
-                              )}
-                              <p className="text-gray-600">
-                                {order.ecommerce.shippingAddress.city}, {order.ecommerce.shippingAddress.state}
-                              </p>
-                              <p className="text-gray-600">
-                                {order.ecommerce.shippingAddress.country} {order.ecommerce.shippingAddress.postcode}
-                              </p>
-                              {order.ecommerce.shippingAddress.phone && (
-                                <p className="text-gray-600 mt-1">📞 {order.ecommerce.shippingAddress.phone}</p>
-                              )}
-                            </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Type:</span>
+                            <span className="font-medium text-gray-700 capitalize">{order.itemType}</span>
                           </div>
-                        )}
-                      </div>
-
-                      {/* Fulfillment Actions - For E-commerce Orders Only */}
-                      {order.itemType === "ecommerce" && order.ecommerce && (
-                        <div>
-                          <div className="border-t pt-4">
-                            <h4 className="font-medium text-gray-700 mb-3">Update Order Status</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {["processing", "shipped", "delivered", "cancelled"].map((status) => {
-                                const isCurrent = order.ecommerce?.fulfillment?.status === status;
-                                const isLoading = updateLoading === order._id;
-                                
-                                return (
-                                  <button
-                                    key={status}
-                                    onClick={() => handleUpdateFulfillment(order._id, status)}
-                                    disabled={isLoading || isCurrent}
-                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                                      isCurrent
-                                        ? "bg-[var(--color-primary)] text-white"
-                                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900"
-                                    } disabled:opacity-50 disabled:cursor-not-allowed`}
-                                  >
-                                    {isLoading ? (
-                                      <RefreshCw className="h-4 w-4 animate-spin mx-2" />
-                                    ) : (
-                                      <>
-                                        {status === "processing" && "🔄"}
-                                        {status === "shipped" && "🚚"}
-                                        {status === "delivered" && "📦"}
-                                        {status === "cancelled" && "❌"}
-                                        <span className="ml-1">{status.charAt(0).toUpperCase() + status.slice(1)}</span>
-                                      </>
-                                    )}
-                                  </button>
-                                );
-                              })}
+                          {order.event && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Event:</span>
+                              <span className="font-medium text-gray-700">{order.event}</span>
                             </div>
-                          </div>
-
-                          {/* Tracking Information */}
-                          {order.ecommerce?.fulfillment?.status === "shipped" && order.ecommerce.fulfillment.trackingNumber && (
-                            <div className="mt-4 p-4 bg-[var(--color-secondary)]/5 rounded-lg border border-[var(--color-secondary)]/20">
-                              <div className="flex items-center gap-2 text-[var(--color-secondary)] mb-2">
-                                <Truck className="h-5 w-5" />
-                                <span className="font-medium">Tracking Information</span>
-                              </div>
-                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                                <div>
-                                  <span className="text-gray-600">Carrier:</span>
-                                  <p className="font-medium">{order.ecommerce.fulfillment.carrier || "Standard Shipping"}</p>
-                                </div>
-                                <div>
-                                  <span className="text-gray-600">Tracking Number:</span>
-                                  <p className="font-medium">{order.ecommerce.fulfillment.trackingNumber}</p>
-                                </div>
-                                <div>
-                                  <span className="text-gray-600">Shipped Date:</span>
-                                  <p className="font-medium">
-                                    {new Date(order.ecommerce.fulfillment.shippedAt).toLocaleDateString()}
-                                  </p>
-                                </div>
-                              </div>
+                          )}
+                          {order.fund && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Fund:</span>
+                              <span className="font-medium text-gray-700">{order.fund}</span>
                             </div>
                           )}
                         </div>
-                      )}
+
+                        <div className="bg-white p-4 rounded-lg border border-gray-200 space-y-2">
+                          <h4 className="font-semibold text-gray-800 mb-2">Payment Summary</h4>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Payment Method:</span>
+                            <span className="font-medium text-gray-700 uppercase">{order.provider || "SSLCommerz"}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Status:</span>
+                            <span className="font-medium capitalize text-gray-700">{order.status}</span>
+                          </div>
+                          <div className="flex justify-between pt-2 border-t font-semibold">
+                            <span>Total Amount:</span>
+                            <span className="text-[var(--color-primary)]">{order.amountFormatted}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

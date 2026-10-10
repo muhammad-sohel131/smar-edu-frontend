@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
@@ -17,8 +16,6 @@ const useCategories = () => {
   });
 };
 export default function TopCategories() {
-  const { t } = useTranslation();
-
   const { data: categoriesData } = useCategories()
   const categories = categoriesData?.data?.categories || [];
 
@@ -104,13 +101,13 @@ export default function TopCategories() {
     <section className="w-full bg-[var(--color-background)] py-16 relative overflow-hidden">
       <div className="container mx-auto px-4 text-center">
         <p className="text-[var(--color-primary)] font-medium text-sm mb-2">
-          {t("categories.subtitle") || "Our Categories"}
+          Our Categories
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-          {t("categories.title") || "Top Courses & Categories"}
+          Top Courses & Categories
         </h2>
         <p className="text-gray-600 mb-10">
-          {t("categories.description") || "The right course, guided by an expert mentor, can provide invaluable insights, practical skills."}
+          The right course, guided by an expert mentor, can provide invaluable insights, practical skills.
         </p>
 
         {/* Carousel */}
@@ -123,7 +120,7 @@ export default function TopCategories() {
             ref={scrollerRef}
             id="scrollContainer"
             role="region"
-            aria-label={t("categories.ariaLabel") || "Top categories"}
+            aria-label="Top categories"
             className="flex gap-5 overflow-x-auto md:overflow-x-hidden scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
           >
             {categories.map((item, i) => (
@@ -145,22 +142,22 @@ export default function TopCategories() {
           {/* Controls (desktop) */}
           <button
             type="button"
-            aria-label={t("categories.previous") || "Previous"}
+            aria-label="Previous"
             disabled={!canPrev}
             onClick={() => scrollStep("left")}
             className={`hidden md:flex absolute left-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
-              ৳{canPrev ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
+              ${canPrev ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
           >
             <ArrowLeft size={18} />
           </button>
 
           <button
             type="button"
-            aria-label={t("categories.next") || "Next"}
+            aria-label="Next"
             disabled={!canNext}
             onClick={() => scrollStep("right")}
             className={`hidden md:flex absolute right-1 top-[45%] -translate-y-1/2 p-2 rounded-full shadow-md transition
-              ৳{canNext ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
+              ${canNext ? "bg-white hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-100 text-gray-300 cursor-not-allowed"}`}
           >
             <ArrowRight size={18} />
           </button>

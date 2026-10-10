@@ -1,11 +1,8 @@
 "use client";
 import { FaGlobe, FaChalkboardTeacher } from "react-icons/fa";
 import Image from "next/image";
-import { useTranslation } from "react-i18next";
 
 export default function AboutHero() {
-  const { t } = useTranslation();
-
   return (
     <section className="py-[var(--spacing-section)] bg-[var(--color-background)] min-h-[600px] flex items-center">
      <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
@@ -17,7 +14,7 @@ export default function AboutHero() {
 
         <Image
           src="/images/students-group.jpg"
-          alt={t("aboutHero.imageAlt") || "About us"}
+          alt="About us"
           width={600}
           height={400}
           className="relative rounded-[var(--radius-card)] shadow-md"
@@ -27,13 +24,13 @@ export default function AboutHero() {
       {/* === Content Right === */}
       <div>
         <p className="text-sm font-semibold text-[var(--color-accent)] mb-2">
-          {t("aboutHero.subtitle") || "About"}
+          About
         </p>
         <h2 className="text-3xl font-bold text-[var(--color-text)] leading-snug mb-4">
-          {t("aboutHero.title") || "Empowering Learning, Inspiring Growth"}
+          Empowering Learning, Inspiring Growth
         </h2>
         <p className="text-gray-600 text-sm mb-6">
-          {t("aboutHero.description") || "At SMARTEDU HUB, we integrate education, events, donations, and e-commerce into a single ecosystem. Learn, participate, and shop seamlessly."}
+          At SMARTEDU HUB, we integrate education, events, and donations into a single ecosystem. Learn and participate seamlessly.
         </p>
 
         {/* Features */}
@@ -44,10 +41,10 @@ export default function AboutHero() {
             </div>
             <div>
               <h3 className="font-semibold text-[var(--color-text)]">
-                {t("aboutHero.features.learnAnywhere.title") || "Learn from anywhere"}
+                Learn from anywhere
               </h3>
               <p className="text-sm text-gray-600">
-                {t("aboutHero.features.learnAnywhere.description") || "Learning from anywhere has become a transform aspect of modern education, allowing individuals."}
+                Learning from anywhere has become a transform aspect of modern education, allowing individuals.
               </p>
             </div>
           </div>
@@ -58,10 +55,10 @@ export default function AboutHero() {
             </div>
             <div>
               <h3 className="font-semibold text-[var(--color-text)]">
-                {t("aboutHero.features.expertMentors.title") || "Expert Mentors"}
+                Expert Mentors
               </h3>
               <p className="text-sm text-gray-600">
-                {t("aboutHero.features.expertMentors.description") || "Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge."}
+                Expert mentors are invaluable assets in any field, providing seasoned guidance and knowledge.
               </p>
             </div>
           </div>

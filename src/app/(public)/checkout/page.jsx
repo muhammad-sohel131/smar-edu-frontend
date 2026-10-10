@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useTranslation } from "react-i18next";
 import {
   CreditCard,
   Landmark,
@@ -23,7 +22,6 @@ import { toast } from "react-toastify";
 export default function CheckoutPage() {
   const router = useRouter()
   const params = useSearchParams()
-  const { t, i18n } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState("sslcommerz");
   const [billingInfo, setBillingInfo] = useState({
     firstName: "",
@@ -45,8 +43,7 @@ export default function CheckoutPage() {
     setBillingInfo({ ...billingInfo, [e.target.name]: e.target.value })
   }
 
-  const getConvertedPrice = (usd) =>
-    i18n?.language === "ms" ? `RM${(usd * 4.7).toFixed(2)}` : `৳${usd.toFixed(2)}`;
+  const getConvertedPrice = (usd) => `৳${Number(usd || 0).toFixed(2)}`;
 
 
   const subTotal = course.price

@@ -5,10 +5,8 @@ import EventFilters from './EventFilters';
 import EventListing from './EventListing';
 import EventHerosection from './EventHerosection';
 import EventSkeleton from './EventSkeleton';
-import { useTranslation } from 'react-i18next';
 
 const EventsPage = () => {
-  const { t } = useTranslation();
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);

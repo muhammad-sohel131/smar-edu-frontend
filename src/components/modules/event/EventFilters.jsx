@@ -2,33 +2,30 @@
 
 import React from 'react';
 import { FaFilter, FaDollarSign, FaCalendar, FaUser, FaTag } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
 
 const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
-  const { t } = useTranslation();
-
   const categories = [
-    { value: 'all', label: t('events.filters.all') + ' ' + t('events.filters.category') },
-    { value: 'masterclass', label: t('events.categories.masterclass') },
-    { value: 'bootcamp', label: t('events.categories.bootcamp') },
-    { value: 'conference', label: t('events.categories.conference') },
-    { value: 'workshop', label: t('events.categories.workshop') },
-    { value: 'summit', label: t('events.categories.summit') }
+    { value: 'all', label: 'All Categories' },
+    { value: 'masterclass', label: 'Masterclass' },
+    { value: 'bootcamp', label: 'Bootcamp' },
+    { value: 'conference', label: 'Conference' },
+    { value: 'workshop', label: 'Workshop' },
+    { value: 'summit', label: 'Summit' }
   ];
 
   const levels = [
-    { value: 'all', label: t('events.filters.all') + ' ' + t('events.filters.level') },
-    { value: 'beginner', label: t('events.levels.beginner') },
-    { value: 'intermediate', label: t('events.levels.intermediate') },
-    { value: 'advanced', label: t('events.levels.advanced') }
+    { value: 'all', label: 'All Levels' },
+    { value: 'beginner', label: 'Beginner' },
+    { value: 'intermediate', label: 'Intermediate' },
+    { value: 'advanced', label: 'Advanced' }
   ];
 
   const types = [
-    { value: 'all', label: t('events.filters.all') + ' ' + t('events.filters.type') },
-    { value: 'workshop', label: t('events.types.workshop') },
-    { value: 'bootcamp', label: t('events.types.bootcamp') },
-    { value: 'conference', label: t('events.types.conference') },
-    { value: 'masterclass', label: t('events.types.masterclass') }
+    { value: 'all', label: 'All Types' },
+    { value: 'workshop', label: 'Workshop' },
+    { value: 'bootcamp', label: 'Bootcamp' },
+    { value: 'conference', label: 'Conference' },
+    { value: 'masterclass', label: 'Masterclass' }
   ];
 
   return (
@@ -36,10 +33,10 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
       <div className="flex items-center gap-3 mb-6">
         <FaFilter className="text-blue-600 text-xl" />
         <h3 className="text-xl font-bold text-gray-800">
-          {t('events.filters.title') || 'Filters'}
+          Filters
         </h3>
         <span className="ml-auto bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
-          {t('events.filters.eventCount', { count: eventCount }) || `${eventCount} events`}
+          {eventCount} events
         </span>
       </div>
 
@@ -48,7 +45,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
         <div>
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
             <FaTag />
-            {t('events.filters.category')}
+            Category
           </label>
           <select
             value={filters.category}
@@ -67,7 +64,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
         <div>
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
             <FaDollarSign />
-            {t('events.filters.priceRange')}
+            Price Range
           </label>
           <div className="space-y-4">
             <div className="flex justify-between text-sm text-gray-600">
@@ -91,13 +88,13 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
                 onClick={() => onFiltersChange({ ...filters, priceRange: [0, 50] })}
                 className="flex-1 text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100"
               >
-                {t('events.filters.under50') || 'Under ৳50'}
+                Under ৳50
               </button>
               <button
                 onClick={() => onFiltersChange({ ...filters, priceRange: [50, 200] })}
                 className="flex-1 text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100"
               >
-                {t('events.filters.fiftyTo200') || '৳50-200'}
+                ৳50-200
               </button>
             </div>
           </div>
@@ -107,7 +104,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
         <div>
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
             <FaUser />
-            {t('events.filters.level')}
+            Level
           </label>
           <select
             value={filters.level}
@@ -126,7 +123,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
         <div>
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
             <FaCalendar />
-            {t('events.filters.type')}
+            Type
           </label>
           <select
             value={filters.type}
@@ -152,7 +149,7 @@ const EventFilters = ({ filters, onFiltersChange, eventCount }) => {
           })}
           className="w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
         >
-          {t('events.filters.clearAll') || 'Clear All Filters'}
+          Clear All Filters
         </button>
       </div>
     </section>

@@ -1,5 +1,5 @@
 "use client";
-import { FileText, Package, Calendar, ShoppingCart, CreditCard } from "lucide-react";
+import { FileText, Package, Calendar, CreditCard } from "lucide-react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
@@ -61,7 +61,6 @@ export default function TransactionsTable({ search, page, limit, onPageChange })
     switch (itemType) {
       case 'course': return <FileText className="w-4 h-4" />;
       case 'package': return <Package className="w-4 h-4" />;
-      case 'ecommerce': return <ShoppingCart className="w-4 h-4" />;
       case 'event': return <Calendar className="w-4 h-4" />;
       default: return <CreditCard className="w-4 h-4" />;
     }
@@ -71,7 +70,6 @@ export default function TransactionsTable({ search, page, limit, onPageChange })
     switch (itemType) {
       case 'course': return 'Course';
       case 'package': return 'Package';
-      case 'ecommerce': return 'Product';
       case 'event': return 'Event';
       default: return itemType;
     }

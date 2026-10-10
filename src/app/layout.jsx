@@ -1,35 +1,18 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Providers from "../providers/providers";
 import RootProvider from "@/providers/RootProvider";
-import { CartProvider } from "@/providers/CartProvider";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata = {
-  title: "SMARTEDU HUB - Integrated LMS, Events, Donations & E-commerce",
-  description: "An integrated platform for learning management, event organization, donations, and tech e-commerce.",
+  title: "SMARTEDU HUB - Integrated LMS, Events & Donations",
+  description: "An integrated platform for learning management, event organization, and donations.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
-        <CartProvider>
-          <Providers>
-            <RootProvider>
-              {children}
-            </RootProvider>
-          </Providers>
-        </CartProvider>
+      <body className="antialiased">
+        <RootProvider>
+          {children}
+        </RootProvider>
       </body>
     </html>
   );

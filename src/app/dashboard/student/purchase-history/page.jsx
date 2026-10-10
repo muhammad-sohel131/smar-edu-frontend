@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
-import { ShoppingCart, CreditCard, Calendar, DollarSign, Receipt } from "lucide-react";
+import { CreditCard, Calendar, DollarSign, Receipt } from "lucide-react";
 
 // Fetch orders hook
 const useMyOrders = () => {
@@ -94,7 +94,7 @@ export default function PurchaseHistory() {
           <p className="text-white/70 text-sm">Track all your course and bundle purchases</p>
         </div>
         <div className="flex items-center gap-2 bg-white/15 text-white text-sm px-4 py-2 rounded-full">
-          <ShoppingCart className="h-4 w-4" />
+          <Receipt className="h-4 w-4" />
           <span>{orders.length} {orders.length === 1 ? 'Order' : 'Orders'}</span>
         </div>
       </div>
@@ -192,7 +192,7 @@ export default function PurchaseHistory() {
 
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <ShoppingCart className="h-4 w-4 text-gray-400" />
+                      <Receipt className="h-4 w-4 text-gray-400" />
                       <span className="text-gray-500">Type:</span>
                       <span className="font-medium capitalize">{order.itemType}</span>
                     </div>

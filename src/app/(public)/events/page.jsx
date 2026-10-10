@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';;
+import { useState } from 'react';
 import EventCard from './EventCard';
 import { usePublicEvents } from '@/hooks/useEvent';
 
@@ -105,38 +105,38 @@ export default function EventsPage() {
               </div>
 
               {/* Filter Buttons */}
-              {/* <div className="flex gap-2">
+              <div className="flex gap-2">
                 <button
                   onClick={() => setFilter('all')}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     filter === 'all'
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                      : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
                   All Events
                 </button>
                 <button
                   onClick={() => setFilter('free')}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     filter === 'free'
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                      : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
                   Free
                 </button>
                 <button
                   onClick={() => setFilter('paid')}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     filter === 'paid'
-                      ? 'bg-[var(--color-primary)] text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                      : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
                   Paid
                 </button>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

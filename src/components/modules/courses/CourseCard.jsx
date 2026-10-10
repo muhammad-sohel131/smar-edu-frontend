@@ -3,10 +3,8 @@ import React from 'react'
 import { FaRegClock } from 'react-icons/fa';
 import { GiBlackBook } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
-import { useTranslation } from 'react-i18next';
 
 export default function CourseCard({ course }) {
-    const { t } = useTranslation();
     return (
         <section className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
             {/* Image + Category Badge */}
@@ -27,12 +25,8 @@ export default function CourseCard({ course }) {
                 <div className="flex justify-between text-sm mb-2 text-[var(--color-text)]">
                     <div className='flex gap-2 items-center'> 
                         <GiBlackBook />
-                        <span>{course.lessons || course.lessonCount || 0} {t("courses.lessons") || "Lessons"}</span>
+                        <span>{course.lessons || course.lessonCount || 0} Lessons</span>
                     </div>
-                    {/* <div className='flex gap-2 items-center'>
-                        <FaRegClock /> 
-                        <span>{course.duration || "0m"}</span>
-                    </div> */}
                 </div>
 
                 {/* Title */}
@@ -44,7 +38,7 @@ export default function CourseCard({ course }) {
                 <div className="mb-3">
                     {course.price === 0 || course.price === null || course.price === undefined ? (
                         <span className="text-[var(--color-accent)] font-bold">
-                            {t("courses.free") || "Free"}
+                            Free
                         </span>
                     ) : (
                         <>
@@ -76,7 +70,7 @@ export default function CourseCard({ course }) {
             </div>
             <div className='absolute bottom-0 w-full flex justify-center items-center text-center'>
                 <Link className='my-5 w-[90%] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-2 rounded-md text-sm font-medium' href={`/courses/${course.slug}`}>
-                    {t("courses.exploreCourse") || "Explore Course"}
+                    Explore Course
                 </Link>
             </div>
         </section>
