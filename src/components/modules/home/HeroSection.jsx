@@ -69,7 +69,8 @@ export default function HeroSection() {
           <div className="flex-1">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <span
@@ -113,8 +114,9 @@ export default function HeroSection() {
             {/* 🔍 Search Bar */}
             <motion.div
               initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
               className="w-full rounded-xl p-1"
             >
               <div className="flex flex-col gap-2 md:flex-row md:gap-3">
@@ -133,8 +135,9 @@ export default function HeroSection() {
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3 md:mt-5 lg:mt-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
                 whileHover={{ scale: 1.03, y: -2 }}
                 className="flex items-center gap-3 rounded-xl bg-white/85 p-4 border border-white/60 shadow-sm transition-all"
                 style={{ boxShadow: "var(--shadow-soft)" }}
@@ -150,8 +153,9 @@ export default function HeroSection() {
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.45 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.35 }}
                 whileHover={{ scale: 1.03, y: -2 }}
                 className="flex items-center gap-3 rounded-xl bg-white/85 p-4 border border-white/60 shadow-sm transition-all"
                 style={{ boxShadow: "var(--shadow-soft)" }}
@@ -167,8 +171,9 @@ export default function HeroSection() {
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.55 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
                 whileHover={{ scale: 1.03, y: -2 }}
                 className="flex items-center gap-3 rounded-xl bg-white/85 p-4 border border-white/60 shadow-sm transition-all"
                 style={{ boxShadow: "var(--shadow-soft)" }}
@@ -188,8 +193,9 @@ export default function HeroSection() {
           {/* Right Side - Video */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94, x: 40 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="flex flex-1 justify-center md:justify-end"
           >
             <video

@@ -174,7 +174,7 @@ export default function TopCategories() {
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <p className="text-[var(--color-primary)] font-semibold text-sm mb-2">
@@ -192,8 +192,8 @@ export default function TopCategories() {
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
           className="relative group/carousel"
         >
           {/* Gradient edges for visual fading */}

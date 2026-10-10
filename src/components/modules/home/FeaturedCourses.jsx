@@ -365,7 +365,7 @@ export default function FeaturedCourses() {
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <p className="text-[var(--color-primary)] font-semibold text-sm mb-2">
@@ -386,8 +386,8 @@ export default function FeaturedCourses() {
               key={c._id || i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.5, delay: (i % 4) * 0.1, ease: "easeOut" }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.5, delay: (i % 4) * 0.08, ease: "easeOut" }}
               className="h-full flex"
             >
               <CourseCard course={c} />
@@ -407,8 +407,8 @@ export default function FeaturedCourses() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5, delay: 0.15 }}
           className="mt-12"
         >
           <Link

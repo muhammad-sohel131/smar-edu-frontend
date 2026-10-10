@@ -34,7 +34,7 @@ export default function LearningJourney() {
         <motion.div
           initial={{ opacity: 0, x: -40, scale: 0.96 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="flex justify-center"
         >
@@ -53,7 +53,7 @@ export default function LearningJourney() {
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <p className="text-[var(--color-primary)] font-semibold mb-2">
@@ -72,7 +72,7 @@ export default function LearningJourney() {
                 key={step.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
                 whileHover={{ x: 6 }}
                 className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/60 transition-all duration-200"

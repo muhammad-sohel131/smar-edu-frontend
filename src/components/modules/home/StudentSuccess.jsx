@@ -10,7 +10,7 @@ export default function StudentSuccess() {
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="relative rounded-3xl overflow-visible shadow-2xl"
         >
@@ -24,7 +24,7 @@ export default function StudentSuccess() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="absolute left-0 right-0 -bottom-12 mx-auto w-[92%] md:w-[85%] bg-gradient-to-r from-[var(--color-primary)] to-emerald-600 text-white rounded-2xl shadow-2xl p-6 md:p-9 border-2 border-white/20 backdrop-blur-sm"
           >

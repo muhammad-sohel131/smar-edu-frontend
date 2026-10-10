@@ -11,7 +11,7 @@ export default function AdvancedLearning() {
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <p className="text-sm font-semibold mb-2 tracking-wide text-emerald-400">
@@ -30,7 +30,7 @@ export default function AdvancedLearning() {
             <motion.li
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="flex items-start gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors"
             >
@@ -50,7 +50,7 @@ export default function AdvancedLearning() {
             <motion.li
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex items-start gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors"
             >
@@ -70,7 +70,7 @@ export default function AdvancedLearning() {
             <motion.li
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex items-start gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors"
             >
@@ -93,7 +93,7 @@ export default function AdvancedLearning() {
         <motion.div
           initial={{ opacity: 0, x: 40, scale: 0.95 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
           className="relative flex flex-col items-center md:items-end gap-6"
         >

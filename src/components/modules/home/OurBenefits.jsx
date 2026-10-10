@@ -30,7 +30,7 @@ export default function OurBenefits() {
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h3 className="text-sm font-semibold text-[var(--color-primary)] mb-2">
@@ -50,7 +50,7 @@ export default function OurBenefits() {
               key={idx}
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.5, delay: idx * 0.15, ease: "easeOut" }}
               whileHover={{ y: -6, scale: 1.02 }}
               className={`rounded-[var(--radius-card)] shadow-md bg-gradient-to-br ${item.gradient} p-7 flex flex-col items-start justify-center transition-all duration-300 border border-white/60`}
