@@ -29,13 +29,13 @@ export default function EventCard({ event }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-soft overflow-hidden hover:shadow-medium transition-shadow duration-300">
+    <div className="group bg-white rounded-xl shadow-soft overflow-hidden hover:shadow-xl transition-all duration-300">
       {/* Event Image */}
-      <div className="relative h-48">
+      <div className="relative h-48 overflow-hidden">
         <img
           src={event.thumbnail || 'https://placehold.co/600x400/ececec/cccccc?text=Event+Image'}
           alt={event.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           onError={(e) => {
             e.target.src = 'https://placehold.co/600x400/ececec/cccccc?text=Event+Image';
           }}

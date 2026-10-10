@@ -6,15 +6,15 @@ import { FaUserCircle } from "react-icons/fa";
 
 export default function CourseCard({ course }) {
     return (
-        <section className="relative bg-white shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col">
+        <section className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-[420px] w-full flex flex-col border border-gray-100">
             {/* Image + Category Badge */}
-            <div className="relative">
+            <div className="relative h-44 w-full overflow-hidden">
                 <img
                     src={course.thumbnail}
                     alt={course.title}
-                    className="h-44 w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 />
-                <span className="absolute top-3 left-3 bg-[var(--color-secondary)] text-white text-xs font-semibold px-3 py-1 rounded-md">
+                <span className="absolute top-3 left-3 bg-[var(--color-secondary)] text-white text-xs font-semibold px-3 py-1 rounded-md z-10 shadow-sm">
                     {course.category}
                 </span>
             </div>

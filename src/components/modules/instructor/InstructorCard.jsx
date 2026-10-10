@@ -6,13 +6,13 @@ import { FiBookOpen, FiClock } from "react-icons/fi";
 export default function InstructorCard({ instructor }) {
 
   return (
-    <div className="bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)] transition-shadow duration-300 overflow-hidden border border-gray-100">
+    <div className="group bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-soft)] hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
       {/* Image */}
-      <div className="relative w-full h-40">
+      <div className="relative w-full h-44 overflow-hidden">
         <img
           src={instructor?.userId?.picture || '/images/ins1.jpg'}
           alt={instructor?.userId?.name || 'Instructor'}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           onError={(e) => {
             e.currentTarget.onerror = null;
             e.currentTarget.src = "/images/ins1.jpg";
