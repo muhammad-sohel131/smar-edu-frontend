@@ -20,13 +20,15 @@ import {
 } from "react-icons/fi";
 import { useInstructorById } from "@/hooks/useAuth";
 import { usePublicCourses } from "@/hooks/useCourse";
+import CourseCard from "@/components/modules/courses/CourseCard";
 
 export default function InstructorProfile() {
   const { slug } = useParams();
   
   const { data: instructorData, isLoading: instructorLoading } = useInstructorById(slug);
+  const instructorUserId = instructorData?.userId?._id || instructorData?.userId || slug;
   const { data: coursesData } = usePublicCourses({ 
-    instructor: slug,
+    instructor: instructorUserId,
     status: "published",
     limit: 1000
   });
@@ -221,6 +223,23 @@ export default function InstructorProfile() {
               </div>
             </div>
           )}
+
+          {/* Instructor's Courses */}
+          {coursesData?.items?.length > 0 && (
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-8 bg-gradient-to-b from-[var(--color-primary)] to-emerald-400 rounded-full"></div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Courses by {name} ({coursesData.items.length})
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {coursesData.items.map((course) => (
+                  <CourseCard key={course._id} course={course} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ===== Right Sidebar ===== */}
@@ -266,7 +285,7 @@ export default function InstructorProfile() {
                       <FiMail className="w-5 h-5 text-blue-600" />
                     </div>
                     <a 
-                      href={`mailto: ৳{email}`} 
+                      href={`mailto:${email}`} 
                       className="text-sm text-gray-700 hover:text-blue-600 font-medium transition-colors truncate"
                     >
                       {email}
@@ -279,7 +298,7 @@ export default function InstructorProfile() {
                       <FiPhone className="w-5 h-5 text-green-600" />
                     </div>
                     <a 
-                      href={`tel: ৳{phone}`} 
+                      href={`tel:${phone}`} 
                       className="text-sm text-gray-700 hover:text-green-600 font-medium transition-colors"
                     >
                       {phone}
