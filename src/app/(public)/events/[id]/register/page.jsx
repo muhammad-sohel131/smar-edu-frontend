@@ -23,6 +23,12 @@ export default function EventRegisterPage() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleFreeRegistration = async () => {
+    if (!user) {
+      toast.error('Please login to register for this event');
+      router.push(`/login?redirect=/events/${id}/register`);
+      return;
+    }
+
     setIsProcessing(true);
     try {
       await registerForEvent.mutateAsync(id);
@@ -37,7 +43,7 @@ export default function EventRegisterPage() {
 
   const handlePayment = async () => {
     if (!user) {
-      toast.error("Please login to continue");
+      toast.error('Please login to register for this event');
       router.push(`/login?redirect=/events/${id}/register`);
       return;
     }

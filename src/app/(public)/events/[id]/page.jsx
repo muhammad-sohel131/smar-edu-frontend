@@ -408,12 +408,19 @@ export default function EventDetailsPage() {
                     <span>You Are Registered</span>
                   </div>
                 ) : (
-                  <Link
-                    href={`/events/${id}/register`}
-                    className="w-full py-4 px-6 bg-gradient-to-r from-[#059669] to-[#0f9293] hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-2xl text-center block shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 text-base"
+                  <button
+                    onClick={() => {
+                      if (!user) {
+                        toast.error('Please login to register for this event');
+                        router.push(`/login?redirect=/events/${id}/register`);
+                        return;
+                      }
+                      router.push(`/events/${id}/register`);
+                    }}
+                    className="w-full py-4 px-6 bg-gradient-to-r from-[#059669] to-[#0f9293] hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-2xl text-center block shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 text-base cursor-pointer"
                   >
                     {isFree ? 'Register for Free' : 'Register & Book Ticket'}
-                  </Link>
+                  </button>
                 )}
 
                 <p className="text-center text-xs text-gray-500 mt-3 flex items-center justify-center gap-1">

@@ -14,10 +14,6 @@ export default function QueryProvider({ children }) {
           queries: {
             retry: 1,
             refetchOnWindowFocus: false,
-            onError: (e) => toast.error(e.message || "Error fetching data"),
-          },
-          mutations: {
-            onError: (e) => toast.error(e.message || "Mutation failed"),
           },
         },
       })
