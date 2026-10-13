@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "@/lib/apiClient";
 import {
   FaSearch,
@@ -40,6 +40,26 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
   const [hasSearched, setHasSearched] = useState(false);
   const [trackData, setTrackData] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
+
+  useEffect(() => {
+    if (initialPhone && initialPhone.trim().length >= 8) {
+      setPhone(initialPhone.trim());
+      const cleanPhone = initialPhone.trim();
+      const fetchInitial = async () => {
+        try {
+          setLoading(true);
+          setHasSearched(true);
+          const res = await api.get(`orders/donations/track?phone=${encodeURIComponent(cleanPhone)}`);
+          setTrackData(res?.data?.data || null);
+        } catch (error) {
+          console.error("Error auto-tracking donations:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchInitial();
+    }
+  }, [initialPhone]);
 
   const handleSearch = async (e) => {
     if (e) e.preventDefault();

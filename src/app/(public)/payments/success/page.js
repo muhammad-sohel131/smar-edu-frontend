@@ -52,16 +52,19 @@ export default function Page() {
     let summaryTitle = "Order Summary";
     let totalLabel = "Total";
     let buttonText = "View Order History";
+    let targetHref = "/dashboard";
     let footerText = "Thank you for your purchase!";
     let Icon = CheckCircle;
     let iconColor = "text-green-500";
 
     if (data.itemType === "Donation") {
+        const phone = data.donorPhone || data.billingInfo?.phone || "";
         title = "Donation Successful ❤️";
         subtitle = "Thank you for your generosity! Your donation has been received successfully.";
         summaryTitle = "Donation Summary";
         totalLabel = "Donated Amount";
-        buttonText = "Go to Dashboard";
+        buttonText = "Track Donation History 🔍";
+        targetHref = `/donation?tab=track&phone=${encodeURIComponent(phone)}&success=true`;
         footerText = "Thank you for your support!";
         Icon = Heart;
         iconColor = "text-red-500 animate-pulse";
@@ -71,6 +74,7 @@ export default function Page() {
         summaryTitle = "Enrollment Summary";
         totalLabel = "Total Amount Paid";
         buttonText = "Start Learning";
+        targetHref = "/dashboard/my-courses";
         footerText = "Happy learning!";
         Icon = CheckCircle;
     } else if (data.itemType === "event") {
@@ -79,6 +83,7 @@ export default function Page() {
         summaryTitle = "Registration Summary";
         totalLabel = "Total Price";
         buttonText = "View Events";
+        targetHref = "/events";
         footerText = "See you at the event!";
     }
 
@@ -122,14 +127,14 @@ export default function Page() {
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-3">
                     <Link
-                        href={data.itemType === "course" ? "/dashboard/my-courses" : "/dashboard"}
-                        className="flex-1 bg-[var(--color-primary)] text-white font-medium py-3 rounded-full hover:opacity-90 transition"
+                        href={targetHref}
+                        className="flex-1 bg-[var(--color-primary)] text-white font-medium py-3 rounded-full hover:opacity-90 transition text-center"
                     >
                         {buttonText}
                     </Link>
                     <Link
                         href="/"
-                        className="flex-1 border border-gray-300 text-gray-700 font-medium py-3 rounded-full hover:bg-gray-100 transition"
+                        className="flex-1 border border-gray-300 text-gray-700 font-medium py-3 rounded-full hover:bg-gray-100 transition text-center"
                     >
                         Back to Home
                     </Link>

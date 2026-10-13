@@ -1,24 +1,65 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Head from 'next/head';
-import Navbar from '@/components/modules/headers/Navbar'
-import React from 'react'
-import { FaCheck, FaCrown, FaGem, FaGraduationCap, FaHandHoldingUsd, FaHeart, FaLock, FaRocket, FaStar, FaSearch } from 'react-icons/fa';
+import Navbar from '@/components/modules/headers/Navbar';
+import { useSearchParams } from 'next/navigation';
+import {
+  FaCheck,
+  FaCrown,
+  FaGem,
+  FaGraduationCap,
+  FaHandHoldingUsd,
+  FaHeart,
+  FaLock,
+  FaRocket,
+  FaStar,
+  FaSearch,
+  FaCheckCircle,
+  FaTimes
+} from 'react-icons/fa';
 import DonationHeaderSection from '@/components/modules/donation/DonationHeaderSection';
 import FundSelectionSidebar from '@/components/modules/donation/FundSelectionSidebar';
 import SelectedFundHeader from '@/components/modules/donation/SelectedFundHeader';
 import DonationForm from '@/components/modules/donation/DonationForm';
 import DonationInfo from '@/components/modules/donation/DonationInfo';
 import DonationTracker from '@/components/modules/donation/DonationTracker';
+import { toast } from 'react-toastify';
 
-const Donation = () => {
-  const [activeTab, setActiveTab] = useState('donate');
+const DonationContent = () => {
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const phoneParam = searchParams.get('phone') || '';
+  const successParam = searchParams.get('success') === 'true';
+  const failedParam = searchParams.get('failed') === 'true';
+  const canceledParam = searchParams.get('canceled') === 'true';
+  const amountParam = searchParams.get('amount') || '';
+  const nameParam = searchParams.get('name') || '';
+
+  const [activeTab, setActiveTab] = useState(
+    tabParam === 'track' || phoneParam ? 'track' : 'donate'
+  );
+  const [showSuccessBanner, setShowSuccessBanner] = useState(successParam);
   const [selectedFund, setSelectedFund] = useState('educational-scholarships');
   const [donationAmount, setDonationAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(null);
+
+  // Sync tab and trigger toast if redirected with success
+  useEffect(() => {
+    if (tabParam === 'track' || phoneParam) {
+      setActiveTab('track');
+    }
+    if (successParam) {
+      setShowSuccessBanner(true);
+      toast.success("Donation completed successfully! Thank you for your support ❤️");
+    } else if (failedParam) {
+      toast.error("Donation payment was not completed. Please try again.");
+    } else if (canceledParam) {
+      toast.info("Donation payment was canceled.");
+    }
+  }, [tabParam, phoneParam, successParam, failedParam, canceledParam]);
 
   const donationOptions = [
     { value: '500', label: '৳500', popular: false },
@@ -96,37 +137,11 @@ const Donation = () => {
 
   const handleDonation = async (e) => {
     e.preventDefault();
-    if (!donationAmount || donationAmount === '0') {
-      alert('Please select or enter a donation amount');
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const paymentData = {
-        fund: selectedFund,
-        amount: donationAmount,
-        customAmount: customAmount
-      };
-
-      console.log('Processing donation:', paymentData);
-      
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      alert(`Redirecting to payment gateway with amount: ৳${donationAmount}`);
-      
-    } catch (error) {
-      console.error('Donation error:', error);
-      alert('Error processing donation. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
         <Head>
           <title>Support SMARTEDU HUB - Make a Donation</title>
@@ -138,6 +153,41 @@ const Donation = () => {
 
         {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 py-12 -mt-10">
+          {/* Success Banner when returning from payment */}
+          {showSuccessBanner && (
+            <div className="mb-10 max-w-4xl mx-auto p-6 sm:p-8 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white rounded-3xl shadow-2xl relative overflow-hidden border border-emerald-400/30 animate-fadeIn">
+              <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+                <div className="flex items-start sm:items-center space-x-4">
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner flex-shrink-0">
+                    🎉
+                  </div>
+                  <div>
+                    <div className="inline-flex items-center space-x-1.5 bg-emerald-800/60 text-emerald-200 px-3 py-1 rounded-full text-xs font-bold mb-2 uppercase tracking-wider">
+                      <FaCheckCircle className="w-3.5 h-3.5 text-emerald-300" />
+                      <span>Payment Confirmed</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                      Thank You{nameParam ? `, ${decodeURIComponent(nameParam)}` : ""}!
+                    </h2>
+                    <p className="text-emerald-100 text-sm sm:text-base mt-1.5 leading-relaxed">
+                      Your donation{amountParam ? ` of ৳${amountParam}` : ""} has been received successfully! Your contribution history and live records are shown below.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setShowSuccessBanner(false)}
+                  className="text-white/80 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-xl transition self-end sm:self-center flex-shrink-0"
+                  title="Close Banner"
+                >
+                  <FaTimes className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* View Mode Toggle: Donate vs Track */}
           <div className="flex items-center justify-center mb-10">
             <div className="bg-white/90 backdrop-blur-md p-1.5 rounded-2xl shadow-lg border border-gray-200/80 inline-flex items-center space-x-2">
@@ -201,18 +251,33 @@ const Donation = () => {
                 </div>
 
                 {/* Additional Info */}
-                <DonationInfo/>
+                <DonationInfo />
               </div>
             </div>
           ) : (
             <div className="max-w-4xl mx-auto">
-              <DonationTracker onDonateClick={() => setActiveTab('donate')} />
+              <DonationTracker
+                initialPhone={phoneParam}
+                onDonateClick={() => setActiveTab('donate')}
+              />
             </div>
           )}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Donation
+const Donation = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <DonationContent />
+    </Suspense>
+  );
+};
+
+export default Donation;
