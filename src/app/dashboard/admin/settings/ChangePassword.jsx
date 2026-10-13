@@ -55,7 +55,7 @@ const ChangePassword = () => {
                                 type={showOldPassword ? "text" : "password"}
                                 value={passwordForm.oldPassword}
                                 onChange={(e) => setPasswordForm({ ...passwordForm, oldPassword: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition pr-12"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition pr-12"
                                 placeholder="Enter current password"
                             />
                             <button
@@ -81,7 +81,7 @@ const ChangePassword = () => {
                                 type={showNewPassword ? "text" : "password"}
                                 value={passwordForm.newPassword}
                                 onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition pr-12"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition pr-12"
                                 placeholder="Enter new password"
                             />
                             <button
@@ -103,15 +103,18 @@ const ChangePassword = () => {
                         <button
                             type="submit"
                             disabled={changePassword.isLoading}
-                            className="w-full px-4 py-3 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full px-6 py-3 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white rounded-xl font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             {changePassword.isLoading ? (
                                 <>
-                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                    <Loader2 className="w-5 h-5 animate-spin" />
                                     Updating Password...
                                 </>
                             ) : (
-                                'Change Password'
+                                <>
+                                    <Lock className="w-5 h-5" />
+                                    Change Password
+                                </>
                             )}
                         </button>
                     </div>
