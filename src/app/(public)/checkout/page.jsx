@@ -27,8 +27,6 @@ export default function CheckoutPage() {
     firstName: "",
     lastName: "",
     phone: "",
-    lineOne: "",
-    lineTwo: "",
     country: "",
     state: "",
     city: ""
@@ -109,10 +107,8 @@ export default function CheckoutPage() {
                     <input onChange={onChange} placeholder="Last Name *" value={billingInfo.lastName} name="lastName" className={inputBase} />
                   </div>
 
-                  <div className="grid sm:grid-cols-3 gap-4">
+                  <div>
                     <input onChange={onChange} placeholder="Phone (optional)" value={billingInfo.phone} name="phone" className={inputBase} />
-                    <input onChange={onChange} placeholder="Address Line 1 *" value={billingInfo.lineOne} name="lineOne" className={inputBase} />
-                    <input onChange={onChange} placeholder="Address Line 2" value={billingInfo.lineTwo} name="lineTwo" className={inputBase} />
                   </div>
 
                   <div className="grid sm:grid-cols-3 gap-4">
