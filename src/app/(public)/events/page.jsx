@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import EventCard from './EventCard';
 import { usePublicEvents } from '@/hooks/useEvent';
+import PageBanner from '@/components/modules/common/PageBanner';
+import { FaCalendarAlt, FaStar } from 'react-icons/fa';
 
 export default function EventsPage() {
   const [filter, setFilter] = useState('all');
@@ -59,16 +61,12 @@ export default function EventsPage() {
     <div className="min-h-screen bg-gradient-to-b from-[var(--color-background)] to-[#fff]">
       
       {/* Hero Section */}
-      <div className="mb-12 bg-gradient-to-r from-[#059669] to-[#0f9293] text-white py-28">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Discover Amazing Events
-          </h1>
-          <p className="text-lg md:text-xl opacity-90 mb-8">
-            Join workshops, conferences, and networking events to grow your skills
-          </p>
-        </div>
-      </div>
+      <PageBanner
+        badgeIcon={FaCalendarAlt}
+        badgeSubIcon={FaStar}
+        title="Discover Amazing Events"
+        description="Join workshops, conferences, and networking events to grow your skills."
+      />
 
       {/* Main Content */}
       <div className="container mx-auto p-4 md:p-6">

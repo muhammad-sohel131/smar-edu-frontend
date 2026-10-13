@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
+import PageBanner from "@/components/modules/common/PageBanner";
 
 const LeaderboardHeroSection = () => {
   const [stats, setStats] = useState({
@@ -105,65 +106,39 @@ const LeaderboardHeroSection = () => {
   ];
 
   return (
-    <section className="relative bg-gradient-to-br from-[#4F46E5] to-[#2563EB] text-white overflow-hidden">
-      <div className="absolute inset-0">
-        {/* Animated Background Elements */}
-        <div className="absolute top-10 left-10 w-72 h-72 bg-white opacity-5 rounded-full animate-pulse"></div>
-        <div className="absolute top-32 right-20 w-48 h-48 bg-white opacity-5 rounded-full animate-bounce delay-1000"></div>
-        <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-white opacity-5 rounded-full animate-ping"></div>
-      </div>
+    <>
+      <PageBanner
+        badgeIcon={FaTrophy}
+        badgeSubIcon={FaCrown}
+        title="SmartEdu Hub Rankings"
+        description="Compete with global changemakers. Track your impact. Lead the sustainable learning revolution."
+      />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Animated Badge */}
-          <div className="flex justify-center mb-8">
-            <div className="relative">
-              <div className="w-28 h-28 bg-gradient-to-r from-[#4F46E5] to-[#2563EB] rounded-3xl flex items-center justify-center transform rotate-12 shadow-2xl animate-float">
-                <FaTrophy className="w-14 h-14 text-white" />
-              </div>
-              <div className="absolute -top-3 -right-3">
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg animate-bounce">
-                  <FaCrown className="w-6 h-6 text-[#4F46E5]" />
+      {/* Dynamic Stats Grid - Floating cleanly below the banner */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20 mb-4">
+        <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-3xl mx-auto">
+          {statItems.map((stat, index) => {
+            const IconComponent = stat.icon;
+            return (
+              <div
+                key={index}
+                className="text-center p-3 sm:p-5 bg-white/95 backdrop-blur-md rounded-2xl border border-emerald-100 shadow-[var(--shadow-medium)] hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
+              >
+                <div className="w-9 h-9 sm:w-11 sm:h-11 mx-auto mb-2 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
+                </div>
+                <div className="text-xl sm:text-2xl font-black text-gray-800">
+                  {stat.value}
+                </div>
+                <div className="text-xs sm:text-sm text-gray-500 font-medium">
+                  {stat.label}
                 </div>
               </div>
-              <div className="absolute -bottom-2 -left-2">
-                <div className="w-8 h-8 bg-[#FBBF24] rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                  <FaStar className="w-4 h-4 text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white to-[#F8FAFC] bg-clip-text text-transparent leading-tight">
-            SmartEdu Hub Rankings
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto leading-relaxed mb-8 font-light">
-            Compete with global changemakers. Track your impact. Lead the sustainable revolution.
-          </p>
-
-          {/* Enhanced Stats Grid - Now Dynamic */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            {statItems.map((stat, index) => {
-              const IconComponent = stat.icon;
-              return (
-                <div
-                  key={index}
-                  className="text-center p-6 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group"
-                >
-                  <IconComponent className={`w-8 h-8 ${stat.color} mx-auto mb-3 group-hover:scale-110 transition-transform`} />
-                  <div className="text-2xl font-bold text-white">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-white/80 font-medium">
-                    {stat.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
       </div>
-    </section>
+    </>
   );
 };
 
