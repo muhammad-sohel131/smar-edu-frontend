@@ -8,8 +8,13 @@ export default function InstructorCard({ instructor }) {
     ? instructor.userId.picture
     : '/images/ins1.jpg';
 
+  const instructorUrl = `/instructors/${instructor?._id || instructor?.id}`;
+
   return (
-    <div className="group bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-soft)] hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col h-full">
+    <Link 
+      href={instructorUrl}
+      className="group bg-white rounded-[var(--radius-card)] shadow-[var(--shadow-soft)] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col h-full block text-left cursor-pointer"
+    >
       {/* Image */}
       <div className="relative w-full h-56 sm:h-64 bg-gradient-to-b from-slate-50 to-emerald-50/20 overflow-hidden flex items-center justify-center p-3">
         <img
@@ -27,8 +32,8 @@ export default function InstructorCard({ instructor }) {
       <div className="p-4 flex-1 flex flex-col justify-between">
         <div>
           {/* Name + Role */}
-          <h3 className="text-[var(--color-text)] font-semibold text-base hover:text-[var(--color-primary)] transition-colors">
-            <Link href={`/instructors/${instructor._id}`}>{instructor?.userId?.name}</Link>
+          <h3 className="text-[var(--color-text)] font-semibold text-base group-hover:text-[var(--color-primary)] transition-colors">
+            {instructor?.userId?.name}
           </h3>
           <p className="text-gray-600 text-sm mb-3">{instructor?.designation || "Instructor"}</p>
         </div>
@@ -43,6 +48,6 @@ export default function InstructorCard({ instructor }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

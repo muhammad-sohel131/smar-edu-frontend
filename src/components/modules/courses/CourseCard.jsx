@@ -1,24 +1,27 @@
 import Link from 'next/link';
-import React from 'react'
-import { FaRegClock } from 'react-icons/fa';
+import React from 'react';
 import { GiBlackBook } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
 
 export default function CourseCard({ course }) {
     const instructorImg = course?.instructorImage || course?.instructor?.picture || course?.instructor?.image || course?.authorImg || course?.authorImage;
     const instructorName = course?.instructor?.name || course?.author || "Unknown Instructor";
+    const courseUrl = `/courses/${course?.slug || course?._id}`;
 
     return (
-        <section className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden w-full flex flex-col border border-gray-100 h-full">
+        <Link 
+            href={courseUrl}
+            className="group bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden w-full flex flex-col border border-gray-100 h-full block text-left text-[var(--color-text)] cursor-pointer"
+        >
             {/* Image + Category Badge */}
             <div className="relative w-full aspect-video overflow-hidden bg-gray-100 flex-shrink-0">
                 <img
-                    src={course.thumbnail}
-                    alt={course.title}
+                    src={course?.thumbnail}
+                    alt={course?.title || "Course thumbnail"}
                     className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
                 <span className="absolute top-3 left-3 bg-[var(--color-secondary)] text-white text-xs font-semibold px-3 py-1 rounded-md z-10 shadow-sm">
-                    {course.category}
+                    {course?.category}
                 </span>
             </div>
 
@@ -29,18 +32,18 @@ export default function CourseCard({ course }) {
                     <div className="flex justify-between text-sm mb-2 text-[var(--color-text)]">
                         <div className='flex gap-2 items-center'> 
                             <GiBlackBook className="text-[var(--color-primary)]" />
-                            <span>{course.lessons || course.lessonCount || 0} Lessons</span>
+                            <span>{course?.lessons || course?.lessonCount || 0} Lessons</span>
                         </div>
                     </div>
 
                     {/* Title */}
-                    <Link href={`/courses/${course.slug}`} className="hover:text-[var(--color-primary)] transition-colors">
-                        <h3 className="font-semibold mb-3 line-clamp-2 min-h-[3rem] text-base leading-snug">{course.title}</h3>
-                    </Link>
+                    <h3 className="font-semibold mb-3 line-clamp-2 min-h-[3rem] text-base leading-snug group-hover:text-[var(--color-primary)] transition-colors">
+                        {course?.title}
+                    </h3>
 
                     {/* Pricing */}
                     <div className="mb-3">
-                        {course.price === 0 || course.price === null || course.price === undefined ? (
+                        {course?.price === 0 || course?.price === null || course?.price === undefined ? (
                             <span className="text-[var(--color-accent)] font-bold text-lg">
                                 Free
                             </span>
@@ -49,7 +52,7 @@ export default function CourseCard({ course }) {
                                 <span className="text-[var(--color-primary)] font-bold text-lg">
                                     ৳{course?.price || "0.00"}
                                 </span>
-                                {course.oldPrice && (
+                                {course?.oldPrice && (
                                     <span className="line-through text-gray-400 text-sm">
                                         ৳{course.oldPrice}
                                     </span>
@@ -82,14 +85,13 @@ export default function CourseCard({ course }) {
                     </div>
 
                     {/* Button in flow */}
-                    <Link 
-                        href={`/courses/${course.slug}`}
-                        className="w-full block text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow"
+                    <span 
+                        className="w-full block text-center bg-[var(--color-primary)] group-hover:bg-[var(--color-primary-hover)] text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors shadow-sm group-hover:shadow"
                     >
                         Explore Course
-                    </Link>
+                    </span>
                 </div>
             </div>
-        </section>
+        </Link>
     );
 }
