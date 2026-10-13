@@ -26,9 +26,6 @@ export default function CheckoutPage() {
   const [billingInfo, setBillingInfo] = useState({
     name: "",
     phone: "",
-    country: "",
-    state: "",
-    city: ""
   })
   const { data: course, isLoading } = useSlugCourses(params.get('slug'))
 
@@ -106,11 +103,6 @@ export default function CheckoutPage() {
                     <input onChange={onChange} placeholder="Phone (optional)" value={billingInfo.phone} name="phone" className={inputBase} />
                   </div>
 
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    <input onChange={onChange} placeholder="Country *" value={billingInfo.country} name="country" className={inputBase} />
-                    <input onChange={onChange} placeholder="State *" value={billingInfo.state} name="state" className={inputBase} />
-                    <input onChange={onChange} placeholder="City *" value={billingInfo.city} name="city" className={inputBase} />
-                  </div>
 
                   <label className="flex items-center gap-2 text-sm text-gray-700 mt-2">
                     <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
