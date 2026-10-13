@@ -12,14 +12,17 @@ import {
   Award,
   AlertCircle,
   ChevronRight,
+  Calendar,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useInstructorDashboard } from "@/hooks/useInstructor";
+import { useMyRegisteredEvents } from "@/hooks/useEvent";
 
 export default function InstructorDashboard() {
   const { user } = useAuth();
   const { data: dashboardData, isLoading, isError, error } = useInstructorDashboard();
+  const { data: eventsData } = useMyRegisteredEvents();
 
   // Loading State
   if (isLoading) {
@@ -132,7 +135,7 @@ export default function InstructorDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -187,23 +190,28 @@ export default function InstructorDashboard() {
             </div>
           </motion.div>
 
-          {/* <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl">
-                  <TrendingUp className="w-6 h-6 text-white" />
+            <Link href="/dashboard/instructor/events">
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
+                    <Calendar className="w-6 h-6 text-white" />
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-primary)] transition-colors" />
                 </div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-1">
+                  {eventsData?.data?.length || 0}
+                </h3>
+                <p className="text-gray-600 text-sm group-hover:text-[var(--color-primary)] transition-colors">
+                  Registered Events
+                </p>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                {stats?.avgRating?.toFixed(1) || "0.0"}/5
-              </h3>
-              <p className="text-gray-600 text-sm">Avg. Course Rating</p>
-            </div>
-          </motion.div> */}
+            </Link>
+          </motion.div>
         </div>
       </div>
 

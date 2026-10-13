@@ -141,7 +141,16 @@ export default function PurchaseHistory() {
                         #{order._id.slice(-8)}
                       </td>
                       <td className="p-4">
-                        <span className="capitalize">{order.itemType}</span>
+                        <div className="flex flex-col">
+                          <span className="capitalize font-medium text-gray-900">
+                            {order.itemType === "event" && order.event?.title
+                              ? (typeof order.event.title === "string" ? order.event.title : order.event.title?.en || "Event Registration")
+                              : order.itemType}
+                          </span>
+                          {order.itemType === "event" && (
+                            <span className="text-[11px] text-[var(--color-primary)] font-semibold uppercase tracking-wider">Event Pass</span>
+                          )}
+                        </div>
                       </td>
                       <td className="p-4 font-semibold text-[var(--color-primary)]">
                         {formatPrice(order.price, order.currency)}
@@ -197,8 +206,12 @@ export default function PurchaseHistory() {
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
                       <Receipt className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-500">Type:</span>
-                      <span className="font-medium capitalize">{order.itemType}</span>
+                      <span className="text-gray-500">Item:</span>
+                      <span className="font-medium capitalize">
+                        {order.itemType === "event" && order.event?.title
+                          ? (typeof order.event.title === "string" ? order.event.title : order.event.title?.en || "Event Registration")
+                          : order.itemType}
+                      </span>
                     </div>
 
                     <div className="flex items-center gap-2">

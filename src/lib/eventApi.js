@@ -32,4 +32,7 @@ export const eventApi = {
   
   // Check registration status
   checkRegistrationStatus: (id) => api.get(`/events/${id}/registration-status`),
+  
+  // Get logged-in user's registered events
+  getMyRegisteredEvents: () => api.get('/events/my-registrations'),
 };

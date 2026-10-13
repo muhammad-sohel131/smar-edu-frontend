@@ -98,7 +98,15 @@ export const useRegisterForEvent = () => {
     mutationFn: async (eventId) => {
       const res = await eventApi.registerForEvent(eventId);
       return res.data;
-    }
+    },
+    onSuccess: (data, eventId) => {
+      queryClient.invalidateQueries(['events']);
+      queryClient.invalidateQueries(['public-events']);
+      queryClient.invalidateQueries(['event', eventId]);
+      queryClient.invalidateQueries(['public-event', eventId]);
+      queryClient.invalidateQueries(['registration-status', eventId]);
+      queryClient.invalidateQueries(['my-registered-events']);
+    },
   });
 };
 
@@ -121,8 +129,9 @@ export const useProcessPayment = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['public-event', data.registration.eventId]);
-      queryClient.invalidateQueries(['registration-status', data.registration.eventId]);
+      queryClient.invalidateQueries(['public-event', data?.registration?.eventId]);
+      queryClient.invalidateQueries(['registration-status', data?.registration?.eventId]);
+      queryClient.invalidateQueries(['my-registered-events']);
     },
   });
 };
@@ -136,5 +145,16 @@ export const useRegistrationStatus = (eventId) => {
       return res.data;
     },
     enabled: !!eventId,
+  });
+};
+
+// Get my registered events hook
+export const useMyRegisteredEvents = () => {
+  return useQuery({
+    queryKey: ['my-registered-events'],
+    queryFn: async () => {
+      const res = await eventApi.getMyRegisteredEvents();
+      return res.data;
+    },
   });
 };

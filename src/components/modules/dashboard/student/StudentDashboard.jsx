@@ -1,16 +1,18 @@
 "use client";
 
-import { Users, Award, Trophy, Sparkles } from "lucide-react";
+import { Users, Award, Trophy, Sparkles, Calendar } from "lucide-react";
 import StatusCard from "@/components/modules/dashboard/student/StatsCard";
 import CourseTable from "@/components/modules/dashboard/student/CourseTable";
 import { useAuth } from "@/hooks/useAuth";
 import { useStudentDashboard, useMyPoints, useMyRank } from "@/hooks/useDashboard";
+import { useMyRegisteredEvents } from "@/hooks/useEvent";
 import { useMemo } from "react";
 
 export default function Dashboard() {
   const { user, loading: authLoading } = useAuth();
   const { data: dashboardData, loading: dashboardLoading } = useStudentDashboard();
   const { data: pointsData } = useMyPoints();
+  const { data: eventsData } = useMyRegisteredEvents();
   const myRank = useMyRank();
 
   const stats = useMemo(() => {
@@ -72,13 +74,20 @@ export default function Dashboard() {
         {/* Stats Grid */}
         <div>
           <SectionLabel>Overview</SectionLabel>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
             <StatusCard
               icon={<Users className="w-5 h-5" />}
               value={stats?.enrolledCourses || 0}
-              label="Enrolled"
+              label="Enrolled Courses"
               color="from-[var(--color-secondary)] to-[var(--color-primary)]"
               trend="Active now"
+            />
+            <StatusCard
+              icon={<Calendar className="w-5 h-5" />}
+              value={eventsData?.data?.length || 0}
+              label="Registered Events"
+              color="from-[var(--color-primary)] to-[var(--color-secondary)]"
+              trend="Confirmed passes"
             />
             <StatusCard
               icon={<Award className="w-5 h-5" />}

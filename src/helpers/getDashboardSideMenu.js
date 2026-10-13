@@ -1,4 +1,4 @@
-import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, Package, TrophyIcon, Heart } from "lucide-react";
+import { Home, BookOpen, Users, Settings, ShoppingBag, ClipboardList, BarChart3, Award, User, HelpCircle, HomeIcon, UserCheck, Shield, Trophy, CreditCard, Settings2, Badge, BadgeCent, LocateIcon, Package, TrophyIcon, Heart, Calendar } from "lucide-react";
 import { MdCategory, MdOutlineBorderStyle } from "react-icons/md";
 
 // ===== Menu Configs with Icons ===== //
@@ -7,6 +7,7 @@ const studentMenu = [
     { title: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
     { title: "Assignments", href: "/dashboard/student/assignments", icon: ShoppingBag },
     { title: "My Badges", href: "/dashboard/student/my-badges", icon: Badge },
+    { title: "My Events", href: "/dashboard/student/events", icon: Calendar },
     // { title: "Leader Board", href: "/dashboard/student/leader-board", icon: Settings },
     { title: "Purchase History", href: "/dashboard/student/purchase-history", icon: BarChart3},
     { title: "Profile", href: "/dashboard/student/profile", icon: Settings },
@@ -18,6 +19,7 @@ const instructorMenu = [
     { title: "Students", href: "/dashboard/instructor/students", icon: Users },
     { title: "Task", href: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: "Quizzes", href: "/dashboard/instructor/quize", icon: HelpCircle },
+    { title: "My Events", href: "/dashboard/instructor/events", icon: Calendar },
     { title: "Profile", href: "/dashboard/instructor/profile", icon: User },
     // { title: "Certificate", href: "/dashboard/instructor/certificate", icon: Award },
 ];
