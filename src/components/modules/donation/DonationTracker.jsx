@@ -111,7 +111,7 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter your phone number (e.g. 01712345678)"
+                placeholder="Enter phone number (e.g. 01712345678)"
                 className="w-full pl-12 pr-4 py-4 bg-gray-50 hover:bg-gray-100/60 focus:bg-white text-gray-900 placeholder-gray-400 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-base font-semibold transition"
               />
             </div>
