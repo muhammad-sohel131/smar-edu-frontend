@@ -22,43 +22,64 @@ export default function CourseFilters({ filters, onFilterChange, onClearFilters 
   const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
   const categories = categoriesData?.data?.categories || [];
   
-  // Local state for UI
+  // Local state for UI (ensure clean categories array without null or empty strings)
   const [localFilters, setLocalFilters] = useState({
-    categories: filters.categories || [],
+    categories: (filters.categories || []).filter(Boolean),
     price: filters.price || "all"
   });
 
   // Sync with parent filters
   useEffect(() => {
     setLocalFilters({
-      categories: filters.categories || [],
+      categories: (filters.categories || []).filter(Boolean),
       price: filters.price || "all"
     });
   }, [filters]);
 
-  // Helper function to format category title
+  // Helper function to format category title for slug matching
   const formatCategoryValue = useCallback((title) => {
-    return title.toLowerCase().replace(/\s+/g, '_');
+    return title ? title.toLowerCase().replace(/\s+/g, '_') : "";
   }, []);
+
+  // Check if a category is selected (matching exact title, lowercase, or snake_case slug)
+  const isCategorySelected = useCallback((catTitle) => {
+    if (!catTitle) return false;
+    const formatted = formatCategoryValue(catTitle);
+    return (localFilters.categories || []).filter(Boolean).some(
+      c => c.toLowerCase() === catTitle.toLowerCase() ||
+           formatCategoryValue(c) === formatted ||
+           c.toLowerCase() === formatted
+    );
+  }, [localFilters.categories, formatCategoryValue]);
 
   // Handle category toggle
   const toggleCategory = useCallback((categoryTitle) => {
-    const formattedCategory = formatCategoryValue(categoryTitle);
+    if (!categoryTitle) return;
+    const formatted = formatCategoryValue(categoryTitle);
     
     setLocalFilters(prev => {
-      const newCategories = prev.categories.includes(formattedCategory)
-        ? prev.categories.filter(id => id !== formattedCategory)
-        : [...prev.categories, formattedCategory];
-      
-      const newFilters = {
+      const currentList = (prev.categories || []).filter(Boolean);
+      const alreadySelected = currentList.some(
+        c => c.toLowerCase() === categoryTitle.toLowerCase() ||
+             formatCategoryValue(c) === formatted ||
+             c.toLowerCase() === formatted
+      );
+
+      const newCategories = alreadySelected
+        ? currentList.filter(
+            c => c.toLowerCase() !== categoryTitle.toLowerCase() &&
+                 formatCategoryValue(c) !== formatted &&
+                 c.toLowerCase() !== formatted
+          )
+        : [...currentList, categoryTitle];
+
+      // Update parent immediately
+      onFilterChange({ categories: newCategories });
+
+      return {
         ...prev,
         categories: newCategories
       };
-      
-      // Update parent immediately
-      onFilterChange({ categories: newCategories });
-      
-      return newFilters;
     });
   }, [onFilterChange, formatCategoryValue]);
 
@@ -129,8 +150,12 @@ export default function CourseFilters({ filters, onFilterChange, onClearFilters 
           <h3 className="font-semibold text-[var(--color-text)]">Filters</h3>
         </div>
         <button
-          onClick={onClearFilters}
-          className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
+          type="button"
+          onClick={() => {
+            setLocalFilters({ categories: [], price: "all" });
+            onClearFilters();
+          }}
+          className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium"
         >
           Clear all
         </button>
@@ -144,7 +169,7 @@ export default function CourseFilters({ filters, onFilterChange, onClearFilters 
           </div>
           <h4 className="font-semibold text-[var(--color-text)]">Categories</h4>
           <span className="text-sm text-gray-500 ml-auto">
-            {localFilters.categories.length} selected
+            {(localFilters.categories || []).filter(Boolean).length} selected
           </span>
         </div>
         <div className="space-y-2 max-h-80 overflow-y-auto pr-2">
@@ -154,12 +179,12 @@ export default function CourseFilters({ filters, onFilterChange, onClearFilters 
             </div>
           ) : (
             categories.map((category) => {
-              const formattedCategoryValue = formatCategoryValue(category.title);
-              const isSelected = localFilters.categories.includes(formattedCategoryValue);
+              const isSelected = isCategorySelected(category.title);
               
               return (
                 <button
                   key={category._id}
+                  type="button"
                   onClick={() => toggleCategory(category.title)}
                   className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                     isSelected

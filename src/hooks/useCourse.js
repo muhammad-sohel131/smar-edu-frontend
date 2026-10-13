@@ -53,8 +53,12 @@ export const usePublicCourses = (filters) => {
       if (filters?.page) params.append("page", filters.page);
       if (filters?.limit) params.append("limit", filters.limit);
       if (filters?.search) params.append("q", filters.search);
-      if (filters?.categories?.length)
-        params.append("categories", filters.categories.join(","));
+      if (filters?.categories?.length) {
+        const cleanCats = filters.categories.filter(Boolean);
+        if (cleanCats.length > 0) {
+          params.append("categories", cleanCats.join(","));
+        }
+      }
       if (filters?.price && filters.price !== "all")
         params.append("price", filters.price); // 'free' | 'paid'
       if (filters?.instructor) params.append("instructor", filters.instructor);
@@ -66,7 +70,7 @@ export const usePublicCourses = (filters) => {
         items: data?.data || [],
         total: data?.meta?.total || 0,
         page: data?.meta?.page || 1,
-        totalPages: data?.meta?.totalPages || 1,
+        totalPages: data?.meta?.totalPage || data?.meta?.totalPages || 1,
       };
     },
     refetchOnWindowFocus: false,

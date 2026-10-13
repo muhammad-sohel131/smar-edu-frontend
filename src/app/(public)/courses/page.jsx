@@ -18,14 +18,25 @@ export default function PublicCourseListing() {
 
   // ---------- State ----------
   const [filters, setFilters] = useState({
-    categories: [category],
+    categories: category ? [category] : [],
     price: "all",
-    search: search
+    search: search || ""
   });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchDraft, setSearchDraft] = useState("");
   const [page, setPage] = useState(1);
   const limit = 9;
+
+  // Sync with URL params if they change
+  useEffect(() => {
+    const cat = searchParams.get("categories");
+    const q = searchParams.get("search");
+    setFilters(prev => ({
+      ...prev,
+      categories: cat ? [cat] : prev.categories.filter(Boolean),
+      search: q !== null ? q : prev.search
+    }));
+  }, [searchParams]);
 
   // ---------- Debounce search ----------
   useEffect(() => {
@@ -45,7 +56,7 @@ export default function PublicCourseListing() {
     limit,
     search: filters.search,
     price: filters.price,
-    categories: filters.categories,
+    categories: (filters.categories || []).filter(Boolean),
   });
 
   const courses = data?.items || [];
@@ -115,30 +126,55 @@ export default function PublicCourseListing() {
           </div>
 
           {/* Active Filters Bar */}
-          {(filters.categories.length > 0 || filters.price !== "all" || filters.search) && (
+          {((filters.categories || []).filter(Boolean).length > 0 || filters.price !== "all" || filters.search) && (
             <div className="pb-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-sm text-[var(--color-text)]/70">Active filters:</span>
-                {filters.categories.map(categoryId => (
-                  <span key={categoryId} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                    <Tag className="w-3 h-3" />
-                    Category ID: {categoryId}
+                {(filters.categories || []).filter(Boolean).map(categoryId => (
+                  <span key={categoryId} className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                    <Tag className="w-3 h-3 text-blue-600" />
+                    <span>{categoryId.replace(/_/g, ' ')}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateFilters({ categories: filters.categories.filter(c => c !== categoryId) })}
+                      className="text-blue-500 hover:text-blue-800 ml-0.5"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
                   </span>
                 ))}
                 {filters.price !== "all" && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">
-                    {filters.price === "free" ? "Free Only" : "Paid Only"}
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">
+                    <span>{filters.price === "free" ? "Free Only" : "Paid Only"}</span>
+                    <button
+                      type="button"
+                      onClick={() => updateFilters({ price: "all" })}
+                      className="text-amber-500 hover:text-amber-800"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
                   </span>
                 )}
                 {filters.search && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-100 text-[var(--color-primary)] rounded-full text-sm">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-[var(--color-primary)] rounded-full text-sm font-medium">
                     <Search className="w-3 h-3" />
-                    "{filters.search}"
+                    <span>"{filters.search}"</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchDraft("");
+                        updateFilters({ search: "" });
+                      }}
+                      className="text-emerald-500 hover:text-emerald-800"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
                   </span>
                 )}
                 <button
+                  type="button"
                   onClick={clearFilters}
-                  className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full text-sm transition-colors ml-2"
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full text-sm transition-colors ml-2 font-medium"
                 >
                   <X className="w-3 h-3" />
                   Clear all
