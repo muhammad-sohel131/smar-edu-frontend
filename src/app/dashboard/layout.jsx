@@ -6,11 +6,11 @@ export default function AdminLayout({
   children,
 }) {
   return (
-    <div className="flex min-h-screen flex-col space-y-6">
-      <div className="grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
-        <DashboardSidebar />
-        <main className="flex w-full flex-1 flex-col overflow-hidden container mx-auto px-4 p-6 md:p-12">{children}</main>
-      </div>
+    <div className="flex flex-col md:flex-row min-h-screen bg-[var(--color-background)]">
+      <DashboardSidebar />
+      <main className="flex-1 min-w-0 flex flex-col">
+        {children}
+      </main>
     </div>
   )
 }

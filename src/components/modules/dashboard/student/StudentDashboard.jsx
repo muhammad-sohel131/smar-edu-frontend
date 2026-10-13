@@ -55,7 +55,7 @@ export default function Dashboard() {
           <div className="absolute top-1/2 left-1/3 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
         </div>
 
-        <div className="relative container mx-auto px-4 sm:px-6 py-10">
+        <div className="relative px-6 sm:px-8 py-8 md:py-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <p className="text-white/70 text-sm font-medium uppercase tracking-widest mb-1">Student Portal</p>
@@ -83,7 +83,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 py-8 space-y-8">
+      <div className="px-6 sm:px-8 py-8 space-y-8">
         {/* Stats Grid */}
         <div>
           <SectionLabel>Overview</SectionLabel>

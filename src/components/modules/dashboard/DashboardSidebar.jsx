@@ -16,7 +16,7 @@ export function DashboardSidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className={`hidden md:flex flex-col bg-white text-gray-800 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 border-r border-gray-100 shadow-sm sticky top-0 h-screen`}>
+            <aside className={`hidden md:flex flex-col bg-white text-gray-800 min-h-screen ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 border-r border-gray-100 shadow-sm sticky top-0 h-screen shrink-0`}>
                 {/* Header */}
                 <div className={`flex items-center h-16 ${collapsed ? 'justify-center' : 'px-4 justify-between'} border-b border-gray-100`}>
                     {!collapsed ? (
