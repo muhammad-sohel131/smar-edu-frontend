@@ -76,7 +76,9 @@ export default function InstructorProfile() {
   const userData = instructorData.userId || {};
   const instructorInfo = instructorData || {};
   
-  const profileImage = userData.picture || "/images/teacher.png";
+  const profileImage = userData.picture && !userData.picture.includes('placeholder') 
+    ? userData.picture 
+    : "/images/teacher.png";
   const name = userData.name || "Instructor";
   const designation = instructorInfo.designation || "";
   const intro = userData.intro || "";
@@ -110,13 +112,13 @@ export default function InstructorProfile() {
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
               {/* Profile Image */}
               <div className="relative">
-                <div className="relative w-40 h-40 md:w-44 md:h-44 rounded-2xl overflow-hidden border-4 border-white shadow-2xl">
+                <div className="relative w-40 h-40 md:w-44 md:h-44 rounded-2xl overflow-hidden border-4 border-white shadow-2xl bg-gray-50">
                   <Image
                     src={profileImage}
                     alt={name}
                     fill
                     unoptimized
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-gradient-to-r from-[var(--color-primary)] to-blue-500 rounded-full flex items-center justify-center shadow-lg">

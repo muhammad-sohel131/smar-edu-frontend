@@ -173,7 +173,7 @@ export default function InstructorListing() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-72 shrink-0">
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-[var(--shadow-medium)] p-6 sticky top-32">
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-[var(--shadow-medium)] p-6 sticky top-48 max-h-[calc(100vh-13rem)] overflow-y-auto">
               <InstructorFilters
                 filters={{ ...filters, totalItems }}
                 onFilterChange={updateFilters}

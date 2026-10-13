@@ -154,11 +154,13 @@ export default function PublicCourseListing() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Desktop Sidebar - Filters */}
           <aside className="hidden lg:block w-72 shrink-0">
-            <CourseFilters
-              filters={filters}
-              onFilterChange={updateFilters}
-              onClearFilters={clearFilters}
-            />
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-[var(--shadow-medium)] p-6 sticky top-48 max-h-[calc(100vh-13rem)] overflow-y-auto">
+              <CourseFilters
+                filters={filters}
+                onFilterChange={updateFilters}
+                onClearFilters={clearFilters}
+              />
+            </div>
           </aside>
 
           {/* Main Content */}
@@ -188,10 +190,10 @@ export default function PublicCourseListing() {
                 </div>
 
                 {/* Courses Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                   {courses.map((course) => (
-                    <Link key={course._id} href={`/courses/${course.slug}`} className="block group">
-                      <div className="transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl">
+                    <div key={course._id} className="h-full flex">
+                      <div className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl w-full h-full flex">
                         <CourseCard
                           course={{
                             ...course,
@@ -212,7 +214,7 @@ export default function PublicCourseListing() {
                           }}
                         />
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
 
