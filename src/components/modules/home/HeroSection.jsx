@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaGraduationCap } from "react-icons/fa";
-import { MdVerified, MdPerson } from "react-icons/md";
 import SearchBar from "@/components/modules/special/Searchbar";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/apiClient";
@@ -130,64 +128,6 @@ export default function HeroSection() {
                 />
               </div>
             </motion.div>
-
-            {/* 📊 Stats */}
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3 md:mt-5 lg:mt-10">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.25 }}
-                whileHover={{ scale: 1.03, y: -2 }}
-                className="flex items-center gap-3 rounded-xl bg-white/85 p-4 border border-white/60 shadow-sm transition-all"
-                style={{ boxShadow: "var(--shadow-soft)" }}
-              >
-                <FaGraduationCap className="text-3xl text-[var(--color-accent)]" />
-                <p>
-                  <span className="font-bold text-lg text-[var(--color-text)]">10K</span>
-                  <br />
-                  <span className="text-sm text-[var(--color-text)]/70">
-                    Online Courses
-                  </span>
-                </p>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.35 }}
-                whileHover={{ scale: 1.03, y: -2 }}
-                className="flex items-center gap-3 rounded-xl bg-white/85 p-4 border border-white/60 shadow-sm transition-all"
-                style={{ boxShadow: "var(--shadow-soft)" }}
-              >
-                <MdVerified className="text-3xl text-[var(--color-secondary)]" />
-                <p>
-                  <span className="font-bold text-lg text-[var(--color-text)]">6K</span>
-                  <br />
-                  <span className="text-sm text-[var(--color-text)]/70">
-                    Certified Courses
-                  </span>
-                </p>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.45 }}
-                whileHover={{ scale: 1.03, y: -2 }}
-                className="flex items-center gap-3 rounded-xl bg-white/85 p-4 border border-white/60 shadow-sm transition-all"
-                style={{ boxShadow: "var(--shadow-soft)" }}
-              >
-                <MdPerson className="text-3xl text-[var(--color-primary)]" />
-                <p>
-                  <span className="font-bold text-lg text-[var(--color-text)]">2K</span>
-                  <br />
-                  <span className="text-sm text-[var(--color-text)]/70">
-                    Experienced Tutors
-                  </span>
-                </p>
-              </motion.div>
-            </div>
           </div>
 
           {/* Right Side - Video */}
