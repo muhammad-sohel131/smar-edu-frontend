@@ -2,7 +2,7 @@
 import { useMemo, useEffect, useState } from "react";
 import AboutInstructor from "@/components/modules/courses/AboutInstructor";
 import CourseContent from "@/components/modules/courses/CourseContent";
-import { FiHeart, FiShare2, FiPlay, FiDownload, FiSmartphone, FiTv, FiAward, FiClock, FiUsers, FiBarChart2 } from "react-icons/fi";
+import { FiHeart, FiShare2, FiPlay, FiDownload, FiSmartphone, FiTv, FiAward, FiClock, FiUsers, FiBarChart2, FiX } from "react-icons/fi";
 import CourseSingleSkeleton from "@/components/modules/special/CourseSingleSkeleton";
 import { useParams } from "next/navigation";
 import { useSlugCourses, useUnitsByCourse, useCourseStats, useEnrollmentCourses } from "@/hooks/useCourse";
@@ -11,10 +11,25 @@ import api from "@/lib/apiClient";
 import Link from "next/link";
 import Image from "next/image";
 
+// Helper to convert YouTube watch/share links to embeddable links
+const getEmbedVideoUrl = (url) => {
+    if (!url) return null;
+    if (url.includes("youtube.com/watch?v=")) {
+        const id = url.split("v=")[1]?.split("&")[0];
+        return `https://www.youtube.com/embed/${id}?autoplay=1`;
+    }
+    if (url.includes("youtu.be/")) {
+        const id = url.split("youtu.be/")[1]?.split("?")[0];
+        return `https://www.youtube.com/embed/${id}?autoplay=1`;
+    }
+    return url;
+};
+
 export default function CourseSinglePage() {
-    const { slug } = useParams()
-    const { user } = useAuth()
-    const [enrolled, setEnrolled] = useState(false)
+    const { slug } = useParams();
+    const { user } = useAuth();
+    const [enrolled, setEnrolled] = useState(false);
+    const [isPlayingPreview, setIsPlayingPreview] = useState(false);
 
     const { data: course, isLoading: courseLoading } = useSlugCourses(slug);
     const { data: instructor, isLoading: instructorLoading } = useInstructorById(course?.instructor);
@@ -101,35 +116,35 @@ export default function CourseSinglePage() {
         if (courseStats?.enrollmentCount !== undefined) {
             features.push({
                 icon: <FiUsers className="w-4 h-4" />,
-                text: `Enrolled: ৳{courseStats.enrollmentCount} student${courseStats.enrollmentCount !== 1 ? 's' : ''}`
+                text: `Enrolled: ${courseStats.enrollmentCount} student${courseStats.enrollmentCount !== 1 ? 's' : ''}`
             });
         }
         
         if (totalDurationSeconds > 0) {
             features.push({
                 icon: <FiClock className="w-4 h-4" />,
-                text: `Duration: ৳{formatDurationShort(totalDurationSeconds)}`
+                text: `Duration: ${formatDurationShort(totalDurationSeconds)}`
             });
         }
         
         if (units.length > 0) {
             features.push({
                 icon: <FiBarChart2 className="w-4 h-4" />,
-                text: `Chapters: ৳{units.length}`
+                text: `Chapters: ${units.length}`
             });
         }
         
         if (videoDurationSeconds > 0) {
             features.push({
                 icon: <FiPlay className="w-4 h-4" />,
-                text: `Video: ৳{formatDurationShort(videoDurationSeconds)}`
+                text: `Video: ${formatDurationShort(videoDurationSeconds)}`
             });
         }
         
         if (course?.level) {
             features.push({
                 icon: <FiAward className="w-4 h-4" />,
-                text: `Level: ৳{course.level.charAt(0).toUpperCase() + course.level.slice(1)}`
+                text: `Level: ${course.level.charAt(0).toUpperCase() + course.level.slice(1)}`
             });
         }
         
@@ -182,8 +197,8 @@ export default function CourseSinglePage() {
         return includes;
     }, [videoDurationSeconds, downloadableResources, courseStats?.tasksCount, course?.awardOnComplete]);
 
-    // Get video source - introVideo first, then thumbnail
-    const videoSource = useMemo(() => course?.introVideo || course?.thumbnail, [course?.introVideo, course?.thumbnail]);
+    // Embeddable preview video URL
+    const embedPreviewUrl = useMemo(() => getEmbedVideoUrl(course?.introVideo), [course?.introVideo]);
 
     // NOW we can do conditional returns AFTER all hooks
     if (courseLoading || instructorLoading || unitsLoading) return <CourseSingleSkeleton />;
@@ -194,39 +209,74 @@ export default function CourseSinglePage() {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* ===== Left Content ===== */}
                     <div className="flex-1">
-                        {/* Video Banner */}
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-8 group">
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 z-0"></div>
-                            {videoSource ? (
-                                course?.introVideo ? (
-                                    <video
-                                        controls
-                                        autoPlay={false}
-                                        muted={true}
-                                        loop={true}
-                                        className="w-full aspect-video object-cover rounded-2xl transform group-hover:scale-[1.01] transition-transform duration-300"
+                        {/* Course Featured Image & Video Preview Banner */}
+                        <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-8 group bg-slate-900 border border-gray-100">
+                            {isPlayingPreview && embedPreviewUrl ? (
+                                <div className="relative w-full aspect-video bg-black">
+                                    <iframe
+                                        src={embedPreviewUrl}
+                                        title={course?.title || "Course Preview"}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="w-full h-full"
+                                    />
+                                    <button
+                                        onClick={() => setIsPlayingPreview(false)}
+                                        className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black text-white text-xs font-semibold backdrop-blur-md transition-all shadow-lg flex items-center gap-1.5 border border-white/20"
+                                        title="Close Preview"
                                     >
-                                        <source src={course.introVideo} type="video/mp4" />
-                                        Your browser does not support video playback.
-                                    </video>
-                                ) : (
-                                    <div className="relative w-full aspect-video">
+                                        <FiX className="w-4 h-4" />
+                                        <span>Show Featured Image</span>
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="relative w-full aspect-video overflow-hidden">
+                                    {course?.thumbnail ? (
                                         <Image
                                             src={course.thumbnail}
-                                            alt={course.title || "Course thumbnail"}
+                                            alt={course.title || "Course featured image"}
                                             fill
-                                            className="object-cover rounded-2xl transform group-hover:scale-[1.01] transition-transform duration-300"
+                                            priority
+                                            className="object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500"
                                         />
+                                    ) : (
+                                        <div className="w-full h-full bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 flex flex-col items-center justify-center p-8 text-white text-center">
+                                            <FiPlay className="w-12 h-12 mb-3 opacity-60" />
+                                            <h3 className="text-xl font-bold max-w-md">{course?.title}</h3>
+                                        </div>
+                                    )}
+
+                                    {/* Subtle gradient overlay for readability and depth */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none"></div>
+
+                                    {/* Play Preview Button Overlay (if intro video is available) */}
+                                    {course?.introVideo && (
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <button
+                                                onClick={() => setIsPlayingPreview(true)}
+                                                className="group/btn relative flex items-center gap-3 px-6 py-3.5 rounded-full bg-white/95 hover:bg-white text-gray-900 shadow-2xl shadow-black/40 backdrop-blur-md transition-all transform hover:scale-105 active:scale-95"
+                                            >
+                                                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-blue-600 flex items-center justify-center text-white shadow-md group-hover/btn:scale-110 transition-transform">
+                                                    <FiPlay className="w-4 h-4 ml-0.5" />
+                                                </div>
+                                                <span className="font-bold text-sm tracking-wide">
+                                                    Watch Course Preview
+                                                </span>
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    {/* Badges in bottom corner */}
+                                    <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                                        <span className="bg-black/70 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-md font-medium border border-white/10 shadow-sm">
+                                            Featured Image
+                                        </span>
+                                        {course?.introVideo && (
+                                            <span className="bg-blue-600/90 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-md font-medium shadow-sm">
+                                                Preview Video Available
+                                            </span>
+                                        )}
                                     </div>
-                                )
-                            ) : (
-                                <div className="w-full aspect-video bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center">
-                                    <p className="text-gray-500">No preview available</p>
-                                </div>
-                            )}
-                            {course?.introVideo && (
-                                <div className="absolute bottom-4 left-4 bg-black/70 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-sm">
-                                    Preview
                                 </div>
                             )}
                         </div>
