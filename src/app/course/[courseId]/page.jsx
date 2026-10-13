@@ -23,7 +23,8 @@ import {
   BarChart3,
   Home,
   SkipBack,
-  SkipForward
+  SkipForward,
+  FileText
 } from "lucide-react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -501,19 +502,108 @@ export default function CourseLearningPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Video Player Section */}
           <main className="lg:flex-1">
-            {/* Enhanced Video Player */}
-            <div className="bg-black rounded-2xl overflow-hidden shadow-xl">
-              {/* Video Container */}
-              <div className="relative w-full aspect-video bg-black">
+            {/* Enhanced Multi-Format Media Player */}
+            <div className="bg-black rounded-2xl overflow-hidden shadow-xl border border-gray-800">
+              {/* Media Container */}
+              <div className="relative w-full aspect-video bg-gray-950 flex flex-col justify-center items-center overflow-hidden">
                 {currentLesson ? (
-                  <iframe
-                    ref={videoRef}
-                    className="absolute inset-0 w-full h-full"
-                    src={currentLesson.contentUrl}
-                    title={currentLesson.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  currentLesson.contentType === "audio" ? (
+                    <div className="w-full h-full p-6 md:p-10 bg-gradient-to-br from-purple-950 via-slate-900 to-indigo-950 flex flex-col items-center justify-center text-center relative">
+                      <div className="absolute w-80 h-80 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+                      
+                      <div className="relative z-10 w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-2xl shadow-purple-500/40 mb-5 border border-purple-400/30">
+                        <Volume2 className="w-10 h-10 md:w-12 md:h-12 text-white animate-pulse" />
+                      </div>
+
+                      <div className="relative z-10 max-w-xl mb-5">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-2 inline-block">
+                          Audio Lecture
+                        </span>
+                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2 line-clamp-2">
+                          {currentLesson.title}
+                        </h3>
+                        <p className="text-xs md:text-sm text-purple-200/80 max-w-md mx-auto">
+                          Listen actively while reviewing key architecture insights and conceptual deep-dives.
+                        </p>
+                      </div>
+
+                      <div className="relative z-10 w-full max-w-md px-4">
+                        <audio
+                          key={currentLesson._id || currentLesson.contentUrl}
+                          src={currentLesson.contentUrl}
+                          controls
+                          autoPlay
+                          className="w-full rounded-2xl shadow-xl accent-purple-500"
+                        />
+                      </div>
+                    </div>
+                  ) : currentLesson.contentType === "pdf" ? (
+                    <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center p-6 text-center relative">
+                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-rose-600 to-red-500 flex items-center justify-center shadow-xl shadow-rose-500/30 mb-4 border border-rose-400/30">
+                        <FileText className="w-10 h-10 text-white" />
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/30 mb-2 inline-block">
+                        PDF Documentation / Cheatsheet
+                      </span>
+                      <h3 className="text-xl md:text-2xl font-bold text-white mb-2 max-w-lg">
+                        {currentLesson.title}
+                      </h3>
+                      <p className="text-sm text-gray-300 mb-6 max-w-md">
+                        Read this official study guide and architectural blueprint to reinforce the module learning.
+                      </p>
+                      <div className="flex flex-wrap items-center justify-center gap-3">
+                        <a
+                          href={currentLesson.contentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 bg-gradient-to-r from-rose-600 to-red-600 text-white font-semibold text-sm rounded-xl shadow-lg shadow-rose-600/30 hover:shadow-rose-600/50 hover:-translate-y-0.5 transition-all flex items-center gap-2"
+                        >
+                          <BookOpen className="w-4 h-4" /> Open Full PDF
+                        </a>
+                        <a
+                          href={currentLesson.contentUrl}
+                          download
+                          className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium text-sm rounded-xl border border-white/20 transition-all flex items-center gap-2"
+                        >
+                          <Download className="w-4 h-4" /> Download PDF
+                        </a>
+                      </div>
+                    </div>
+                  ) : currentLesson.contentType === "article" ? (
+                    <div className="w-full h-full bg-slate-900 p-8 flex flex-col items-center justify-center text-center overflow-y-auto">
+                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center shadow-xl shadow-amber-500/30 mb-4 border border-amber-400/30">
+                        <BookOpen className="w-10 h-10 text-white" />
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30 mb-2 inline-block">
+                        Curated Deep-Dive Article
+                      </span>
+                      <h3 className="text-xl md:text-2xl font-bold text-white mb-3 max-w-xl">
+                        {currentLesson.title}
+                      </h3>
+                      <p className="text-sm text-amber-100/90 max-w-lg mb-6 leading-relaxed">
+                        Exhaustive theoretical breakdowns, step-by-step code structures, and real-world deployment trade-offs.
+                      </p>
+                      {currentLesson.contentUrl && (
+                        <a
+                          href={currentLesson.contentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold text-sm rounded-xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center gap-2"
+                        >
+                          <BookOpen className="w-4 h-4" /> Read Full Publication
+                        </a>
+                      )}
+                    </div>
+                  ) : (
+                    <iframe
+                      ref={videoRef}
+                      className="absolute inset-0 w-full h-full"
+                      src={currentLesson.contentUrl}
+                      title={currentLesson.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  )
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                     <Play className="w-16 h-16 mb-4 text-gray-600" />
@@ -527,8 +617,8 @@ export default function CourseLearningPage() {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="px-3 py-1 bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 text-xs font-semibold rounded-full">
-                        Now Playing
+                      <span className="px-3 py-1 bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 text-xs font-semibold rounded-full capitalize">
+                        {currentLesson?.contentType || "Lesson"}
                       </span>
                         <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                           completedLessons.has(currentLesson?._id)

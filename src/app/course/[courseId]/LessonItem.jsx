@@ -1,23 +1,63 @@
 "use client";
-import { PlayCircle, CheckCircle, Clock, Lock, ExternalLink, Download, MoreVertical } from "lucide-react";
+import { PlayCircle, CheckCircle, Clock, Lock, ExternalLink, Download, MoreVertical, FileText, Volume2, BookOpen } from "lucide-react";
 
 export default function LessonItem({ lesson, currentLesson, setCurrentLesson, completed = false }) {
   const isActive = currentLesson?._id === lesson._id;
   const isCompleted = completed;
-  const isLocked = false; // You can add logic for locked lessons
+  const isLocked = false; // Logic for locked lessons if needed
 
   // Calculate dynamic duration from lesson data
   const formatDuration = (durationSec) => {
-    if (!durationSec) return "No timer";
+    if (!durationSec) return "5m";
     const minutes = Math.floor(durationSec / 60);
     const seconds = durationSec % 60;
-    return minutes > 0 ? `${minutes}: ৳{seconds.toString().padStart(2, '0')}` : `${seconds}s`;
+    return minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}s`;
   };
 
   const duration = formatDuration(lesson.durationSec);
 
+  // Pick appropriate icon based on content type
+  const renderIcon = () => {
+    if (isLocked) {
+      return <Lock className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400'}`} />;
+    }
+    if (isCompleted) {
+      return <CheckCircle className={`w-5 h-5 ${isActive ? 'text-white' : 'text-emerald-600'}`} />;
+    }
+
+    switch (lesson?.contentType?.toLowerCase()) {
+      case "pdf":
+        return <FileText className={`w-5 h-5 ${isActive ? 'text-white' : 'text-rose-500'}`} />;
+      case "audio":
+        return <Volume2 className={`w-5 h-5 ${isActive ? 'text-white' : 'text-purple-600'}`} />;
+      case "article":
+        return <BookOpen className={`w-5 h-5 ${isActive ? 'text-white' : 'text-amber-600'}`} />;
+      case "video":
+      default:
+        return <PlayCircle className={`w-5 h-5 ${isActive ? 'text-white' : 'text-blue-600'}`} />;
+    }
+  };
+
+  const getIconBackground = () => {
+    if (isActive) return "bg-white/20";
+    if (isLocked) return "bg-gray-200";
+    if (isCompleted) return "bg-gradient-to-br from-emerald-100 to-green-100";
+
+    switch (lesson?.contentType?.toLowerCase()) {
+      case "pdf":
+        return "bg-gradient-to-br from-rose-100 to-red-100";
+      case "audio":
+        return "bg-gradient-to-br from-purple-100 to-indigo-100";
+      case "article":
+        return "bg-gradient-to-br from-amber-100 to-orange-100";
+      case "video":
+      default:
+        return "bg-gradient-to-br from-blue-100 to-cyan-100";
+    }
+  };
+
   return (
-    <li className="px-2 py-1.5">
+    <li className="px-2 py-1.5 list-none">
       <button
         onClick={() => !isLocked && setCurrentLesson(lesson)}
         disabled={isLocked}
@@ -42,22 +82,8 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
           {/* Left side: Icon and Title */}
           <div className="flex items-center gap-3 flex-1 min-w-0">
             {/* Icon Container */}
-            <div className={`relative flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
-              isActive 
-                ? "bg-white/20" 
-                : isLocked
-                  ? "bg-gray-200"
-                  : isCompleted
-                    ? "bg-gradient-to-br from-emerald-100 to-green-100"
-                    : "bg-gradient-to-br from-blue-100 to-cyan-100"
-            }`}>
-              {isLocked ? (
-                <Lock className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400'}`} />
-              ) : isCompleted ? (
-                <CheckCircle className={`w-5 h-5 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
-              ) : (
-                <PlayCircle className={`w-5 h-5 ${isActive ? 'text-white' : 'text-blue-600'}`} />
-              )}
+            <div className={`relative flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${getIconBackground()}`}>
+              {renderIcon()}
               
               {/* Badge for completed */}
               {isCompleted && !isActive && (
@@ -89,14 +115,14 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
                 </span>
                 
                 {/* Content Type Badge */}
-                <span className={`px-2 py-0.5 text-xs rounded-full ${
+                <span className={`px-2 py-0.5 text-[11px] capitalize rounded-full ${
                   isActive
                     ? "bg-white/20 text-white"
                     : isLocked
                       ? "bg-gray-200 text-gray-500"
                       : "bg-gray-100 text-gray-700"
                 }`}>
-                  {lesson?.contentType || "Video"}
+                  {lesson?.contentType || "video"}
                 </span>
               </div>
             </div>
@@ -115,14 +141,14 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
             {isActive && !isCompleted && !isLocked && (
               <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                Now Playing
+                Active
               </div>
             )}
 
             {/* Action buttons */}
             {!isLocked && (
               <div className="flex items-center gap-1">
-                {lesson?.contentUrl?.includes('youtube') && (
+                {lesson?.contentUrl && (
                   <button
                     className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity ${
                       isActive ? 'hover:bg-white/20' : 'hover:bg-gray-100'
@@ -131,6 +157,7 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
                       e.stopPropagation();
                       window.open(lesson.contentUrl, '_blank');
                     }}
+                    title="Open external source"
                   >
                     <ExternalLink className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
                   </button>
@@ -143,21 +170,11 @@ export default function LessonItem({ lesson, currentLesson, setCurrentLesson, co
                     }`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      // Handle download
                     }}
                   >
                     <Download className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
                   </button>
                 )}
-
-                <button
-                  className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity ${
-                    isActive ? 'hover:bg-white/20' : 'hover:bg-gray-100'
-                  }`}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <MoreVertical className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
-                </button>
               </div>
             )}
           </div>
