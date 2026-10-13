@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, TrendingUp, Target, Clock, Award, Trophy, Star, Sparkles } from "lucide-react";
+import { Users, Award, Trophy, Sparkles } from "lucide-react";
 import StatusCard from "@/components/modules/dashboard/student/StatsCard";
 import CourseTable from "@/components/modules/dashboard/student/CourseTable";
 import { useAuth } from "@/hooks/useAuth";
@@ -56,29 +56,14 @@ export default function Dashboard() {
         </div>
 
         <div className="relative px-6 sm:px-8 py-8 md:py-10">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <p className="text-white/70 text-sm font-medium uppercase tracking-widest mb-1">Student Portal</p>
-              <h1 className="text-3xl md:text-4xl font-bold text-white">
-                Welcome back, {user?.name?.split(" ")[0] || "Student"}! 👋
-              </h1>
-              <p className="text-white/80 mt-2 text-base">
-                Track your learning journey and celebrate your progress.
-              </p>
-            </div>
-
-            {/* Quick stat pills */}
-            {stats && (
-              <div className="flex flex-wrap gap-2">
-                <QuickPill icon={<TrendingUp className="w-3.5 h-3.5" />} label={`${stats.progress}% progress`} />
-                <QuickPill icon={<Target className="w-3.5 h-3.5" />} label={`${stats.activeCourses} active`} />
-                <QuickPill icon={<Clock className="w-3.5 h-3.5" />} label={`${stats.studyTime}h this week`} />
-                <QuickPill icon={<Award className="w-3.5 h-3.5" />} label={`${stats.totalPoints} pts`} />
-                {stats.rank && (
-                  <QuickPill icon={<Trophy className="w-3.5 h-3.5" />} label={`Rank #${stats.rank}`} highlight />
-                )}
-              </div>
-            )}
+          <div>
+            <p className="text-white/70 text-sm font-medium uppercase tracking-widest mb-1">Student Portal</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-white">
+              Welcome back, {user?.name?.split(" ")[0] || "Student"}! 👋
+            </h1>
+            <p className="text-white/80 mt-2 text-base">
+              Track your learning journey and celebrate your progress.
+            </p>
           </div>
         </div>
       </div>
@@ -130,20 +115,7 @@ export default function Dashboard() {
 
 /* ——— Sub-components ——— */
 
-function QuickPill({ icon, label, highlight = false }) {
-  return (
-    <div
-      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-        highlight
-          ? "bg-[var(--color-accent)] text-white shadow-md"
-          : "bg-white/15 text-white backdrop-blur-sm border border-white/20"
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </div>
-  );
-}
+
 
 function SectionLabel({ children }) {
   return (
