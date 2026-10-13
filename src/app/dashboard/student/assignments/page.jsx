@@ -86,7 +86,7 @@ export default function AssignmentsPage() {
   }
 
   return (
-    <section className="space-y-6">
+    <section className="px-6 sm:px-8 py-8 space-y-6">
       {/* Header */}
       <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>

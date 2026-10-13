@@ -87,7 +87,7 @@ export default function StudentBadges() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="px-6 sm:px-8 py-8 space-y-6">
         {/* Header Loading */}
         <div className="bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-[--radius-card] shadow-lg p-6 animate-pulse">
           <div className="flex items-center justify-between">
@@ -139,7 +139,7 @@ export default function StudentBadges() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="px-6 sm:px-8 py-8 space-y-6">
       {/* Header */}
       <div className="bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-[--radius-card] shadow-lg overflow-hidden">
         <div className="p-6 md:p-8">

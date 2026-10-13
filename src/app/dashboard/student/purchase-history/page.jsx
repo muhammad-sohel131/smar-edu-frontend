@@ -53,16 +53,18 @@ export default function PurchaseHistory() {
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Loading header banner */}
-        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] px-6 py-8">
-          <div className="h-7 w-48 bg-white/20 rounded animate-pulse mb-2" />
-          <div className="h-4 w-64 bg-white/10 rounded animate-pulse" />
-        </div>
-        <div className="p-6 md:p-10 space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-16 bg-gray-200 rounded animate-pulse" />
-          ))}
+      <div className="px-6 sm:px-8 py-8 space-y-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          {/* Loading header banner */}
+          <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] px-6 py-8">
+            <div className="h-7 w-48 bg-white/20 rounded animate-pulse mb-2" />
+            <div className="h-4 w-64 bg-white/10 rounded animate-pulse" />
+          </div>
+          <div className="p-6 md:p-10 space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-16 bg-gray-200 rounded animate-pulse" />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -70,15 +72,17 @@ export default function PurchaseHistory() {
 
   if (error) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Error header banner */}
-        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] px-6 py-8">
-          <h1 className="text-2xl font-bold text-white mb-1">Purchase History</h1>
-          <p className="text-white/70 text-sm">Your course and bundle purchases</p>
-        </div>
-        <div className="p-6 md:p-10">
-          <div className="p-4 bg-red-100 text-red-700 rounded-lg">
-            Error loading purchase history. Please try again later.
+      <div className="px-6 sm:px-8 py-8 space-y-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          {/* Error header banner */}
+          <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] px-6 py-8">
+            <h1 className="text-2xl font-bold text-white mb-1">Purchase History</h1>
+            <p className="text-white/70 text-sm">Your course and bundle purchases</p>
+          </div>
+          <div className="p-6 md:p-10">
+            <div className="p-4 bg-red-100 text-red-700 rounded-lg">
+              Error loading purchase history. Please try again later.
+            </div>
           </div>
         </div>
       </div>
@@ -86,7 +90,7 @@ export default function PurchaseHistory() {
   }
 
   return (
-    <div className="text-[var(--color-text)]">
+    <div className="text-[var(--color-text)] px-6 sm:px-8 py-8 space-y-6">
       {/* Page-level header banner */}
       <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] rounded-2xl px-6 py-8 mb-6 flex items-center justify-between">
         <div>

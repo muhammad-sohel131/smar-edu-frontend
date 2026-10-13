@@ -28,7 +28,7 @@ export default function CertificatesPage() {
   ];
 
   return (
-    <div className="text-[var(--color-text)] space-y-8">
+    <div className="text-[var(--color-text)] px-6 sm:px-8 py-8 space-y-8">
       {/* Gradient Banner Header */}
       <div className="rounded-2xl overflow-hidden bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] px-8 py-10 flex items-center gap-5 shadow-md">
         <div className="flex-shrink-0 bg-white/20 rounded-full p-3">

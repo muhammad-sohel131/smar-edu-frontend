@@ -18,7 +18,7 @@ const podiumIcons = [
 
 export default function Leaderboard() {
   return (
-    <div className="min-h-screen bg-[var(--color-background)]">
+    <div className="min-h-screen bg-[var(--color-background)] px-6 sm:px-8 py-8">
       {/* Page Header Banner */}
       <div className="relative bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent-special)] rounded-2xl overflow-hidden mb-8 p-6 md:p-8">
         <div className="absolute inset-0">

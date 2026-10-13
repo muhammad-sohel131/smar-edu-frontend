@@ -300,8 +300,8 @@ export default function StudentProfilePage() {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
-      <div className="container mx-auto">
+    <div className="min-h-screen px-6 sm:px-8 py-8">
+      <div>
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">

@@ -40,7 +40,7 @@ export default function CoursesPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)]">
+    <div className="min-h-screen bg-[var(--color-background)] px-6 sm:px-8 py-8">
       {/* Section Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
