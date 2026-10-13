@@ -74,7 +74,7 @@ export default function Page() {
         summaryTitle = "Enrollment Summary";
         totalLabel = "Total Amount Paid";
         buttonText = "Start Learning";
-        targetHref = "/dashboard/my-courses";
+        targetHref = "/dashboard";
         footerText = "Happy learning!";
         Icon = CheckCircle;
     } else if (data.itemType === "event") {
