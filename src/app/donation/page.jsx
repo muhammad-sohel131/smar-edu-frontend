@@ -37,7 +37,7 @@ const Donation = () => {
       badge: 'Most Popular',
       examples: [
         'Tuition fee assistance',
-        'Tech gadget grants',
+        'Research & project grants',
         'Internship opportunities',
         'Learning materials'
       ],

@@ -16,7 +16,7 @@ const DonationInfo = () => {
           </li>
           <li className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
-            <span>Builds a tech-focused e-commerce learning ecosystem</span>
+            <span>Builds an inclusive digital learning ecosystem</span>
           </li>
           <li className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
