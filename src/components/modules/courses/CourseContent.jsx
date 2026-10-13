@@ -15,6 +15,7 @@ import {
   FiX,
   FiCheckCircle,
   FiAward,
+  FiLock,
 } from "react-icons/fi";
 import { useLessonsByUnit } from "@/hooks/useCourse";
 import { useTasks } from "@/hooks/useTask";
@@ -371,7 +372,7 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                   {lessons.map((lesson, lessonIdx) => {
                     const typeConfig = getContentTypeConfig(lesson.contentType);
                     const IconComponent = typeConfig.icon;
-                    const canPreview = (index === 0 && lessonIdx < 2) || lesson.contentType === "video";
+                    const canPreview = index === 0 && lessonIdx === 0;
 
                     return (
                       <motion.div
@@ -379,11 +380,17 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                         initial={{ opacity: 0, x: -8 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: lessonIdx * 0.03 }}
-                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-gray-50/70 to-white hover:from-white hover:to-emerald-50/30 border border-gray-100 hover:border-emerald-200/80 transition-all group shadow-sm hover:shadow"
+                        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 sm:p-3.5 rounded-xl border transition-all group shadow-sm ${
+                          canPreview
+                            ? "bg-gradient-to-r from-gray-50/70 to-white hover:from-white hover:to-emerald-50/30 border-gray-100 hover:border-emerald-200/80 hover:shadow"
+                            : "bg-gray-50/40 border-gray-100/90 hover:border-gray-200"
+                        }`}
                       >
                         <div className="flex items-center gap-3 flex-1 min-w-0">
                           <div
-                            className={`p-2.5 rounded-xl border ${typeConfig.bg} ${typeConfig.iconColor} transition-transform group-hover:scale-105 flex-shrink-0`}
+                            className={`p-2.5 rounded-xl border ${typeConfig.bg} ${typeConfig.iconColor} transition-transform group-hover:scale-105 flex-shrink-0 ${
+                              !canPreview ? "opacity-80" : ""
+                            }`}
                           >
                             <IconComponent className="w-4 h-4" />
                           </div>
@@ -405,7 +412,7 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                         </div>
 
                         <div className="flex items-center gap-2 self-end sm:self-center">
-                          {canPreview && (
+                          {canPreview ? (
                             <button
                               onClick={() =>
                                 setPreviewItem({
@@ -419,6 +426,11 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                               <FiEye className="w-3.5 h-3.5" />
                               <span>Preview</span>
                             </button>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg bg-gray-100 text-gray-500 border border-gray-200/80">
+                              <FiLock className="w-3 h-3 text-gray-400" />
+                              <span>Locked</span>
+                            </span>
                           )}
                         </div>
                       </motion.div>
@@ -453,7 +465,11 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                           )}
                         </div>
                       </div>
-                      <div className="self-end sm:self-center flex-shrink-0">
+                      <div className="self-end sm:self-center flex-shrink-0 flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg bg-gray-100 text-gray-500 border border-gray-200/80">
+                          <FiLock className="w-3 h-3 text-gray-400" />
+                          <span>Locked</span>
+                        </span>
                         <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
                           {task.maxPoints || 15} pts
                         </span>
@@ -487,7 +503,11 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                           </p>
                         </div>
                       </div>
-                      <div className="self-end sm:self-center flex-shrink-0">
+                      <div className="self-end sm:self-center flex-shrink-0 flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg bg-gray-100 text-gray-500 border border-gray-200/80">
+                          <FiLock className="w-3 h-3 text-gray-400" />
+                          <span>Locked</span>
+                        </span>
                         <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
                           {qTask.maxPoints || 10} pts
                         </span>
