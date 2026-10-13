@@ -15,11 +15,16 @@ const CourseTable = ({ enrollments = [] }) => {
   const courses = useMemo(() => {
     return enrollments.map((enrollment) => {
       const course = enrollment.course || {};
-      const instructor = course.instructor || {};
+      const instructorObj =
+        (typeof enrollment.instructor === "object" && enrollment.instructor?.name)
+          ? enrollment.instructor
+          : (typeof course.instructor === "object" && course.instructor?.name)
+          ? course.instructor
+          : {};
       return {
         id: enrollment._id,
         name: course.title || "Unknown Course",
-        instructor: instructor.name || "Unknown Instructor",
+        instructor: instructorObj.name || enrollment.instructor?.name || course.instructor?.name || "Unknown Instructor",
         date: enrollment.createdAt
           ? new Date(enrollment.createdAt).toLocaleDateString("en-GB")
           : "N/A",
