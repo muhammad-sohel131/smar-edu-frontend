@@ -14,6 +14,7 @@ import {
   FiDownload,
   FiX,
   FiCheckCircle,
+  FiAward,
 } from "react-icons/fi";
 import { useLessonsByUnit } from "@/hooks/useCourse";
 import { useTasks } from "@/hooks/useTask";
@@ -93,7 +94,7 @@ export default function CourseContent({ units = [] }) {
                 Course Curriculum & Modules
               </h2>
               <p className="text-sm text-gray-600">
-                {units.length} comprehensive modules • Real videos, PDFs, audio guides & quizzes
+                {units.length} comprehensive modules • Real videos, PDFs, audio guides, hands-on tasks & quizzes
               </p>
             </div>
           </div>
@@ -103,13 +104,19 @@ export default function CourseContent({ units = [] }) {
               <FiPlayCircle className="w-3.5 h-3.5 text-blue-500" /> Video
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200/60 font-medium">
-              <FiFileText className="w-3.5 h-3.5 text-rose-500" /> PDF Document
+              <FiFileText className="w-3.5 h-3.5 text-rose-500" /> PDF Guide
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-200/60 font-medium">
               <FiHeadphones className="w-3.5 h-3.5 text-purple-500" /> Audio
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200/60 font-medium">
               <FiBookOpen className="w-3.5 h-3.5 text-amber-500" /> Article
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-medium">
+              <FiAward className="w-3.5 h-3.5 text-emerald-500" /> Practice Tasks
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200/60 font-medium">
+              <FiHelpCircle className="w-3.5 h-3.5 text-violet-500" /> Quizzes
             </span>
           </div>
         </div>
@@ -282,7 +289,8 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
   const { data: lessons = [], isLoading } = useLessonsByUnit(unit._id);
   const { data: tasks = [] } = useTasks(unit._id);
 
-  const quizTask = tasks.find((t) => t.type === "quiz");
+  const practicalTasks = tasks.filter((t) => t.type !== "quiz");
+  const quizTasks = tasks.filter((t) => t.type === "quiz");
 
   return (
     <motion.div
@@ -313,13 +321,18 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
             <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
               {unit.title}
             </h3>
-            <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-gray-600">
+            <div className="flex flex-wrap items-center gap-2.5 mt-1 text-xs text-gray-600">
               <span className="font-medium text-gray-700">
                 {lessons.length} {lessons.length === 1 ? "lesson" : "lessons"}
               </span>
-              {tasks.length > 0 && (
-                <span className="text-purple-600 font-medium">
-                  • {tasks.length} {tasks.length === 1 ? "assessment" : "assessments"}
+              {practicalTasks.length > 0 && (
+                <span className="text-emerald-700 font-medium">
+                  • {practicalTasks.length} {practicalTasks.length === 1 ? "task" : "tasks"}
+                </span>
+              )}
+              {quizTasks.length > 0 && (
+                <span className="text-purple-700 font-medium">
+                  • {quizTasks.length} {quizTasks.length === 1 ? "quiz" : "quizzes"}
                 </span>
               )}
               {unit.duration && <span>• {unit.duration}</span>}
@@ -358,7 +371,6 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                   {lessons.map((lesson, lessonIdx) => {
                     const typeConfig = getContentTypeConfig(lesson.contentType);
                     const IconComponent = typeConfig.icon;
-                    // First module's lessons or lessons with explicit content can be previewed
                     const canPreview = (index === 0 && lessonIdx < 2) || lesson.contentType === "video";
 
                     return (
@@ -413,32 +425,75 @@ function UnitAccordion({ unit, index, isOpen, onToggle, setPreviewItem }) {
                     );
                   })}
 
-                  {/* Render Quizzes / Practice Tasks */}
-                  {quizTask && (
-                    <div className="mt-3 p-3.5 rounded-xl bg-gradient-to-r from-purple-50/60 to-indigo-50/40 border border-purple-100/80 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2.5 rounded-xl bg-purple-100 text-purple-700">
+                  {/* Render Practical Tasks / Assignments */}
+                  {practicalTasks.map((task) => (
+                    <motion.div
+                      key={task._id}
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="mt-2.5 p-3.5 rounded-xl bg-gradient-to-r from-emerald-50/80 to-teal-50/40 border border-emerald-100/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm hover:border-emerald-200 transition-all"
+                    >
+                      <div className="flex items-start sm:items-center gap-3 flex-1 min-w-0">
+                        <div className="p-2.5 rounded-xl bg-emerald-100 text-emerald-700 flex-shrink-0">
+                          {task.type === "video" ? <FiPlayCircle className="w-4 h-4" /> : <FiFileText className="w-4 h-4" />}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h4 className="font-semibold text-gray-900 text-sm truncate">
+                              {task.title}
+                            </h4>
+                            <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200/80">
+                              {task.type === "video" ? "Video Demo Task" : "Practical Project"}
+                            </span>
+                          </div>
+                          {task.description && (
+                            <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                              {task.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="self-end sm:self-center flex-shrink-0">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                          {task.maxPoints || 15} pts
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
+
+                  {/* Render Module Knowledge-Check Quizzes */}
+                  {quizTasks.map((qTask) => (
+                    <motion.div
+                      key={qTask._id}
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="mt-2.5 p-3.5 rounded-xl bg-gradient-to-r from-purple-50/70 to-indigo-50/40 border border-purple-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm hover:border-purple-200 transition-all"
+                    >
+                      <div className="flex items-start sm:items-center gap-3 flex-1 min-w-0">
+                        <div className="p-2.5 rounded-xl bg-purple-100 text-purple-700 flex-shrink-0">
                           <FiHelpCircle className="w-4 h-4" />
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-semibold text-gray-900 text-sm">
-                              {quizTask.title}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h4 className="font-semibold text-gray-900 text-sm truncate">
+                              {qTask.title}
                             </h4>
-                            <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-md bg-purple-200/80 text-purple-800">
+                            <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 border border-purple-200">
                               Module Quiz
                             </span>
                           </div>
-                          <p className="text-xs text-gray-600 mt-0.5">
-                            Pass Mark: 70% • Multiple Choice Assessment with Instant Feedback
+                          <p className="text-xs text-gray-600 mt-1">
+                            Pass Mark: 70% • Instant Feedback Assessment & Leaderboard Points
                           </p>
                         </div>
                       </div>
-                      <div className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800">
-                        {quizTask.maxPoints || 10} pts
+                      <div className="self-end sm:self-center flex-shrink-0">
+                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
+                          {qTask.maxPoints || 10} pts
+                        </span>
                       </div>
-                    </div>
-                  )}
+                    </motion.div>
+                  ))}
                 </>
               ) : (
                 <div className="text-center py-6 bg-gray-50/50 rounded-xl border border-dashed border-gray-200">
