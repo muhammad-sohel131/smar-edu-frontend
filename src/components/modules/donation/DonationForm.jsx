@@ -2,8 +2,21 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import api from "@/lib/apiClient";
-import React, { useState } from "react";
-import { FaCheck, FaCrown, FaHandHoldingUsd, FaHeart, FaLock, FaRocket, FaCreditCard, FaBuilding, FaGlobe, FaMoneyBillWave } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import {
+  FaCheck,
+  FaCrown,
+  FaHandHoldingUsd,
+  FaHeart,
+  FaLock,
+  FaRocket,
+  FaCreditCard,
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaSpinner,
+  FaSearch
+} from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const DonationForm = ({
@@ -15,10 +28,26 @@ const DonationForm = ({
   handleDonation,
   isLoading,
   selectedFundData,
-  loading = false
+  loading = false,
+  onSwitchToTrack
 }) => {
   const { user } = useAuth();
   const [selectedProvider, setSelectedProvider] = useState("sslcommerz");
+
+  // Donor identification fields (no registration required)
+  const [donorName, setDonorName] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Auto-fill from authenticated user if available
+  useEffect(() => {
+    if (user) {
+      if (user.name && !donorName) setDonorName(user.name);
+      if (user.email && !donorEmail) setDonorEmail(user.email);
+      if (user.phone && !donorPhone) setDonorPhone(user.phone);
+    }
+  }, [user]);
 
   // Payment providers
   const paymentProviders = [
@@ -28,42 +57,60 @@ const DonationForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if user is logged in
-    console.log(user)
-    if (!user) {
-      toast.error("Please login to make a donation");
+    // Validate donor details
+    if (!donorName.trim()) {
+      toast.error("Please enter your full name");
+      return;
+    }
+
+    if (!donorEmail.trim() || !/\S+@\S+\.\S+/.test(donorEmail.trim())) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    const cleanPhone = donorPhone.trim();
+    if (!cleanPhone || cleanPhone.length < 8) {
+      toast.error("Please enter a valid phone number (used to track your donations)");
       return;
     }
 
     // Validate amount
-    if (!donationAmount || donationAmount === "0" || parseInt(donationAmount) < 1) {
+    if (!donationAmount || donationAmount === "0" || parseFloat(donationAmount) < 1) {
       toast.error("Please select or enter a valid donation amount");
       return;
     }
 
     try {
-      // Prepare donation data
+      setIsSubmitting(true);
+      // Prepare donation data with guest donor information
       const donationData = {
-        fund: selectedFundData.id,
+        fund: selectedFundData?.id || "educational-scholarships",
         amount: parseFloat(donationAmount),
         provider: selectedProvider,
-        currency: "BDT"
+        currency: "BDT",
+        donorInfo: {
+          name: donorName.trim(),
+          email: donorEmail.trim(),
+          phone: cleanPhone
+        }
       };
 
-      console.log("Processing donation:", donationData);
+      console.log("Processing donation with donor info:", donationData);
 
-
-      const res = await api.post('orders/donation-checkout', donationData)
-      const { checkoutUrl } = res?.data?.data
+      const res = await api.post("orders/donation-checkout", donationData);
+      const { checkoutUrl } = res?.data?.data || {};
 
       if (checkoutUrl) {
-        window.location.href = checkoutUrl
+        window.location.href = checkoutUrl;
+      } else {
+        toast.success("Donation initiated successfully!");
       }
-
-
     } catch (error) {
       console.error("Donation error:", error);
-      toast.error("Error processing donation. Please try again.");
+      const errMsg = error?.response?.data?.message || "Error processing donation. Please try again.";
+      toast.error(errMsg);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -188,6 +235,79 @@ const DonationForm = ({
         </div>
       </div>
 
+      {/* Donor Information (No Registration Required) */}
+      <div className="mb-8 p-6 bg-gradient-to-r from-emerald-50/60 via-teal-50/40 to-blue-50/60 rounded-2xl border border-emerald-200/80">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <label className="text-xl font-bold text-gray-900 flex items-center">
+            <FaUser className="w-5 h-5 text-emerald-600 mr-2" />
+            Donor Details
+          </label>
+          <span className="text-xs bg-emerald-600 text-white font-semibold px-3 py-1 rounded-full shadow-sm">
+            ✓ No Account / Registration Needed
+          </span>
+        </div>
+        <p className="text-xs text-gray-600 mb-5">
+          Please enter your name, email, and phone number. Your <strong className="text-emerald-700">phone number serves as your unique ID</strong> to track all your donation history anytime!
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Donor Name */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
+              Full Name <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <FaUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+              <input
+                type="text"
+                required
+                value={donorName}
+                onChange={(e) => setDonorName(e.target.value)}
+                placeholder="e.g. John Doe"
+                className="w-full pl-10 pr-3 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-medium text-gray-800 placeholder-gray-400"
+              />
+            </div>
+          </div>
+
+          {/* Donor Email */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">
+              Email Address <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <FaEnvelope className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+              <input
+                type="email"
+                required
+                value={donorEmail}
+                onChange={(e) => setDonorEmail(e.target.value)}
+                placeholder="e.g. donor@example.com"
+                className="w-full pl-10 pr-3 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-medium text-gray-800 placeholder-gray-400"
+              />
+            </div>
+          </div>
+
+          {/* Donor Phone (Unique Tracker) */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide flex items-center justify-between">
+              <span>Phone Number <span className="text-red-500">*</span></span>
+              <span className="text-[10px] text-emerald-600 font-bold bg-emerald-100 px-1.5 py-0.5 rounded">Unique Tracker</span>
+            </label>
+            <div className="relative">
+              <FaPhone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-600 text-sm" />
+              <input
+                type="tel"
+                required
+                value={donorPhone}
+                onChange={(e) => setDonorPhone(e.target.value)}
+                placeholder="e.g. 01712345678"
+                className="w-full pl-10 pr-3 py-3 text-sm bg-white border-2 border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-bold text-gray-900 placeholder-gray-400"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Payment Provider Selection */}
       <div className="mb-8">
         <label className="text-xl font-bold text-gray-900 mb-4 flex items-center">
@@ -204,12 +324,12 @@ const DonationForm = ({
                 type="button"
                 onClick={() => setSelectedProvider(provider.id)}
                 className={`relative p-3 rounded-xl border-2 text-center transition-all duration-200 ${selectedProvider === provider.id
-                    ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                    ? "border-emerald-500 bg-emerald-50 text-emerald-700 font-semibold"
                     : "border-gray-200 text-gray-700 hover:border-gray-300"
                   }`}
               >
-                <ProviderIcon className="w-6 h-6 mx-auto mb-2" />
-                <div className="text-sm font-medium">{provider.name}</div>
+                <ProviderIcon className="w-6 h-6 mx-auto mb-2 text-emerald-600" />
+                <div className="text-sm font-semibold">{provider.name}</div>
                 <div className="text-xs text-gray-500 mt-1">{provider.description}</div>
                 {selectedProvider === provider.id && (
                   <div className="absolute top-2 right-2 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
@@ -232,7 +352,7 @@ const DonationForm = ({
           {selectedFundData?.examples.map((example, index) => (
             <div
               key={index}
-              className="flex items-center space-x-3 p-3 bg-white rounded-xl border border-gray-200"
+              className="flex items-center space-x-3 p-3 bg-white rounded-xl border border-gray-200 shadow-sm"
             >
               <div className="w-3 h-3 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full flex-shrink-0"></div>
               <span className="text-gray-700 font-medium">{example}</span>
@@ -253,28 +373,42 @@ const DonationForm = ({
           remains completely secure.
         </p>
         <div className="mt-3 text-sm text-emerald-600 font-medium">
-          Selected: {paymentProviders.find(p => p.id === selectedProvider)?.name}
+          Selected Gateway: {paymentProviders.find(p => p.id === selectedProvider)?.name}
         </div>
       </div>
 
       {/* Donate Button */}
       <button
         type="submit"
-        disabled={!user || !donationAmount || donationAmount === "0"}
-        className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white py-5 px-8 rounded-2xl font-bold text-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-3 shadow-lg"
+        disabled={isSubmitting || !donationAmount || donationAmount === "0"}
+        className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white py-5 px-8 rounded-2xl font-bold text-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-3 shadow-lg"
       >
-        {!user ? (
+        {isSubmitting ? (
           <>
-            <FaLock className="w-6 h-6" />
-            <span>Please Login to Donate</span>
+            <FaSpinner className="w-6 h-6 animate-spin" />
+            <span>Connecting to Payment Gateway...</span>
           </>
         ) : (
           <>
             <FaHandHoldingUsd className="w-6 h-6" />
-            <span>Donate ৳{donationAmount}</span>
+            <span>Donate ৳{donationAmount || "0"}</span>
           </>
         )}
       </button>
+
+      {/* Track Link Notice */}
+      {onSwitchToTrack && (
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            onClick={onSwitchToTrack}
+            className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline inline-flex items-center space-x-1"
+          >
+            <FaSearch className="w-3.5 h-3.5 mr-1" />
+            <span>Already donated? Track your donations using your phone number &rarr;</span>
+          </button>
+        </div>
+      )}
 
       {/* Trust Badges */}
       <div className="mt-8 text-center">

@@ -4,14 +4,16 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/modules/headers/Navbar'
 import React from 'react'
-import { FaCheck, FaCrown, FaGem, FaGraduationCap, FaHandHoldingUsd, FaHeart, FaLock, FaRocket, FaStar } from 'react-icons/fa';
+import { FaCheck, FaCrown, FaGem, FaGraduationCap, FaHandHoldingUsd, FaHeart, FaLock, FaRocket, FaStar, FaSearch } from 'react-icons/fa';
 import DonationHeaderSection from '@/components/modules/donation/DonationHeaderSection';
 import FundSelectionSidebar from '@/components/modules/donation/FundSelectionSidebar';
 import SelectedFundHeader from '@/components/modules/donation/SelectedFundHeader';
 import DonationForm from '@/components/modules/donation/DonationForm';
 import DonationInfo from '@/components/modules/donation/DonationInfo';
+import DonationTracker from '@/components/modules/donation/DonationTracker';
 
 const Donation = () => {
+  const [activeTab, setActiveTab] = useState('donate');
   const [selectedFund, setSelectedFund] = useState('educational-scholarships');
   const [donationAmount, setDonationAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
@@ -135,42 +137,78 @@ const Donation = () => {
         <DonationHeaderSection />
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 sm:px-6 py-16 -mt-10">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Fund Selection Sidebar */}
-            <FundSelectionSidebar
-              selectedFund={selectedFund}
-              setSelectedFund={setSelectedFund}
-              isHovered={isHovered}
-              setIsHovered={setIsHovered}
-              funds={funds}
-            />
+        <div className="container mx-auto px-4 sm:px-6 py-12 -mt-10">
+          {/* View Mode Toggle: Donate vs Track */}
+          <div className="flex items-center justify-center mb-10">
+            <div className="bg-white/90 backdrop-blur-md p-1.5 rounded-2xl shadow-lg border border-gray-200/80 inline-flex items-center space-x-2">
+              <button
+                onClick={() => setActiveTab('donate')}
+                className={`px-6 py-3 rounded-xl font-bold text-sm sm:text-base flex items-center space-x-2.5 transition-all duration-300 ${
+                  activeTab === 'donate'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <FaHandHoldingUsd className="w-5 h-5" />
+                <span>Make a Donation</span>
+              </button>
 
-            {/* Donation Form */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-                {/* Selected Fund Header */}
-                <SelectedFundHeader
-                  selectedFundData={selectedFundData}
-                />
-
-                {/* Donation Form */}
-                <DonationForm
-                  donationOptions={donationOptions}
-                  donationAmount={donationAmount}
-                  customAmount={customAmount}
-                  handleAmountSelect={handleAmountSelect}
-                  handleCustomAmount={handleCustomAmount}
-                  handleDonation={handleDonation}
-                  isLoading={isLoading}
-                  selectedFundData={selectedFundData}
-                />
-              </div>
-
-              {/* Additional Info */}
-              <DonationInfo/>
+              <button
+                onClick={() => setActiveTab('track')}
+                className={`px-6 py-3 rounded-xl font-bold text-sm sm:text-base flex items-center space-x-2.5 transition-all duration-300 ${
+                  activeTab === 'track'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <FaSearch className="w-4 h-4" />
+                <span>Track by Phone</span>
+              </button>
             </div>
           </div>
+
+          {activeTab === 'donate' ? (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Fund Selection Sidebar */}
+              <FundSelectionSidebar
+                selectedFund={selectedFund}
+                setSelectedFund={setSelectedFund}
+                isHovered={isHovered}
+                setIsHovered={setIsHovered}
+                funds={funds}
+              />
+
+              {/* Donation Form */}
+              <div className="lg:col-span-2">
+                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+                  {/* Selected Fund Header */}
+                  <SelectedFundHeader
+                    selectedFundData={selectedFundData}
+                  />
+
+                  {/* Donation Form */}
+                  <DonationForm
+                    donationOptions={donationOptions}
+                    donationAmount={donationAmount}
+                    customAmount={customAmount}
+                    handleAmountSelect={handleAmountSelect}
+                    handleCustomAmount={handleCustomAmount}
+                    handleDonation={handleDonation}
+                    isLoading={isLoading}
+                    selectedFundData={selectedFundData}
+                    onSwitchToTrack={() => setActiveTab('track')}
+                  />
+                </div>
+
+                {/* Additional Info */}
+                <DonationInfo/>
+              </div>
+            </div>
+          ) : (
+            <div className="max-w-4xl mx-auto">
+              <DonationTracker onDonateClick={() => setActiveTab('donate')} />
+            </div>
+          )}
         </div>
       </div>
     </>
