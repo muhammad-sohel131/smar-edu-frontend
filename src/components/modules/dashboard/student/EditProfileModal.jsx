@@ -69,22 +69,16 @@ export default function EditProfileModal({ profile, isOpen, onClose, onSave }) {
               {/* Personal Info Section */}
               <FieldSection title="Personal Information">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField
-                    label="First Name"
-                    icon={<User className="w-4 h-4" />}
-                    name="firstName"
-                    value={formData.firstName || ""}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                  />
-                  <FormField
-                    label="Last Name"
-                    icon={<User className="w-4 h-4" />}
-                    name="lastName"
-                    value={formData.lastName || ""}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                  />
+                  <div className="sm:col-span-2">
+                    <FormField
+                      label="Name"
+                      icon={<User className="w-4 h-4" />}
+                      name="name"
+                      value={formData.name || ""}
+                      onChange={handleChange}
+                      placeholder="Full Name"
+                    />
+                  </div>
                   <FormField
                     label="Gender"
                     icon={<Users className="w-4 h-4" />}

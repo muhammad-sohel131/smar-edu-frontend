@@ -24,8 +24,7 @@ export default function CheckoutPage() {
   const params = useSearchParams()
   const [paymentMethod, setPaymentMethod] = useState("sslcommerz");
   const [billingInfo, setBillingInfo] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     phone: "",
     country: "",
     state: "",
@@ -103,11 +102,7 @@ export default function CheckoutPage() {
 
                 <form className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <input onChange={onChange} value={billingInfo.firstName} name="firstName" placeholder="First Name *" className={inputBase} />
-                    <input onChange={onChange} placeholder="Last Name *" value={billingInfo.lastName} name="lastName" className={inputBase} />
-                  </div>
-
-                  <div>
+                    <input onChange={onChange} value={billingInfo.name} name="name" placeholder="Name *" className={inputBase} />
                     <input onChange={onChange} placeholder="Phone (optional)" value={billingInfo.phone} name="phone" className={inputBase} />
                   </div>
 

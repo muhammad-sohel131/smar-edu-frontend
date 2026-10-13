@@ -65,8 +65,7 @@ export default function ProfileCard() {
 
   const profile = userData
     ? {
-        firstName: userData.name?.split(" ")[0] || "",
-        lastName: userData.name?.split(" ").slice(1).join(" ") || "",
+        name: userData.name || "",
         userName: userData.email?.split("@")[0] || "",
         phone: userData.phone || "",
         email: userData.email || "",
@@ -96,7 +95,7 @@ export default function ProfileCard() {
   const handleSaveProfile = async (formData) => {
     try {
       const updateData = {
-        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        name: formData.name || userData?.name,
         phone: formData.phone,
         organization: formData.organization,
         region: formData.region,
@@ -113,10 +112,7 @@ export default function ProfileCard() {
     }
   };
 
-  const fullName =
-    profile.firstName && profile.lastName
-      ? `${profile.firstName} ${profile.lastName}`
-      : userData?.name || "Loading...";
+  const fullName = profile.name || userData?.name || "Loading...";
   const initials =
     fullName !== "Loading..."
       ? fullName
