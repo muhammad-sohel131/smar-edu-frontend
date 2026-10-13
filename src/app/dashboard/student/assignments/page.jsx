@@ -14,7 +14,15 @@ import {
 
 /* ============================ Utilities ========================== */
 
-const STATUSES = ["All", "Pending", "Reviewed"];
+const isPendingStatus = (status) => {
+  const s = String(status || "").toLowerCase();
+  return s === "pending" || s === "pending_review";
+};
+
+const isReviewedStatus = (status) => {
+  const s = String(status || "").toLowerCase();
+  return s === "reviewed" || s === "auto_scored" || s === "approved" || s === "rejected";
+};
 
 function classNames(...a) {
   return a.filter(Boolean).join(" ");
@@ -47,8 +55,8 @@ export default function AssignmentsPage() {
 
   const stats = useMemo(() => {
     const total = submissions.length;
-    const pending = submissions.filter((s) => s.status === "pending").length;
-    const reviewed = submissions.filter((s) => s.status === "reviewed").length;
+    const pending = submissions.filter((s) => isPendingStatus(s.status)).length;
+    const reviewed = submissions.filter((s) => isReviewedStatus(s.status)).length;
     return { total, pending, reviewed };
   }, [submissions]);
 
@@ -62,8 +70,8 @@ export default function AssignmentsPage() {
         s.course?.title?.toLowerCase().includes(q);
       const matchesStatus = 
         status === "All" ? true : 
-        status === "Pending" ? s.status === "pending" :
-        s.status === "reviewed";
+        status === "Pending" ? isPendingStatus(s.status) :
+        isReviewedStatus(s.status);
       return matchesQ && matchesStatus;
     });
   }, [query, status, submissions]);
@@ -96,9 +104,29 @@ export default function AssignmentsPage() {
 
         {/* Quick stats */}
         <div className="grid grid-cols-3 gap-2">
-          <StatCard icon={<BookOpen className="h-4 w-4" />} label="Total" value={stats.total} />
-          <StatCard icon={<Clock3 className="h-4 w-4" />} label="Pending" value={stats.pending} tone="secondary" />
-          <StatCard icon={<CheckCircle2 className="h-4 w-4" />} label="Reviewed" value={stats.reviewed} tone="primary" />
+          <StatCard
+            icon={<BookOpen className="h-4 w-4" />}
+            label="Total"
+            value={stats.total}
+            active={status === "All"}
+            onClick={() => setStatus("All")}
+          />
+          <StatCard
+            icon={<Clock3 className="h-4 w-4" />}
+            label="Pending"
+            value={stats.pending}
+            tone="secondary"
+            active={status === "Pending"}
+            onClick={() => setStatus("Pending")}
+          />
+          <StatCard
+            icon={<CheckCircle2 className="h-4 w-4" />}
+            label="Reviewed"
+            value={stats.reviewed}
+            tone="primary"
+            active={status === "Reviewed"}
+            onClick={() => setStatus("Reviewed")}
+          />
         </div>
       </header>
 
@@ -231,25 +259,35 @@ export default function AssignmentsPage() {
 
 /* =============================== UI Components =============================== */
 
-function StatCard({ icon, label, value, tone = "default" }) {
+function StatCard({ icon, label, value, tone = "default", active = false, onClick }) {
   const bg =
     tone === "primary" ? "var(--color-primary)" :
     tone === "secondary" ? "var(--color-secondary)" :
     "var(--color-text)";
     
   return (
-    <div className="rounded-xl px-4 py-3 text-white shadow-md" style={{ background: bg }}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-xl px-4 py-3 text-white shadow-md text-left transition-all duration-200 cursor-pointer ${
+        active
+          ? "ring-2 ring-offset-2 ring-[var(--color-primary)] scale-[1.03]"
+          : "opacity-90 hover:opacity-100 hover:scale-[1.01]"
+      }`}
+      style={{ background: bg }}
+    >
       <div className="flex items-center justify-between">
-        <span className="text-xs opacity-90">{label}</span>
+        <span className="text-xs opacity-90 font-medium">{label}</span>
         <span className="opacity-90">{icon}</span>
       </div>
       <div className="mt-1 text-lg font-bold">{value}</div>
-    </div>
+    </button>
   );
 }
 
 function StatusBadge({ status }) {
-  const config = status === "reviewed" 
+  const reviewed = isReviewedStatus(status);
+  const config = reviewed 
     ? { bg: "var(--color-primary)", icon: CheckCircle2, label: "Reviewed" }
     : { bg: "var(--color-secondary)", icon: Clock3, label: "Pending" };
 
@@ -257,7 +295,7 @@ function StatusBadge({ status }) {
   
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs text-white shadow-sm"
+      className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs text-white shadow-sm font-medium"
       style={{ background: config.bg }}
     >
       <Icon className="h-3.5 w-3.5" />
