@@ -1,6 +1,6 @@
 "use client";
 
-import { Book, Users, CheckCircle, CreditCard, TrendingUp, Target, Clock, Award, Trophy, Star, Sparkles } from "lucide-react";
+import { Users, TrendingUp, Target, Clock, Award, Trophy, Star, Sparkles } from "lucide-react";
 import StatusCard from "@/components/modules/dashboard/student/StatsCard";
 import CourseTable from "@/components/modules/dashboard/student/CourseTable";
 import { useAuth } from "@/hooks/useAuth";
@@ -87,34 +87,13 @@ export default function Dashboard() {
         {/* Stats Grid */}
         <div>
           <SectionLabel>Overview</SectionLabel>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-3">
-            <StatusCard
-              icon={<Book className="w-5 h-5" />}
-              value={stats?.totalCourses || 0}
-              label="Total Courses"
-              color="from-[var(--color-primary)] to-[var(--color-secondary)]"
-              trend={`${stats?.enrolledCourses || 0} enrolled`}
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-3">
             <StatusCard
               icon={<Users className="w-5 h-5" />}
               value={stats?.enrolledCourses || 0}
               label="Enrolled"
               color="from-[var(--color-secondary)] to-[var(--color-primary)]"
               trend="Active now"
-            />
-            <StatusCard
-              icon={<CheckCircle className="w-5 h-5" />}
-              value={`${stats?.completionRate || 0}%`}
-              label="Completion Rate"
-              color="from-[var(--color-accent-special)] to-[var(--color-secondary)]"
-              trend={`${stats?.completedCourses || 0} completed`}
-            />
-            <StatusCard
-              icon={<CreditCard className="w-5 h-5" />}
-              value={`৳${stats?.totalFeesPaid || 0}`}
-              label="Fees Paid"
-              color="from-[var(--color-accent)] to-[var(--color-accent-special)]"
-              trend="Investment"
             />
             <StatusCard
               icon={<Award className="w-5 h-5" />}
