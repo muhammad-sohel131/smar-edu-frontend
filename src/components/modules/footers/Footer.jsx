@@ -99,7 +99,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)] text-[var(--color-primary)] hover:text-white flex items-center justify-center transition-all duration-200"
+                  className="w-8 h-8 rounded-full bg-orange-50 hover:bg-[var(--color-accent)] text-orange-600 hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm"
                 >
                   <FaFacebookF size={13} />
                 </a>
@@ -108,7 +108,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Twitter"
-                  className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)] text-[var(--color-primary)] hover:text-white flex items-center justify-center transition-all duration-200"
+                  className="w-8 h-8 rounded-full bg-orange-50 hover:bg-[var(--color-accent)] text-orange-600 hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm"
                 >
                   <FaTwitter size={13} />
                 </a>
@@ -117,7 +117,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)] text-[var(--color-primary)] hover:text-white flex items-center justify-center transition-all duration-200"
+                  className="w-8 h-8 rounded-full bg-orange-50 hover:bg-[var(--color-accent)] text-orange-600 hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm"
                 >
                   <FaLinkedinIn size={13} />
                 </a>
@@ -126,7 +126,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
-                  className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)] text-[var(--color-primary)] hover:text-white flex items-center justify-center transition-all duration-200"
+                  className="w-8 h-8 rounded-full bg-orange-50 hover:bg-[var(--color-accent)] text-orange-600 hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm"
                 >
                   <FaYoutube size={13} />
                 </a>

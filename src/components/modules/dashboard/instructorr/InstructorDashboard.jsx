@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import EarningsChart from "./EarningsChart";
@@ -13,16 +14,45 @@ import {
   AlertCircle,
   ChevronRight,
   Calendar,
+  Wallet,
+  ArrowUpRight,
+  History,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useInstructorDashboard } from "@/hooks/useInstructor";
 import { useMyRegisteredEvents } from "@/hooks/useEvent";
+import { useWithdrawalSimulation } from "@/hooks/useWithdrawalSimulation";
+import WithdrawModal from "@/app/dashboard/admin/transactions/WithdrawModal";
 
 export default function InstructorDashboard() {
   const { user } = useAuth();
   const { data: dashboardData, isLoading, isError, error } = useInstructorDashboard();
   const { data: eventsData } = useMyRegisteredEvents();
+
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
+  const [modalTab, setModalTab] = useState("withdraw");
+
+  const { stats, topCourses, unevaluatedTasks } = dashboardData || {};
+
+  const {
+    withdrawals,
+    myWithdrawals,
+    totalWithdrawn: instructorTotalWithdrawn,
+    availableBalance: instructorAvailableBalance,
+    effectiveEarnings: instructorTotalEarnings,
+    addWithdrawal,
+    resetSimulation,
+  } = useWithdrawalSimulation({
+    user,
+    isInstructor: true,
+    instructorEarnings: stats?.totalEarnings,
+  });
+
+  const handleOpenWithdraw = (tab = "withdraw") => {
+    setModalTab(tab);
+    setIsWithdrawOpen(true);
+  };
 
   // Loading State
   if (isLoading) {
@@ -71,7 +101,6 @@ export default function InstructorDashboard() {
     );
   }
 
-  const { stats, topCourses, unevaluatedTasks } = dashboardData || {};
   if (user?.instructorRequest?.status === "pending") {
     return (
       <section className=" flex min-h-[80vh] items-center justify-center p-4 md:p-6 lg:p-8">
@@ -104,7 +133,7 @@ export default function InstructorDashboard() {
     <section className="min-h-screen p-4 md:p-6 lg:p-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent-special)] rounded-xl">
@@ -120,11 +149,22 @@ export default function InstructorDashboard() {
               </div>
             </div>
             <p className="text-[var(--color-text)]/70 max-w-2xl">
-              Track your performance, manage courses, and monitor student engagement
+              Track your performance, manage earnings, courses, and student engagement
             </p>
           </div>
-          <div className="hidden md:flex items-center gap-3">
-            <span className="px-4 py-2 bg-emerald-100 text-[var(--color-primary)] rounded-full font-medium text-sm">
+
+          {/* Action Header Button */}
+          <div className="flex items-center gap-3">
+            <button
+              id="btn-instructor-withdraw-header"
+              onClick={() => handleOpenWithdraw("withdraw")}
+              className="flex items-center gap-2 px-5 py-2.5 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-semibold rounded-xl shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <ArrowUpRight className="w-4 h-4" />
+              Withdraw Earnings
+            </button>
+
+            <span className="hidden md:inline-flex px-4 py-2 bg-blue-50 text-[var(--color-primary)] rounded-full font-medium text-sm border border-blue-100">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -134,81 +174,188 @@ export default function InstructorDashboard() {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Financial & Activity Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {/* 1. AVAILABLE BALANCE CARD (Gradient Hero Card with Withdraw Button) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+          >
+            <div className="relative overflow-hidden p-6 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl shadow-lg text-white border border-blue-500/20 h-full flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="flex items-center gap-1.5 text-blue-100 text-xs font-semibold uppercase tracking-wider">
+                    <Wallet className="w-4 h-4" />
+                    Available Balance
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/40 text-blue-100 font-semibold border border-blue-300/30">
+                    Ready to Payout
+                  </span>
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-white mb-1">
+                  ৳{instructorAvailableBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </h3>
+                <p className="text-blue-200 text-xs">Simulate instant withdrawal to wallet/bank</p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-blue-400/30 flex items-center justify-between">
+                <button
+                  id="btn-instructor-withdraw-card"
+                  onClick={() => handleOpenWithdraw("withdraw")}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white text-[var(--color-primary)] hover:bg-blue-50 font-bold text-xs rounded-xl shadow-md transition hover:scale-105 active:scale-95"
+                >
+                  <ArrowUpRight className="w-4 h-4" />
+                  Withdraw
+                </button>
+                <button
+                  id="btn-instructor-history-link"
+                  onClick={() => handleOpenWithdraw("history")}
+                  className="text-xs text-blue-100 hover:text-white font-medium flex items-center gap-1 underline underline-offset-2"
+                >
+                  <History className="w-3.5 h-3.5" />
+                  History ({myWithdrawals.length})
+                </button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 2. TOTAL EARNINGS CARD */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl">
-                  <BookOpen className="w-6 h-6 text-white" />
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-lg p-6 hover:shadow-xl transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl text-white shadow-md shadow-amber-500/20">
+                    <DollarSign className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                    Lifetime
+                  </span>
                 </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
+                  ৳{instructorTotalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </h3>
+                <p className="text-gray-500 text-sm">Total Earnings</p>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                {stats?.liveCourses || 0}
-              </h3>
-              <p className="text-gray-600 text-sm">Live Courses</p>
+              <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+                Revenue from course enrollments
+              </div>
             </div>
           </motion.div>
 
+          {/* 3. TOTAL WITHDRAWN CARD */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+          >
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-lg p-6 hover:shadow-xl transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl text-white shadow-md shadow-purple-500/20">
+                    <ArrowUpRight className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+                    {myWithdrawals.length} Payouts
+                  </span>
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
+                  ৳{instructorTotalWithdrawn.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </h3>
+                <p className="text-gray-500 text-sm">Total Withdrawn</p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                <span className="text-gray-400">Paid out to wallets</span>
+                {myWithdrawals.length > 0 && (
+                  <button
+                    onClick={() => handleOpenWithdraw("history")}
+                    className="text-[var(--color-primary)] font-semibold hover:underline flex items-center gap-1"
+                  >
+                    <History className="w-3.5 h-3.5" />
+                    View History
+                  </button>
+                )}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 4. LIVE COURSES CARD */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl">
-                  <Users className="w-6 h-6 text-white" />
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-lg p-6 hover:shadow-xl transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl text-white shadow-md shadow-blue-500/20">
+                    <BookOpen className="w-6 h-6" />
+                  </div>
                 </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
+                  {stats?.liveCourses || 0}
+                </h3>
+                <p className="text-gray-500 text-sm">Live Courses</p>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                {stats?.totalStudents || 0}
-              </h3>
-              <p className="text-gray-600 text-sm">Active Students</p>
+              <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+                Published & available online
+              </div>
             </div>
           </motion.div>
 
+          {/* 5. ACTIVE STUDENTS CARD */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+          >
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-lg p-6 hover:shadow-xl transition-all h-full flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl text-white shadow-md shadow-emerald-500/20">
+                    <Users className="w-6 h-6" />
+                  </div>
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
+                  {stats?.totalStudents || 0}
+                </h3>
+                <p className="text-gray-500 text-sm">Active Students</p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400">
+                Enrolled learners
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 6. REGISTERED EVENTS CARD */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-lg p-6 hover:shadow-xl transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl">
-                  <DollarSign className="w-6 h-6 text-white" />
-                </div>
-              </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                ৳{stats?.totalEarnings?.toFixed(2) || "0.00"}
-              </h3>
-              <p className="text-gray-600 text-sm">Total Earnings</p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
             <Link href="/dashboard/instructor/events">
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-emerald-100 shadow-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
-                    <Calendar className="w-6 h-6 text-white" />
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-lg p-6 hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group h-full flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl text-white shadow-md shadow-indigo-500/20">
+                      <Calendar className="w-6 h-6 text-white" />
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-primary)] transition-colors" />
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-primary)] transition-colors" />
+                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
+                    {eventsData?.data?.length || 0}
+                  </h3>
+                  <p className="text-gray-600 text-sm group-hover:text-[var(--color-primary)] transition-colors">
+                    Registered Events
+                  </p>
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-1">
-                  {eventsData?.data?.length || 0}
-                </h3>
-                <p className="text-gray-600 text-sm group-hover:text-[var(--color-primary)] transition-colors">
-                  Registered Events
-                </p>
+                <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400 group-hover:text-[var(--color-primary)] transition-colors">
+                  View upcoming sessions →
+                </div>
               </div>
             </Link>
           </motion.div>
@@ -419,6 +566,19 @@ export default function InstructorDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Instructor Withdraw Simulation Modal */}
+      <WithdrawModal
+        isOpen={isWithdrawOpen}
+        onClose={() => setIsWithdrawOpen(false)}
+        availableBalance={instructorAvailableBalance}
+        onWithdrawSuccess={addWithdrawal}
+        withdrawals={withdrawals}
+        onResetSimulation={resetSimulation}
+        currentUser={user}
+        initialTab={modalTab}
+        isInstructorView={true}
+      />
     </section>
   );
 }

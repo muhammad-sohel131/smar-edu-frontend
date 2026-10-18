@@ -36,7 +36,7 @@ export default function AdminEventsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screenp-6">
+      <div className="p-6 space-y-6 text-[var(--color-text)]">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-gray-200 rounded w-1/4"></div>
           <div className="h-64 bg-gray-200 rounded"></div>
@@ -47,8 +47,8 @@ export default function AdminEventsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen p-6">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <div className="p-6 space-y-6 text-[var(--color-text)]">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-[--radius-card]">
           Error loading events. Please try again.
         </div>
       </div>
@@ -56,16 +56,18 @@ export default function AdminEventsPage() {
   }
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="p-6 space-y-6 text-[var(--color-text)]">
       
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
-          Event Management
-        </h1>
-        <p className="text-[var(--color-text)] opacity-80">
-          Create, edit, and manage events for your platform
-        </p>
+      <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[--color-text]">
+            Event Management
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Create, edit, and manage events for your platform
+          </p>
+        </div>
       </div>
 
       {/* Action Bar */}

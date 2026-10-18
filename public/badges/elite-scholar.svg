@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <radialGradient id="es-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2e1065"/>
+      <stop offset="60%" stop-color="#170338"/>
+      <stop offset="100%" stop-color="#090117"/>
+    </radialGradient>
+    <linearGradient id="es-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="40%" stop-color="#eab308"/>
+      <stop offset="80%" stop-color="#ca8a04"/>
+      <stop offset="100%" stop-color="#713f12"/>
+    </linearGradient>
+    <linearGradient id="es-ruby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fda4af"/>
+      <stop offset="50%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#881337"/>
+    </linearGradient>
+    <filter id="es-glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer Rim Glow -->
+  <circle cx="250" cy="250" r="236" fill="none" stroke="#ec4899" stroke-width="4" opacity="0.6" filter="url(#es-glow)"/>
+  <!-- Beveled Gold & Ruby Rim -->
+  <circle cx="250" cy="250" r="225" fill="url(#es-bg)" stroke="url(#es-gold)" stroke-width="16"/>
+  <circle cx="250" cy="250" r="195" fill="none" stroke="url(#es-ruby)" stroke-width="8"/>
+  <circle cx="250" cy="250" r="175" fill="#130426" stroke="url(#es-gold)" stroke-width="3"/>
+
+  <!-- Five Honor Stars Arc -->
+  <g fill="url(#es-gold)" filter="url(#es-glow)">
+    <!-- Center star -->
+    <polygon points="250,90 255,105 270,105 258,114 262,128 250,119 238,128 242,114 230,105 245,105" transform="scale(1.1) translate(-23,-10)"/>
+    <!-- Left Stars -->
+    <polygon points="200,105 204,118 217,118 206,126 210,138 200,130 190,138 194,126 183,118 196,118" transform="scale(0.85) translate(30,20)"/>
+    <polygon points="160,135 164,148 177,148 166,156 170,168 160,160 150,168 154,156 143,148 156,148" transform="scale(0.7) translate(70,55)"/>
+    <!-- Right Stars -->
+    <polygon points="300,105 304,118 317,118 306,126 310,138 300,130 290,138 294,126 283,118 296,118" transform="scale(0.85) translate(50,20)"/>
+    <polygon points="340,135 344,148 357,148 346,156 350,168 340,160 330,168 334,156 323,148 336,148" transform="scale(0.7) translate(145,55)"/>
+  </g>
+
+  <!-- Open Tome / Book of Wisdom -->
+  <g transform="translate(130, 200)" filter="url(#es-glow)">
+    <!-- Book Pages -->
+    <path d="M 120 40 C 70 30, 20 40, 0 50 L 0 140 C 20 130, 70 120, 120 130 Z" fill="#fdf4ff" stroke="url(#es-gold)" stroke-width="4"/>
+    <path d="M 120 40 C 170 30, 220 40, 240 50 L 240 140 C 220 130, 170 120, 120 130 Z" fill="#fae8ff" stroke="url(#es-gold)" stroke-width="4"/>
+    <!-- Book Spine -->
+    <path d="M 120 40 L 120 145" stroke="url(#es-gold)" stroke-width="6"/>
+    <!-- Page Lines -->
+    <line x1="25" y1="70" x2="95" y2="65" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+    <line x1="25" y1="90" x2="95" y2="85" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+    <line x1="25" y1="110" x2="80" y2="105" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+
+    <line x1="145" y1="65" x2="215" y2="70" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+    <line x1="145" y1="85" x2="215" y2="90" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+    <line x1="145" y1="105" x2="200" y2="110" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Quill of Honor -->
+  <path d="M 290 170 Q 330 200 320 280 L 305 270 Q 315 220 285 200 Z" fill="url(#es-gold)" filter="url(#es-glow)"/>
+</svg>

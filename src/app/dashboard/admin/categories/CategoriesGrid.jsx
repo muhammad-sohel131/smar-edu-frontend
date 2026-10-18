@@ -440,7 +440,7 @@ if (isLoading) {
             <button
               onClick={() => goToPage(page - 1)}
               disabled={page === 1}
-              className={`p-2 rounded-lg ${page === 1 ? 'text-gray-400 bg-gray-100' : 'text-[#189E75] hover:bg-[#189E75]/10'}`}
+              className={`p-2 rounded-lg ${page === 1 ? 'text-gray-400 bg-gray-100' : 'text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10'}`}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -462,8 +462,8 @@ if (isLoading) {
                   <button
                     key={pageNum}
                     onClick={() => goToPage(pageNum)}
-                    className={`w-9 h-9 rounded-lg text-sm ${page === pageNum 
-                      ? 'bg-[#189E75] text-white shadow' 
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition ${page === pageNum 
+                      ? 'bg-[var(--color-primary)] text-white shadow-md' 
                       : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
@@ -476,7 +476,7 @@ if (isLoading) {
             <button
               onClick={() => goToPage(page + 1)}
               disabled={page === totalPages}
-              className={`p-2 rounded-lg ${page === totalPages ? 'text-gray-400 bg-gray-100' : 'text-[#189E75] hover:bg-[#189E75]/10'}`}
+              className={`p-2 rounded-lg ${page === totalPages ? 'text-gray-400 bg-gray-100' : 'text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10'}`}
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -559,7 +559,7 @@ if (isLoading) {
                       required
                       value={formData.title}
                       onChange={(e) => setFormData({...formData, title: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                       placeholder="Enter category title"
                     />
                   </div>
@@ -575,7 +575,7 @@ if (isLoading) {
                     <button
                       type="submit"
                       disabled={createCategory.isLoading || updateCategory.isLoading}
-                      className="flex-1 px-4 py-3 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {createCategory.isLoading || updateCategory.isLoading ? (
                         <>
@@ -602,7 +602,7 @@ if (isLoading) {
                   </p>
                   <button
                     onClick={() => setIsCreating(true)}
-                    className="px-4 py-2 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
+                    className="px-4 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
                   >
                     <Plus className="w-4 h-4" />
                     Create New Category

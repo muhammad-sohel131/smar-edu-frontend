@@ -56,9 +56,9 @@ export default function LearningJourney() {
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <p className="text-[var(--color-primary)] font-semibold mb-2">
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 border border-orange-200/60 mb-2.5">
             How it Works
-          </p>
+          </span>
           <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text)] mb-4">
             Start your Learning Journey Today!
           </h2>
@@ -75,9 +75,9 @@ export default function LearningJourney() {
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
                 whileHover={{ x: 6 }}
-                className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/60 transition-all duration-200"
+                className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/60 transition-all duration-200 group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[var(--color-primary)] flex items-center justify-center text-lg font-bold shadow-sm flex-shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 text-white flex items-center justify-center text-lg font-extrabold shadow-md shadow-orange-500/20 flex-shrink-0 group-hover:scale-105 transition-transform">
                   {step.id}
                 </div>
                 <div>

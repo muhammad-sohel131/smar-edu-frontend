@@ -210,7 +210,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                         <div className="font-medium text-[--color-text] flex items-center gap-2">
                           {admin.name || 'Unknown'}
                           {admin.role === 'SUPER_ADMIN' && (
-                            <span className="text-xs bg-[#189E75] text-white px-2 py-0.5 rounded-full">
+                            <span className="text-xs bg-[var(--color-primary)] text-white px-2 py-0.5 rounded-full">
                               Owner
                             </span>
                           )}
@@ -224,7 +224,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                   <td className="p-4">
                     <span className={`px-3 py-1.5 rounded-full text-xs font-medium ${
                       admin.role === 'SUPER_ADMIN'
-                        ? 'bg-[#189E75] text-white'
+                        ? 'bg-[var(--color-primary)] text-white'
                         : 'bg-gray-100 text-gray-700'
                     }`}>
                       {admin.role === 'SUPER_ADMIN' ? 'Super Admin' : 'Admin'}
@@ -273,7 +273,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                 <button
                   onClick={() => goToPage(page - 1)}
                   disabled={page === 1}
-                  className={`p-2 rounded-lg ${page === 1 ? 'text-gray-400 bg-gray-100' : 'text-[#189E75] hover:bg-[#189E75]/10'}`}
+                  className={`p-2 rounded-lg ${page === 1 ? 'text-gray-400 bg-gray-100' : 'text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10'}`}
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
@@ -295,8 +295,8 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                       <button
                         key={pageNum}
                         onClick={() => goToPage(pageNum)}
-                        className={`w-9 h-9 rounded-lg text-sm ${page === pageNum 
-                          ? 'bg-[#189E75] text-white shadow' 
+                        className={`w-9 h-9 rounded-lg text-sm font-medium transition ${page === pageNum 
+                          ? 'bg-[var(--color-primary)] text-white shadow-md' 
                           : 'text-gray-600 hover:bg-gray-100'
                         }`}
                       >
@@ -309,7 +309,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                 <button
                   onClick={() => goToPage(page + 1)}
                   disabled={page === totalPages}
-                  className={`p-2 rounded-lg ${page === totalPages ? 'text-gray-400 bg-gray-100' : 'text-[#189E75] hover:bg-[#189E75]/10'}`}
+                  className={`p-2 rounded-lg ${page === totalPages ? 'text-gray-400 bg-gray-100' : 'text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10'}`}
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
@@ -354,7 +354,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                       required
                       value={newAdmin.name}
                       onChange={(e) => setNewAdmin({...newAdmin, name: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                       placeholder="Enter full name"
                     />
                   </div>
@@ -370,7 +370,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                       required
                       value={newAdmin.email}
                       onChange={(e) => setNewAdmin({...newAdmin, email: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                       placeholder="Enter email address"
                     />
                   </div>
@@ -386,7 +386,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                       required
                       value={newAdmin.password}
                       onChange={(e) => setNewAdmin({...newAdmin, password: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition pr-12"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition pr-12"
                       placeholder="Enter password"
                       minLength={8}
                     />
@@ -416,7 +416,7 @@ export default function AdminsTable({ search, page, limit, onPageChange, showCre
                   <button
                     type="submit"
                     disabled={createAdmin.isLoading}
-                    className="flex-1 px-4 py-3 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                   >
                     {createAdmin.isLoading ? (
                       <>

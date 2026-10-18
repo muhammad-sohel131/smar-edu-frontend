@@ -233,7 +233,7 @@ export default function SettingsPage() {
                       className="hidden"
                       disabled={isUploading}
                     />
-                    <div className="p-2 bg-[#189E75] text-white rounded-full shadow-lg hover:bg-[#147c5e] transition-colors">
+                    <div className="p-2 bg-[var(--color-primary)] text-white rounded-full shadow-lg hover:bg-[var(--color-primary-hover)] transition-colors">
                       {isUploading ? (
                         <Loader2 className="w-5 h-5 animate-spin" />
                       ) : (
@@ -261,7 +261,7 @@ export default function SettingsPage() {
                     type="text"
                     value={profileForm.name}
                     onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -287,7 +287,7 @@ export default function SettingsPage() {
                     type="tel"
                     value={profileForm.phone}
                     onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                     placeholder="Enter your phone number"
                   />
                 </div>
@@ -296,7 +296,7 @@ export default function SettingsPage() {
                   <button
                     type="submit"
                     disabled={updateProfile.isLoading}
-                    className="w-full px-4 py-3 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full px-4 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {updateProfile.isLoading ? (
                       <>

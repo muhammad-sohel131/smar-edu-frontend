@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <radialGradient id="ma-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#451a03"/>
+      <stop offset="60%" stop-color="#290d02"/>
+      <stop offset="100%" stop-color="#0f0401"/>
+    </radialGradient>
+    <linearGradient id="ma-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="30%" stop-color="#fbbf24"/>
+      <stop offset="70%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="ma-fire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="40%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <filter id="ma-glow">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer Glow -->
+  <circle cx="250" cy="250" r="236" fill="none" stroke="#f59e0b" stroke-width="4" opacity="0.6" filter="url(#ma-glow)"/>
+  <!-- Heavy Gold Medallion Rim -->
+  <circle cx="250" cy="250" r="225" fill="url(#ma-bg)" stroke="url(#ma-gold)" stroke-width="16"/>
+  
+  <!-- Golden Laurel Wreath -->
+  <g fill="url(#ma-gold)" opacity="0.85" filter="url(#ma-glow)">
+    <!-- Left Wreath Leaves -->
+    <path d="M 90 250 C 90 170, 140 100, 210 75 C 190 95, 175 130, 175 160 C 150 160, 125 180, 115 210 C 100 230, 95 250, 90 250 Z"/>
+    <path d="M 90 250 C 90 330, 140 400, 210 425 C 190 405, 175 370, 175 340 C 150 340, 125 320, 115 290 C 100 270, 95 250, 90 250 Z"/>
+    <!-- Right Wreath Leaves -->
+    <path d="M 410 250 C 410 170, 360 100, 290 75 C 310 95, 325 130, 325 160 C 350 160, 375 180, 385 210 C 400 230, 405 250, 410 250 Z"/>
+    <path d="M 410 250 C 410 330, 360 400, 290 425 C 310 405, 325 370, 325 340 C 350 340, 375 320, 385 290 C 400 270, 405 250, 410 250 Z"/>
+  </g>
+
+  <!-- Inner Architectural Grid Circle -->
+  <circle cx="250" cy="250" r="160" fill="#1c0702" stroke="url(#ma-gold)" stroke-width="4"/>
+  <circle cx="250" cy="250" r="130" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+
+  <!-- 3D Isometric Architectural Structure / Cube -->
+  <g transform="translate(250, 235)" filter="url(#ma-glow)">
+    <!-- Top Face -->
+    <polygon points="0,-70 65,-35 0,0 -65,-35" fill="url(#ma-gold)" stroke="#fff" stroke-width="2"/>
+    <!-- Left Face -->
+    <polygon points="-65,-35 0,0 0,75 -65,40" fill="#9a3412" stroke="url(#ma-gold)" stroke-width="2"/>
+    <!-- Right Face -->
+    <polygon points="0,0 65,-35 65,40 0,75" fill="#ea580c" stroke="url(#ma-gold)" stroke-width="2"/>
+  </g>
+
+  <!-- Crown Flame on Top of Cube -->
+  <path d="M 250 115 C 235 140, 230 155, 235 165 C 240 170, 250 170, 255 165 C 265 155, 260 135, 250 115 Z" fill="url(#ma-fire)" filter="url(#ma-glow)"/>
+</svg>

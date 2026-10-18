@@ -10,8 +10,18 @@ export default function DashboardHome() {
   const {user} = useAuth();
 
   if (!user) {
-    return ''
+    return null;
   }
- 
-  return user.role === "SUPER_ADMIN" ? <AdminDashboard /> : user.role === "INSTRUCTOR" ? <InstructorDashboard /> : <StudentDashboard />;
+
+  const role = user.role?.toUpperCase();
+
+  if (role === "ADMIN" || role === "SUPER_ADMIN") {
+    return <AdminDashboard />;
+  }
+
+  if (role === "INSTRUCTOR") {
+    return <InstructorDashboard />;
+  }
+
+  return <StudentDashboard />;
 }

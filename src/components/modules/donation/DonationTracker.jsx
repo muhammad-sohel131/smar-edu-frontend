@@ -18,7 +18,10 @@ import {
   FaUser,
   FaEnvelope,
   FaHistory,
-  FaExternalLinkAlt
+  FaExternalLinkAlt,
+  FaCoins,
+  FaBalanceScale,
+  FaReceipt
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -40,6 +43,21 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
   const [hasSearched, setHasSearched] = useState(false);
   const [trackData, setTrackData] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
+  const [publicSummary, setPublicSummary] = useState(null);
+
+  useEffect(() => {
+    const fetchPublicSummary = async () => {
+      try {
+        const res = await api.get("/donation-spends/summary");
+        if (res?.data?.data) {
+          setPublicSummary(res.data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching public transparency summary:", err);
+      }
+    };
+    fetchPublicSummary();
+  }, []);
 
   useEffect(() => {
     if (initialPhone && initialPhone.trim().length >= 8) {
@@ -395,6 +413,99 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
           <p className="text-sm text-gray-600 max-w-lg mx-auto">
             You don't need an account or password to verify your generosity. Simply input your phone number above to see total funds donated, receipts, and real-time transaction updates.
           </p>
+        </div>
+      )}
+
+      {/* Live Fund Utilization & Financial Transparency Section */}
+      {publicSummary && (
+        <div className="mt-10 bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-xl overflow-hidden relative">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100">
+            <div>
+              <div className="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 px-3.5 py-1 rounded-full text-xs font-semibold mb-2 border border-emerald-200">
+                <FaBalanceScale className="w-3.5 h-3.5" />
+                <span>100% Financial Transparency</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+                Live Donation Fund Utilization
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+                Real-time accounting of every taka donated, spent on student causes, and currently held in reserve.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800 block mb-1">
+                Total Funds Raised
+              </span>
+              <div className="text-2xl font-black text-emerald-900">
+                ৳{publicSummary.totalRaised?.toLocaleString() || "0"}
+              </div>
+              <div className="text-[11px] text-emerald-700 mt-1">
+                Across {publicSummary.totalDonationCount || 0} generous donations
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-rose-50 to-red-50 border border-rose-100 rounded-2xl p-5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-rose-800 block mb-1">
+                Total Disbursed / Spent
+              </span>
+              <div className="text-2xl font-black text-rose-700">
+                ৳{publicSummary.totalSpent?.toLocaleString() || "0"}
+              </div>
+              <div className="text-[11px] text-rose-600 mt-1">
+                On scholarships, books, labs & equipment
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-blue-800 block mb-1">
+                Current Active Balance
+              </span>
+              <div className="text-2xl font-black text-blue-900">
+                ৳{publicSummary.netBalance?.toLocaleString() || "0"}
+              </div>
+              <div className="text-[11px] text-blue-600 mt-1">
+                Reserved for ongoing student welfare
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Verified Expenses */}
+          {publicSummary.recentSpends?.length > 0 && (
+            <div>
+              <h4 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <FaReceipt className="text-rose-500" />
+                <span>Recent Verified Expenditures</span>
+              </h4>
+              <div className="space-y-2.5">
+                {publicSummary.recentSpends.map((sp) => (
+                  <div
+                    key={sp._id}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-gray-50 hover:bg-gray-100/70 rounded-xl border border-gray-100 transition text-xs gap-2"
+                  >
+                    <div>
+                      <div className="font-semibold text-gray-900">{sp.title}</div>
+                      {sp.recipient && (
+                        <div className="text-gray-500 text-[11px] mt-0.5">
+                          Beneficiary: <span className="text-emerald-700 font-medium">{sp.recipient}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex sm:flex-col items-center sm:items-end justify-between shrink-0">
+                      <div className="font-bold text-rose-600 sm:text-right">
+                        -৳{sp.amount?.toLocaleString()}
+                      </div>
+                      <div className="text-[10px] text-gray-400">
+                        {new Date(sp.spentDate).toLocaleDateString()}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

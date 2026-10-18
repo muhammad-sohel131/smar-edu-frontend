@@ -32,7 +32,7 @@ export default function BadgesPage() {
           placeholder="Search badges by title..."
           value={search}
           onChange={handleSearch}
-          className="w-full pl-10 pr-4 py-3 rounded-[--radius-card] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#189E75] bg-white"
+          className="w-full pl-10 pr-4 py-3 rounded-[--radius-card] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] bg-white"
         />
       </div>
 

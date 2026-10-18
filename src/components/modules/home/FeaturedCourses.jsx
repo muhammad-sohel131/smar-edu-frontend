@@ -368,11 +368,11 @@ export default function FeaturedCourses() {
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <p className="text-[var(--color-primary)] font-semibold text-sm mb-2">
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 border border-orange-200/60 mb-2.5">
             Featured Courses
-          </p>
+          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
-            What's New in SMARTEDU HUB
+            What's New in SMARTEDU <span className="text-[var(--color-accent)]">HUB</span>
           </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Discover our featured courses, specially curated to help you gain in-demand skills.
@@ -413,7 +413,7 @@ export default function FeaturedCourses() {
         >
           <Link
             href="/courses"
-            className="inline-block px-8 py-3 rounded-full bg-[var(--color-primary)] text-white font-semibold hover:bg-[var(--color-primary-hover)] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-md shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 active:scale-95 transition-all"
           >
             View More Courses
           </Link>

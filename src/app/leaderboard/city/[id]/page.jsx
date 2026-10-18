@@ -29,7 +29,7 @@ const CityLeaderboardPage = () => {
   const { data: studentsData, isLoading } = useQuery({
     queryKey: ['cityStudents', cityId],
     queryFn: async () => {
-      const response = await api.get(`/gamification/leaderboard?cityId=${cityId}&limit=50`);
+      const response = await api.get(`/gamification/leaderboard?scope=city&cityId=${cityId}&limit=50`);
       return response.data?.data || [];
     }
   });
@@ -49,7 +49,7 @@ const CityLeaderboardPage = () => {
       name: student.name,
       email: student.email,
       points: student.totalPoints,
-      school: student.organization,
+      school: student.school || student.organization,
       city: student.city,
       region: student.region,
       progress: Math.min((student.totalPoints / 10000) * 100, 100),

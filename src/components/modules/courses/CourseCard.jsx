@@ -11,7 +11,7 @@ export default function CourseCard({ course }) {
     return (
         <Link 
             href={courseUrl}
-            className="group bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden w-full flex flex-col border border-gray-100 h-full block text-left text-[var(--color-text)] cursor-pointer"
+            className="group bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden w-full flex flex-col border border-gray-100 hover:border-orange-300/80 h-full block text-left text-[var(--color-text)] cursor-pointer"
         >
             {/* Image + Category Badge */}
             <div className="relative w-full aspect-video overflow-hidden bg-gray-100 flex-shrink-0">
@@ -20,7 +20,8 @@ export default function CourseCard({ course }) {
                     alt={course?.title || "Course thumbnail"}
                     className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
-                <span className="absolute top-3 left-3 bg-[var(--color-secondary)] text-white text-xs font-semibold px-3 py-1 rounded-md z-10 shadow-sm">
+                <span className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-md z-10 shadow-sm border border-white/10 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
                     {course?.category}
                 </span>
             </div>
@@ -37,15 +38,15 @@ export default function CourseCard({ course }) {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-semibold mb-3 line-clamp-2 min-h-[3rem] text-base leading-snug group-hover:text-[var(--color-primary)] transition-colors">
+                    <h3 className="font-semibold mb-3 line-clamp-2 min-h-[3rem] text-base leading-snug group-hover:text-[var(--color-accent)] transition-colors">
                         {course?.title}
                     </h3>
 
                     {/* Pricing */}
                     <div className="mb-3">
                         {course?.price === 0 || course?.price === null || course?.price === undefined ? (
-                            <span className="text-[var(--color-accent)] font-bold text-lg">
-                                Free
+                            <span className="text-[var(--color-accent)] font-bold text-lg inline-flex items-center gap-1">
+                                <span className="text-xs px-2 py-0.5 rounded bg-orange-100/80 text-orange-700 font-bold uppercase tracking-wider">Free</span>
                             </span>
                         ) : (
                             <div className="flex items-baseline gap-2">
@@ -86,7 +87,7 @@ export default function CourseCard({ course }) {
 
                     {/* Button in flow */}
                     <span 
-                        className="w-full block text-center bg-[var(--color-primary)] group-hover:bg-[var(--color-primary-hover)] text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors shadow-sm group-hover:shadow"
+                        className="w-full block text-center bg-[var(--color-primary)] group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:to-amber-500 text-white py-2.5 px-4 rounded-lg text-sm font-semibold transition-all shadow-sm group-hover:shadow-orange-500/25"
                     >
                         Explore Course
                     </span>

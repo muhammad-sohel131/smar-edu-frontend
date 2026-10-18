@@ -46,10 +46,15 @@ const Leaderboard = () => {
       };
 
       if (selectedFilter) {
-        if (activeCategory === 'school' || activeCategory === 'region') {
+        if (activeCategory === 'school') {
+          params.schoolId = selectedFilter;
+          params.value = selectedFilter;
+        } else if (activeCategory === 'region') {
           params.value = selectedFilter;
         } else if (activeCategory === 'city') {
+          params.cityId = selectedFilter;
           params.city = selectedFilter;
+          params.value = selectedFilter;
         }
       }
 

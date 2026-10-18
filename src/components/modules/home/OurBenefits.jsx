@@ -33,9 +33,9 @@ export default function OurBenefits() {
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h3 className="text-sm font-semibold text-[var(--color-primary)] mb-2">
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 border border-orange-200/60 mb-2.5">
             Our Benefits
-          </h3>
+          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-3">
             Master the Skills to Drive your Career
           </h2>

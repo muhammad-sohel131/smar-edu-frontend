@@ -14,9 +14,9 @@ export default function AdvancedLearning() {
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <p className="text-sm font-semibold mb-2 tracking-wide text-emerald-400">
+          <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-950/60 border border-orange-500/40 mb-3">
             Advanced Learning
-          </p>
+          </span>
 
           <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug">
             Creating a community of learners.
@@ -34,7 +34,7 @@ export default function AdvancedLearning() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="flex items-start gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors"
             >
-              <div className="bg-[var(--primary)] text-white p-3 rounded-xl text-xl shadow-md">
+              <div className="bg-[var(--color-primary)] text-white p-3 rounded-xl text-xl shadow-md">
                 🌍
               </div>
               <div>
@@ -54,7 +54,7 @@ export default function AdvancedLearning() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex items-start gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors"
             >
-              <div className="bg-[var(--secondary)] text-white p-3 rounded-xl text-xl shadow-md">
+              <div className="bg-[var(--color-secondary)] text-white p-3 rounded-xl text-xl shadow-md">
                 🎓
               </div>
               <div>
@@ -74,7 +74,7 @@ export default function AdvancedLearning() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex items-start gap-4 p-2 rounded-xl hover:bg-white/5 transition-colors"
             >
-              <div className="bg-[var(--accent)] text-white p-3 rounded-xl text-xl shadow-md">
+              <div className="bg-[var(--color-accent)] text-white p-3 rounded-xl text-xl shadow-md shadow-orange-500/20">
                 💼
               </div>
               <div>

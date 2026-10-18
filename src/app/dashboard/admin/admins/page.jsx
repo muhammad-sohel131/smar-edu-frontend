@@ -24,7 +24,7 @@ export default function ManageAdmins() {
         </div>
         <button 
           onClick={() => setShowCreateModal(true)}
-          className="px-4 py-2 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-[--radius-default] shadow-sm text-sm font-medium flex items-center gap-2 transition-all"
+          className="px-4 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-[--radius-default] shadow-sm text-sm font-medium flex items-center gap-2 transition-all"
         >
           <Plus className="w-4 h-4" />
           Add New Admin
@@ -39,7 +39,7 @@ export default function ManageAdmins() {
           placeholder="Search admins by name or email..."
           value={search}
           onChange={handleSearch}
-          className="w-full pl-10 pr-4 py-3 rounded-[--radius-card] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#189E75] bg-white"
+          className="w-full pl-10 pr-4 py-3 rounded-[--radius-card] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] bg-white"
         />
       </div>
 

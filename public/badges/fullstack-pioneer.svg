@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <radialGradient id="fp-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#075985"/>
+      <stop offset="60%" stop-color="#0c2e4e"/>
+      <stop offset="100%" stop-color="#031121"/>
+    </radialGradient>
+    <linearGradient id="fp-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="fp-indigo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a5b4fc"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#3730a3"/>
+    </linearGradient>
+    <filter id="fp-glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Outer Neon Ring -->
+  <circle cx="250" cy="250" r="235" fill="none" stroke="#06b6d4" stroke-width="4" opacity="0.6" filter="url(#fp-glow)"/>
+  <circle cx="250" cy="250" r="225" fill="url(#fp-bg)" stroke="url(#fp-cyan)" stroke-width="14"/>
+  <circle cx="250" cy="250" r="190" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="12 8" opacity="0.7"/>
+
+  <!-- Upper Browser / Frontend Window Frame -->
+  <g transform="translate(145, 120)">
+    <rect width="210" height="120" rx="14" fill="#0b1e36" stroke="url(#fp-cyan)" stroke-width="4"/>
+    <rect width="210" height="28" rx="14" fill="#0e3a63"/>
+    <circle cx="18" cy="14" r="5" fill="#f87171"/>
+    <circle cx="34" cy="14" r="5" fill="#facc15"/>
+    <circle cx="50" cy="14" r="5" fill="#4ade80"/>
+    <!-- Code Mockup inside -->
+    <rect x="20" y="44" width="75" height="10" rx="3" fill="#38bdf8" opacity="0.9"/>
+    <rect x="105" y="44" width="85" height="10" rx="3" fill="#a5b4fc" opacity="0.9"/>
+    <rect x="35" y="66" width="130" height="8" rx="3" fill="#67e8f9" opacity="0.7"/>
+    <rect x="35" y="86" width="90" height="8" rx="3" fill="#818cf8" opacity="0.7"/>
+  </g>
+
+  <!-- Connective Energy Bridges -->
+  <line x1="210" y1="240" x2="210" y2="280" stroke="#38bdf8" stroke-width="5" stroke-dasharray="6 4" filter="url(#fp-glow)"/>
+  <line x1="290" y1="240" x2="290" y2="280" stroke="#818cf8" stroke-width="5" stroke-dasharray="6 4" filter="url(#fp-glow)"/>
+  <circle cx="250" cy="260" r="14" fill="#0284c7" stroke="#e0f2fe" stroke-width="3" filter="url(#fp-glow)"/>
+
+  <!-- Lower Database Cylinders / Backend -->
+  <g transform="translate(170, 280)">
+    <!-- Top Cylinder -->
+    <path d="M 0 25 C 0 10, 160 10, 160 25 L 160 45 C 160 60, 0 60, 0 45 Z" fill="#1e1b4b" stroke="url(#fp-indigo)" stroke-width="4"/>
+    <ellipse cx="80" cy="25" rx="80" ry="16" fill="#312e81" stroke="url(#fp-indigo)" stroke-width="4"/>
+    <circle cx="140" cy="35" r="4" fill="#34d399" filter="url(#fp-glow)"/>
+
+    <!-- Middle Cylinder -->
+    <path d="M 0 55 C 0 40, 160 40, 160 55 L 160 75 C 160 90, 0 90, 0 75 Z" fill="#1e1b4b" stroke="url(#fp-indigo)" stroke-width="4"/>
+    <circle cx="140" cy="65" r="4" fill="#38bdf8" filter="url(#fp-glow)"/>
+
+    <!-- Bottom Cylinder -->
+    <path d="M 0 85 C 0 70, 160 70, 160 85 L 160 105 C 160 120, 0 120, 0 105 Z" fill="#1e1b4b" stroke="url(#fp-indigo)" stroke-width="4"/>
+    <circle cx="140" cy="95" r="4" fill="#a78bfa" filter="url(#fp-glow)"/>
+  </g>
+</svg>

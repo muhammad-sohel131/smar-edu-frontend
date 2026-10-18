@@ -384,7 +384,7 @@ export default function LocationsGrid() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="p-6 space-y-6 text-[var(--color-text)]">
         {/* Loading skeleton similar to badges page */}
         <div className="animate-pulse">
           {/* Tab loading */}
@@ -416,7 +416,7 @@ export default function LocationsGrid() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="p-6 space-y-6 text-[var(--color-text)]">
       {/* Messages */}
       {successMessage && (
         <motion.div
@@ -443,8 +443,8 @@ export default function LocationsGrid() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Locations Management</h1>
-          <p className="text-gray-500 mt-1">Manage cities and schools</p>
+          <h1 className="text-2xl font-bold text-[--color-text]">Locations Management</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage cities and schools</p>
         </div>
       </div>
 
@@ -457,7 +457,7 @@ export default function LocationsGrid() {
           }}
           className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'cities'
-              ? 'border-[#189E75] text-[#189E75]'
+              ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
               : 'border-transparent text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -473,7 +473,7 @@ export default function LocationsGrid() {
           }}
           className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'schools'
-              ? 'border-[#189E75] text-[#189E75]'
+              ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
               : 'border-transparent text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -492,14 +492,14 @@ export default function LocationsGrid() {
             placeholder={`Search ${activeTab}...`}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
           />
         </div>
         {activeTab === 'schools' && (
           <select
             value={schoolFormData.city}
             onChange={(e) => setSchoolFormData(prev => ({ ...prev, city: e.target.value }))}
-            className="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition min-w-[180px]"
+            className="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition min-w-[180px]"
           >
             <option value="">All Cities</option>
             {cities.map(city => (
@@ -666,7 +666,7 @@ export default function LocationsGrid() {
                     <button
                       onClick={() => goToPage(page - 1)}
                       disabled={page === 1}
-                      className={`p-2 rounded-lg ${page === 1 ? 'text-gray-400 bg-gray-100' : 'text-[#189E75] hover:bg-[#189E75]/10'}`}
+                      className={`p-2 rounded-lg ${page === 1 ? 'text-gray-400 bg-gray-100' : 'text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10'}`}
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -688,8 +688,8 @@ export default function LocationsGrid() {
                           <button
                             key={pageNum}
                             onClick={() => goToPage(pageNum)}
-                            className={`w-9 h-9 rounded-lg text-sm ${page === pageNum 
-                              ? 'bg-[#189E75] text-white shadow' 
+                            className={`w-9 h-9 rounded-lg text-sm font-medium transition ${page === pageNum 
+                              ? 'bg-[var(--color-primary)] text-white shadow-md' 
                               : 'text-gray-600 hover:bg-gray-100'
                             }`}
                           >
@@ -702,7 +702,7 @@ export default function LocationsGrid() {
                     <button
                       onClick={() => goToPage(page + 1)}
                       disabled={page === totalPages}
-                      className={`p-2 rounded-lg ${page === totalPages ? 'text-gray-400 bg-gray-100' : 'text-[#189E75] hover:bg-[#189E75]/10'}`}
+                      className={`p-2 rounded-lg ${page === totalPages ? 'text-gray-400 bg-gray-100' : 'text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10'}`}
                     >
                       <ChevronRight className="w-5 h-5" />
                     </button>
@@ -743,7 +743,7 @@ export default function LocationsGrid() {
                         required
                         value={cityFormData.name}
                         onChange={(e) => setCityFormData({...cityFormData, name: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                         placeholder="Enter city name"
                       />
                     </div>
@@ -757,7 +757,7 @@ export default function LocationsGrid() {
                         type="text"
                         value={cityFormData.country}
                         onChange={(e) => setCityFormData({...cityFormData, country: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                         placeholder="Enter country name"
                       />
                     </div>
@@ -773,7 +773,7 @@ export default function LocationsGrid() {
                             type="radio"
                             checked={cityFormData.isActive === true}
                             onChange={() => setCityFormData({...cityFormData, isActive: true})}
-                            className="text-[#189E75] focus:ring-[#189E75]"
+                            className="text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
                           />
                           <span className="text-gray-700">Active</span>
                         </label>
@@ -782,7 +782,7 @@ export default function LocationsGrid() {
                             type="radio"
                             checked={cityFormData.isActive === false}
                             onChange={() => setCityFormData({...cityFormData, isActive: false})}
-                            className="text-[#189E75] focus:ring-[#189E75]"
+                            className="text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
                           />
                           <span className="text-gray-700">Inactive</span>
                         </label>
@@ -800,7 +800,7 @@ export default function LocationsGrid() {
                       <button
                         type="submit"
                         disabled={createCity.isLoading || updateCity.isLoading}
-                        className="flex-1 px-4 py-3 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="flex-1 px-4 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       >
                         {createCity.isLoading || updateCity.isLoading ? (
                           <>
@@ -827,7 +827,7 @@ export default function LocationsGrid() {
                     </p>
                     <button
                       onClick={() => setIsCreatingCity(true)}
-                      className="px-4 py-2 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
+                      className="px-4 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
                     >
                       <Plus className="w-4 h-4" />
                       Create New City
@@ -866,7 +866,7 @@ export default function LocationsGrid() {
                         required
                         value={schoolFormData.name}
                         onChange={(e) => setSchoolFormData({...schoolFormData, name: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                         placeholder="Enter school name"
                       />
                     </div>
@@ -880,7 +880,7 @@ export default function LocationsGrid() {
                         type="text"
                         value={schoolFormData.code}
                         onChange={(e) => setSchoolFormData({...schoolFormData, code: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                         placeholder="Enter school code (optional)"
                       />
                     </div>
@@ -893,7 +893,7 @@ export default function LocationsGrid() {
                       <textarea
                         value={schoolFormData.address}
                         onChange={(e) => setSchoolFormData({...schoolFormData, address: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition h-20 resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition h-20 resize-none"
                         placeholder="Enter school address"
                       />
                     </div>
@@ -907,12 +907,12 @@ export default function LocationsGrid() {
                         required
                         value={schoolFormData.city}
                         onChange={(e) => setSchoolFormData({...schoolFormData, city: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#189E75] focus:border-transparent transition"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition"
                       >
                         <option value="">Select a city</option>
                         {cities.map(city => (
                           <option key={city._id} value={city._id}>
-                            {city.name} {city.country && `(৳{city.country})`}
+                            {city.name} {city.country && `(${city.country})`}
                           </option>
                         ))}
                       </select>
@@ -929,7 +929,7 @@ export default function LocationsGrid() {
                             type="radio"
                             checked={schoolFormData.isActive === true}
                             onChange={() => setSchoolFormData({...schoolFormData, isActive: true})}
-                            className="text-[#189E75] focus:ring-[#189E75]"
+                            className="text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
                           />
                           <span className="text-gray-700">Active</span>
                         </label>
@@ -938,7 +938,7 @@ export default function LocationsGrid() {
                             type="radio"
                             checked={schoolFormData.isActive === false}
                             onChange={() => setSchoolFormData({...schoolFormData, isActive: false})}
-                            className="text-[#189E75] focus:ring-[#189E75]"
+                            className="text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
                           />
                           <span className="text-gray-700">Inactive</span>
                         </label>
@@ -956,7 +956,7 @@ export default function LocationsGrid() {
                       <button
                         type="submit"
                         disabled={createSchool.isLoading || updateSchool.isLoading}
-                        className="flex-1 px-4 py-3 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="flex-1 px-4 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-xl font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                       >
                         {createSchool.isLoading || updateSchool.isLoading ? (
                           <>
@@ -983,7 +983,7 @@ export default function LocationsGrid() {
                     </p>
                     <button
                       onClick={() => setIsCreatingSchool(true)}
-                      className="px-4 py-2 bg-[#189E75] hover:bg-[#147c5e] text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
+                      className="px-4 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white rounded-lg font-medium transition-colors flex items-center gap-2 mx-auto"
                     >
                       <Plus className="w-4 h-4" />
                       Create New School

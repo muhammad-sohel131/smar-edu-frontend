@@ -79,7 +79,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[var(--color-background)] border-b border-[var(--color-primary)] shadow sticky top-0 z-50 backdrop-blur-lg">
+    <nav className="bg-[var(--color-background)] border-b border-gray-200/80 shadow-sm sticky top-0 z-50 backdrop-blur-lg relative">
+      {/* Top Brand Accent Line */}
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-secondary)]" />
+
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <Link
           href="/"
@@ -96,7 +99,7 @@ const Navbar = () => {
               <div key={link.name} className="relative" ref={pagesDropdownRef}>
                 <button
                   onClick={() => toggleDropdown(link.key)}
-                  className={`flex items-center gap-1 font-medium transition-all duration-200 ${openDropdown === link.key
+                  className={`flex items-center gap-1 font-semibold transition-all duration-200 transform hover:scale-105 origin-center ${openDropdown === link.key
                       ? "text-[var(--color-primary)]"
                       : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
                     }`}
@@ -119,7 +122,7 @@ const Navbar = () => {
                       key={item.name}
                       href={item.href}
                       onClick={closeMenu}
-                      className={`block px-4 py-2 text-sm transition-colors duration-200 ${isActive(item.href)
+                      className={`block px-4 py-2 text-sm font-medium transition-colors duration-200 ${isActive(item.href)
                           ? "bg-[var(--color-primary)] text-white"
                           : "text-[var(--color-text)] hover:bg-[var(--color-primary)] hover:text-white"
                         }`}
@@ -134,7 +137,7 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={closeMenu}
-                className={`font-medium transition-colors duration-200 ${isActive(link.href)
+                className={`inline-flex items-center font-semibold tracking-wide transition-all duration-200 transform hover:scale-105 origin-center ${isActive(link.href)
                     ? "text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]"
                     : "text-[var(--color-text)] hover:text-[var(--color-secondary-hover)]"
                   }`}
@@ -151,7 +154,7 @@ const Navbar = () => {
             <Link
             href="/login"
             onClick={closeMenu}
-            className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200"
+            className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-semibold text-sm transition-all duration-200"
             title="Login"
           >
             <span className="hidden xl:inline">Login</span>
@@ -175,7 +178,7 @@ const Navbar = () => {
           <Link
             href="/register"
             onClick={closeMenu}
-            className="flex items-center justify-center px-4 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-medium shadow-sm transition-all duration-200"
+            className="flex items-center justify-center px-5 py-2 rounded-lg bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-sm font-semibold shadow-sm shadow-orange-500/20 hover:shadow-orange-500/35 hover:scale-105 active:scale-95 transition-all duration-200"
             title="Register"
           >
             <span className="hidden xl:inline">Register</span>
@@ -198,7 +201,7 @@ const Navbar = () => {
           </>):(<>
             <button
             onClick={logout}
-            className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-medium text-sm transition-all duration-200"
+            className="flex items-center justify-center px-4 py-2 rounded-lg border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white font-semibold text-sm transition-all duration-200"
           >
             Logout
           </button>
@@ -206,7 +209,7 @@ const Navbar = () => {
           <Link
             href="/dashboard"
             onClick={closeMenu}
-            className="flex items-center justify-center px-4 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-medium shadow-sm transition-all duration-200"
+            className="flex items-center justify-center px-4 py-2 rounded-lg bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white text-sm font-semibold shadow-sm transition-all duration-200"
             title="Dashboard"
           >
             <span className="hidden xl:inline">Dashboard</span>
@@ -374,7 +377,7 @@ const Navbar = () => {
                     <Link
                       href="/register"
                       onClick={closeMenu}
-                      className="text-center bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-4 py-3 rounded-lg text-sm font-medium shadow-md transition-all duration-200 active:scale-95"
+                      className="text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-4 py-3 rounded-lg text-sm font-semibold shadow-md shadow-orange-500/25 transition-all duration-200 active:scale-95"
                     >
                       Register
                     </Link></>) : (<>
