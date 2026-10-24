@@ -52,19 +52,15 @@ const LeaderboardTable = ({
         <div className="grid grid-cols-12 gap-4 text-sm font-semibold text-[#0F172A]">
           <div className="col-span-1 text-center">Rank</div>
           <div className="col-span-4">
-            {activeCategory === "school" && !leaderboardData[0]?.schoolName
-              ? "School"
-              : activeCategory === "city" && !leaderboardData[0]?.cityName
-              ? "City"
+            {activeCategory === "city" && !leaderboardData[0]?.cityName
+              ? "City / District"
               : activeCategory === "region"
               ? "Region"
               : "Player"}
           </div>
           <div className="col-span-3 text-center">Points</div>
           <div className="col-span-2 text-center">
-            {activeCategory === "school" && !leaderboardData[0]?.schoolName
-              ? "Students"
-              : activeCategory === "city" && !leaderboardData[0]?.cityName
+            {activeCategory === "city" && !leaderboardData[0]?.cityName
               ? "Students"
               : activeCategory === "region"
               ? "Schools"
@@ -77,10 +73,8 @@ const LeaderboardTable = ({
       <div className="lg:hidden bg-gradient-to-r from-[#F8FAFC] to-slate-50 px-4 py-3 border-b border-gray-200">
         <div className="text-center">
           <div className="text-sm font-semibold text-[#0F172A]">
-            {activeCategory === "school" && !leaderboardData[0]?.schoolName
-              ? "School Rankings"
-              : activeCategory === "city" && !leaderboardData[0]?.cityName
-              ? "City Rankings"
+            {activeCategory === "city" && !leaderboardData[0]?.cityName
+              ? "National Rankings"
               : activeCategory === "region"
               ? "Regional Rankings"
               : "Player Rankings"}
@@ -94,8 +88,7 @@ const LeaderboardTable = ({
       {/* Leaderboard Rows */}
       <div className="divide-y divide-gray-100">
         {leaderboardData.map((item) => {
-          const isClickable = (activeCategory === 'school' && item.type === 'school') || 
-                             (activeCategory === 'city' && item.type === 'city');
+          const isClickable = activeCategory === 'city' && item.type === 'city';
           
           return (
             <div

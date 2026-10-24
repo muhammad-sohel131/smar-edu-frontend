@@ -16,7 +16,8 @@ import {
   FaAward,
   FaUsers,
   FaChartLine,
-  FaCity
+  FaCity,
+  FaFlag
 } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/apiClient';
@@ -195,23 +196,11 @@ const Leaderboard = () => {
       description: 'Top performers worldwide' 
     },
     { 
-      id: 'school', 
-      name: 'School Ranking', 
-      icon: FaUniversity, 
-      description: 'Leading educational institutions' 
-    },
-    { 
       id: 'city', 
-      name: 'City Ranking', 
-      icon: FaCity, 
-      description: 'Performance by cities' 
+      name: 'National Ranking', 
+      icon: FaFlag, 
+      description: 'Performance across the nation' 
     },
-    // { 
-    //   id: 'region', 
-    //   name: 'Regional Ranking', 
-    //   icon: FaMapMarkerAlt, 
-    //   description: 'Performance by regions' 
-    // }
   ];
 
   const badges = {
@@ -299,10 +288,7 @@ const Leaderboard = () => {
   };
 
   const handleRowClick = (item) => {
-    if (activeCategory === 'school' && item.type === 'school') {
-      // Navigate to school-specific leaderboard
-      router.push(`/leaderboard/school/${item.id}`);
-    } else if (activeCategory === 'city' && item.type === 'city') {
+    if (activeCategory === 'city' && item.type === 'city') {
       // Navigate to city-specific leaderboard
       router.push(`/leaderboard/city/${item.id}`);
     }

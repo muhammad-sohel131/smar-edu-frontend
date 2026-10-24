@@ -63,7 +63,7 @@ const Filters = ({
       </div>
 
       {/* Category Tabs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {categories.map((category) => {
           const IconComponent = category.icon;
           const isActive = activeCategory === category.id;
