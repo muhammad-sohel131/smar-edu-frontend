@@ -6,6 +6,7 @@ import { BookOpen, PlusCircle, Edit, Video, FileText, PlayCircle, File, ChevronR
 import { useLessons } from "@/hooks/useLessons";
 import LessonFormModal from "./LessonFormModal";
 import Link from "next/link";
+import { getEmbedVideoUrl, isDirectVideoFile } from "@/helpers/videoUrl";
 
 export default function LessonManager({ courseUnits }) {
   const [selectedUnit, setSelectedUnit] = useState(null);
@@ -320,12 +321,22 @@ export default function LessonManager({ courseUnits }) {
                     <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-lg bg-gray-900">
                       {selectedLesson.contentType === "video" ? (
                         <div className="relative aspect-video bg-gray-900">
-                          <video
-                            src={selectedLesson.contentUrl}
-                            controls
-                            className="w-full h-full object-contain"
-                            preload="metadata"
-                          />
+                          {isDirectVideoFile(selectedLesson.contentUrl) ? (
+                            <video
+                              src={selectedLesson.contentUrl}
+                              controls
+                              className="w-full h-full object-contain"
+                              preload="metadata"
+                            />
+                          ) : (
+                            <iframe
+                              src={getEmbedVideoUrl(selectedLesson.contentUrl)}
+                              title={selectedLesson.title}
+                              allowFullScreen
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              className="w-full h-full"
+                            />
+                          )}
                         </div>
                       ) : selectedLesson.contentType === "pdf" ? (
                         <div className="aspect-video bg-white">

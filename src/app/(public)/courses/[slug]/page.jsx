@@ -10,20 +10,7 @@ import { useAuth, useInstructorById } from "@/hooks/useAuth";
 import api from "@/lib/apiClient";
 import Link from "next/link";
 import Image from "next/image";
-
-// Helper to convert YouTube watch/share links to embeddable links
-const getEmbedVideoUrl = (url) => {
-    if (!url) return null;
-    if (url.includes("youtube.com/watch?v=")) {
-        const id = url.split("v=")[1]?.split("&")[0];
-        return `https://www.youtube.com/embed/${id}?autoplay=1`;
-    }
-    if (url.includes("youtu.be/")) {
-        const id = url.split("youtu.be/")[1]?.split("?")[0];
-        return `https://www.youtube.com/embed/${id}?autoplay=1`;
-    }
-    return url;
-};
+import { getEmbedVideoUrl, isDirectVideoFile } from "@/helpers/videoUrl";
 
 export default function CourseSinglePage() {
     const { slug } = useParams();
@@ -211,15 +198,24 @@ export default function CourseSinglePage() {
                     <div className="flex-1">
                         {/* Course Featured Image & Video Preview Banner */}
                         <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-8 group bg-slate-900 border border-gray-100">
-                            {isPlayingPreview && embedPreviewUrl ? (
+                            {isPlayingPreview && (embedPreviewUrl || isDirectVideoFile(course?.introVideo)) ? (
                                 <div className="relative w-full aspect-video bg-black">
-                                    <iframe
-                                        src={embedPreviewUrl}
-                                        title={course?.title || "Course Preview"}
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                        className="w-full h-full"
-                                    />
+                                    {isDirectVideoFile(course?.introVideo) ? (
+                                        <video
+                                            src={course?.introVideo}
+                                            controls
+                                            autoPlay
+                                            className="w-full h-full object-contain"
+                                        />
+                                    ) : (
+                                        <iframe
+                                            src={embedPreviewUrl}
+                                            title={course?.title || "Course Preview"}
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowFullScreen
+                                            className="w-full h-full"
+                                        />
+                                    )}
                                     <button
                                         onClick={() => setIsPlayingPreview(false)}
                                         className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black text-white text-xs font-semibold backdrop-blur-md transition-all shadow-lg flex items-center gap-1.5 border border-white/20"

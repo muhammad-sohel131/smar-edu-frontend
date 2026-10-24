@@ -37,6 +37,7 @@ import { useMySubmissionsByUnit, useMySubmissionsByUnits } from "@/hooks/useSubm
 import { toast } from "react-toastify";
 import api from "@/lib/apiClient";
 import UnitAccordion from "./UnitAccordion";
+import { getEmbedVideoUrl, isDirectVideoFile } from "@/helpers/videoUrl";
 
 export default function CourseLearningPage() {
   const { courseId } = useParams();
@@ -594,13 +595,23 @@ export default function CourseLearningPage() {
                         </a>
                       )}
                     </div>
+                  ) : isDirectVideoFile(currentLesson.contentUrl) ? (
+                    <video
+                      ref={videoRef}
+                      key={currentLesson._id || currentLesson.contentUrl}
+                      className="absolute inset-0 w-full h-full object-contain bg-black"
+                      src={currentLesson.contentUrl}
+                      controls
+                      autoPlay
+                    />
                   ) : (
                     <iframe
                       ref={videoRef}
+                      key={currentLesson._id || currentLesson.contentUrl}
                       className="absolute inset-0 w-full h-full"
-                      src={currentLesson.contentUrl}
+                      src={getEmbedVideoUrl(currentLesson.contentUrl)}
                       title={currentLesson.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
                     />
                   )

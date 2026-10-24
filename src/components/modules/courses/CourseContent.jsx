@@ -19,6 +19,7 @@ import {
 } from "react-icons/fi";
 import { useLessonsByUnit } from "@/hooks/useCourse";
 import { useTasks } from "@/hooks/useTask";
+import { getEmbedVideoUrl, isDirectVideoFile } from "@/helpers/videoUrl";
 
 // Helper to format lesson duration into human readable text
 const formatDuration = (sec) => {
@@ -185,13 +186,22 @@ export default function CourseContent({ units = [] }) {
               <div className="p-0">
                 {previewItem.type === "video" && (
                   <div className="aspect-video bg-black">
-                    <iframe
-                      src={previewItem.url}
-                      title={previewItem.title}
-                      allowFullScreen
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      className="w-full h-full"
-                    />
+                    {isDirectVideoFile(previewItem.url) ? (
+                      <video
+                        src={previewItem.url}
+                        controls
+                        autoPlay
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <iframe
+                        src={getEmbedVideoUrl(previewItem.url)}
+                        title={previewItem.title}
+                        allowFullScreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        className="w-full h-full"
+                      />
+                    )}
                   </div>
                 )}
 
