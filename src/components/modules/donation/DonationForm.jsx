@@ -263,7 +263,7 @@ const DonationForm = ({
                 required
                 value={donorName}
                 onChange={(e) => setDonorName(e.target.value)}
-                placeholder="e.g. Abdur Rahim"
+                placeholder="Passport Name / NID Name"
                 className="w-full pl-10 pr-3 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-medium text-gray-800 placeholder-gray-400"
               />
             </div>
@@ -281,7 +281,7 @@ const DonationForm = ({
                 required
                 value={donorEmail}
                 onChange={(e) => setDonorEmail(e.target.value)}
-                placeholder="e.g. abdur.rahim@gmail.com"
+                placeholder="Verified email address"
                 className="w-full pl-10 pr-3 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-medium text-gray-800 placeholder-gray-400"
               />
             </div>
@@ -300,7 +300,7 @@ const DonationForm = ({
                 required
                 value={donorPhone}
                 onChange={(e) => setDonorPhone(e.target.value)}
-                placeholder="e.g. 01712345678"
+                placeholder="e.g. 01712345678 (+880)"
                 className="w-full pl-10 pr-3 py-3 text-sm bg-white border-2 border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-bold text-gray-900 placeholder-gray-400"
               />
             </div>
