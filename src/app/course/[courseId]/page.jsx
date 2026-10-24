@@ -131,7 +131,7 @@ export default function CourseLearningPage() {
             // Keep enrollmentData as null to show enrollment/purchase UI
           }
         } else {
-          toast.error("Failed to fetch enrollment data. Please refresh the page.");
+          console.warn("Enrollment query returned non-404 status:", err.response?.status);
         }
       }
     }
@@ -423,7 +423,7 @@ export default function CourseLearningPage() {
 
     // Also check if current lesson is completed
     if (!completedLessons.has(currentLesson?._id)) {
-      toast.error("Please complete the current lesson before proceeding to the next one.");
+      toast.info("Please complete the current lesson to unlock the next one.");
       return;
     }
 

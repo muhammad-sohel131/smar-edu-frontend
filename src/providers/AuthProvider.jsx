@@ -31,41 +31,22 @@ export function AuthProvider({ children }) {
       const res = await api.post("/auth/login", payload); 
       const { data } = await api.get("/user/me");
       setUser(data.data);
+      toast.success("Welcome back! Logged in successfully.");
       router.push("/dashboard");
     } catch (err) {
       setLoading(false);
-      toast.error(err.response?.data?.message || "Invalid credentials");
+      toast.error(err.response?.data?.message || "Invalid email or password. Please try again.");
     }
   };
-// const login = async (payload) => {
-//   const router = useRouter();
 
-//   try {
-//     const res = await fetch("/api/auth/login", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(payload),
-//     });
-
-//     if (!res.ok) {
-//       const error = await res.json();
-//       throw new Error(error.message || "Login failed");
-//     }
-
-//     // Cookie is now set, middleware can read it
-//     router.push("/dashboard");
-//   } catch (err) {
-//     console.error(err);
-//     toast.error(err.message || "Invalid credentials");
-//   }
-// };
   const forgotPassword = async (payload) => {
     try {
       const res = await api.post("/auth/forgot-password", payload);
+      toast.success(res?.data?.message || "Password reset instructions sent to your email!");
       return res;
     } catch (err) {
       setLoading(false);
-      toast.error(err.response?.data?.message || "Invalid credentials");
+      toast.error(err.response?.data?.message || "Failed to process forgot password request. Please try again.");
     }
   };
 
@@ -76,10 +57,11 @@ export function AuthProvider({ children }) {
           Authorization: `${token}`,
         },
       });
+      toast.success("Password reset successfully! Please log in with your new password.");
       return res;
     } catch (err) {
       setLoading(false);
-      toast.error(err.response?.data?.message || "Invalid credentials");
+      toast.error(err.response?.data?.message || "Invalid or expired reset link. Please request a new one.");
     }
   };
   const googleLogin = async () => {
@@ -90,18 +72,19 @@ export function AuthProvider({ children }) {
       router.push("/dashboard");
     } catch (err) {
       setLoading(false);
-      toast.error(err.response?.data?.message || "Invalid credentials");
+      toast.error(err.response?.data?.message || "Google sign-in could not be completed.");
     }
   };
 
   const register = async (payload) => {
-    await api.post("/user/register", payload);
-    router.push("/login");
+    const res = await api.post("/user/register", payload);
+    return res;
   };
 
   const logout = async () => {
     await api.post("/auth/logout");
     setUser(null);
+    toast.info("You have been logged out successfully.");
     router.push("/login");
   };
 

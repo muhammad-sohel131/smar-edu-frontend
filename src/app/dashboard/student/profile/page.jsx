@@ -226,15 +226,10 @@ export default function StudentProfilePage() {
       updateProfile.mutate(payload, {
         onSuccess: () => {
           setIsEditing(false);
-          toast.success("Profile updated successfully!");
         },
-        onError: (error) => {
-          toast.error(error.response?.data?.message || "Failed to update profile");
-        }
       });
     } catch (error) {
       console.error("Profile update error:", error);
-      toast.error("Failed to update profile");
     }
   };
 

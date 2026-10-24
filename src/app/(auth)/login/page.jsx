@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "@/hooks/useAuth";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,20 +22,21 @@ export default function LoginPage() {
     defaultValues: { email: "", password: "" },
   });
 
-  const { login, googleLogin } = useAuth()
+  const { login, googleLogin } = useAuth();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const errorParam = params.get("error");
+      if (errorParam) {
+        toast.error(decodeURIComponent(errorParam));
+      }
+    }
+  }, []);
 
   const onSubmit = async (data) => {
     setIsLoading(true);
     await login(data);
-    //  const res = await fetch("/api/auth/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(data),
-    // });
-
-    // console.log("Login API Response:", res);
-   
-    // router.push("/dashboard");
     setIsLoading(false);
   };
 

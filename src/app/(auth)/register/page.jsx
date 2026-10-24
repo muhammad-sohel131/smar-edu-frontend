@@ -4,18 +4,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-// export enum Role {
-//     SUPER_ADMIN = 'SUPER_ADMIN',
-//     ADMIN = 'ADMIN',
-//     STUDENT = 'STUDENT',
-//     INSTRUCTOR = 'INSTRUCTOR',
-//     ORGANIZATION = 'ORGANIZATION'
-// }
-export default function RegisterPage() {
 
+export default function RegisterPage() {
+  const router = useRouter();
   const { register: registerUser, googleLogin } = useAuth();
   const [role, setRole] = useState("STUDENT");
   const [isLoading, setIsLoading] = useState(false);
@@ -37,11 +32,28 @@ export default function RegisterPage() {
     setIsLoading(true);
     try {
       await registerUser({ ...formData, role });
-      toast.success("Account created successfully!");
+      toast.success("Account created successfully! Please sign in with your credentials.");
       reset();
+      router.push("/login");
     } catch (err) {
-      console.error(err);
-      toast.error(err?.response?.data?.errorsSource?.[0]?.message || "Registration failed");
+      console.error("Registration error:", err);
+      const serverMessage =
+        err?.response?.data?.message ||
+        err?.response?.data?.errorsSource?.[0]?.message ||
+        err?.message ||
+        "";
+
+      if (
+        /already exist/i.test(serverMessage) ||
+        err?.response?.status === 409 ||
+        (err?.response?.status === 400 && /exist/i.test(serverMessage))
+      ) {
+        toast.error("An account with this email already exists. Please log in instead.");
+      } else if (serverMessage) {
+        toast.error(serverMessage);
+      } else {
+        toast.error("Registration could not be completed. Please check your information and try again.");
+      }
     } finally {
       setIsLoading(false);
     }

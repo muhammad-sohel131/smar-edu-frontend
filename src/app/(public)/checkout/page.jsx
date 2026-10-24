@@ -71,9 +71,9 @@ export default function CheckoutPage() {
     }
 
     router.push('/dashboard/student/courses')
-    }catch(err){
-      console.log(err?.response?.data?.message)
-      toast.error(err?.response?.data?.message)
+    } catch(err) {
+      console.error("Checkout submission error:", err);
+      toast.error(err?.response?.data?.message || "Failed to initiate payment. Please try again.");
     }
   }
   return (

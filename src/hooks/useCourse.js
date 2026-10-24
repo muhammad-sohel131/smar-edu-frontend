@@ -147,13 +147,12 @@ export const useCompleteCourse = () => {
       return res.data?.data;
     },
     onSuccess: () => {
-      toast.success("Course completed successfully!");
       // Invalidate related queries to refresh dashboard and enrollment data
       queryClient.invalidateQueries({ queryKey: ["enrollmentCourse"] });
       queryClient.invalidateQueries({ queryKey: ["studentDashboard"] });
     },
     onError: (error) => {
-      toast.error("Failed to complete course. Please try again.");
+      console.error("Course completion error:", error);
     }
   });
 };
