@@ -69,10 +69,10 @@ const Footer = () => {
                   <FaPhoneAlt className="text-sm" />
                 </span>
                 <a
-                  href="tel:+8801700000000"
+                  href="tel:01759884811"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  +880 1700-000000
+                  01759884811
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -80,10 +80,10 @@ const Footer = () => {
                   <FaEnvelope className="text-sm" />
                 </span>
                 <a
-                  href="mailto:support@smarteduhub.com"
+                  href="mailto:admin@example.com"
                   className="hover:text-[var(--color-primary)] transition-colors"
                 >
-                  support@smarteduhub.com
+                  admin@example.com
                 </a>
               </li>
             </ul>

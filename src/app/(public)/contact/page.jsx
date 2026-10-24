@@ -80,7 +80,7 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-semibold text-[var(--color-text)]">Address</h3>
-              <p className="text-gray-600">1364 Still Water Dr, AK 99801.</p>
+              <p className="text-gray-600">Dhaka, Bangladesh</p>
             </div>
           </div>
 
@@ -90,7 +90,11 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-semibold text-[var(--color-text)]">Phone</h3>
-              <p className="text-gray-600">+1 (907) 789-7623</p>
+              <p className="text-gray-600">
+                <a href="tel:01759884811" className="hover:text-[var(--color-primary)] transition-colors">
+                  01759884811
+                </a>
+              </p>
             </div>
           </div>
 
@@ -100,7 +104,11 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-semibold text-[var(--color-text)]">Email</h3>
-              <p className="text-gray-600">contact@sardarit.com</p>
+              <p className="text-gray-600">
+                <a href="mailto:admin@example.com" className="hover:text-[var(--color-primary)] transition-colors">
+                  admin@example.com
+                </a>
+              </p>
             </div>
           </div>
         </div>
@@ -213,7 +221,7 @@ export default function ContactPage() {
       <div className="overflow-hidden relative z-10 mb-12">
         <iframe
           className="container mx-auto p-4 rounded-b-[var(--radius-card)] shadow-[var(--shadow-medium)]"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.720148594872!2d-74.0060156845938!3d40.712775279330084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316a4e5b6f%3A0xa9f66f83f8f9d28b!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1678901234567"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.38703692693!2d90.27292527261452!3d23.780573258035957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
           width="100%"
           height="450"
           style={{ border: 0 }}
