@@ -95,7 +95,7 @@ const Footer = () => {
               </p>
               <div className="flex items-center gap-2.5">
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/share/1B7ho3PnCd/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
