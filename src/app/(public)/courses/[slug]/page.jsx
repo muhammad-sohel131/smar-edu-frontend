@@ -351,7 +351,7 @@ export default function CourseSinglePage() {
                             </div>
 
                             <p className="text-center text-gray-500 text-sm mt-4">
-                                30-Day Money-Back Guarantee
+                                7-Day, 95% Money-Back Guarantee
                             </p>
                         </div>
 

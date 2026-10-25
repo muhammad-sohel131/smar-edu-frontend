@@ -9,7 +9,6 @@ import {
   FaHandHoldingUsd,
   FaHeart,
   FaLock,
-  FaRocket,
   FaCreditCard,
   FaUser,
   FaEnvelope,
@@ -342,24 +341,6 @@ const DonationForm = ({
         </div>
       </div>
 
-      {/* Fund Impact Examples */}
-      <div className="mb-8 p-6 bg-gradient-to-r from-slate-50 to-blue-50 rounded-2xl border border-blue-100">
-        <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
-          <FaRocket className="w-5 h-5 text-emerald-500 mr-2" />
-          Your Impact Breakdown
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {selectedFundData?.examples.map((example, index) => (
-            <div
-              key={index}
-              className="flex items-center space-x-3 p-3 bg-white rounded-xl border border-gray-200 shadow-sm"
-            >
-              <div className="w-3 h-3 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full flex-shrink-0"></div>
-              <span className="text-gray-700 font-medium">{example}</span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* Payment Security */}
       <div className="mb-8 p-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl border border-emerald-200">

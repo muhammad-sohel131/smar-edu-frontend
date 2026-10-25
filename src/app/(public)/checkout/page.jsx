@@ -186,7 +186,7 @@ export default function CheckoutPage() {
 
                 <div className="mt-6 bg-gray-50 border border-gray-100 p-4 text-xs text-gray-700 rounded-lg flex items-start gap-2">
                   <BadgeCheck className="h-4 w-4 text-[var(--color-primary,#0ea5e9)] mt-0.5" />
-                  <p>14-day money-back guarantee. No hidden charges.</p>
+                  <p>7-day, 95% money-back guarantee. No hidden charges.</p>
                 </div>
               </div>
             </aside>
