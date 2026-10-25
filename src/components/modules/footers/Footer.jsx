@@ -142,7 +142,7 @@ const Footer = () => {
               Copyright 2023 © All rights reserved.
             </div>
             <div className="flex space-x-6 text-[var(--color-text)]/70 text-sm">
-              <Link href="/terms" className="hover:text-[var(--color-primary)] transition-colors">Terms & Conditions</Link>
+              <span>Kawsar And Bristy</span>
               <Link href="/privacy" className="hover:text-[var(--color-primary)] transition-colors">Privacy Policy</Link>
             </div>
           </div>
