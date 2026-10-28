@@ -7,11 +7,23 @@ import { useOrderBySession } from "@/hooks/useOrder";
 import { format } from "date-fns";
 
 
+import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
 export default function Page() {
     const searchParam = useSearchParams()
     const sessionId = searchParam.get("session_id")
 
     const {data, isLoading} = useOrderBySession(sessionId)
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        if (data) {
+            queryClient.invalidateQueries({ queryKey: ["studentDashboard"] });
+            queryClient.invalidateQueries({ queryKey: ["enrollmentCourse"] });
+            queryClient.invalidateQueries({ queryKey: ["myPoints"] });
+        }
+    }, [data, queryClient]);
 
     if(isLoading){
         return <h2>Loading...</h2>
