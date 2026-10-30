@@ -62,7 +62,7 @@ const Footer = () => {
                 <span className="mt-0.5 text-[var(--color-primary)] shrink-0">
                   <FaMapMarkerAlt className="text-base" />
                 </span>
-                <span>Dhaka, Bangladesh</span>
+                <span>Hossain Tower, Uttara House Building, Dhaka, Bangladesh</span>
               </li>
               <li className="flex items-center gap-3">
                 <span className="text-[var(--color-primary)] shrink-0">
