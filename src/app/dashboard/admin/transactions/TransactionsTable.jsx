@@ -187,9 +187,18 @@ export default function TransactionsTable({ search, page, limit, onPageChange })
                   </div>
                 </td>
                 <td className="p-4">
-                  <div>
-                    <div className="font-medium text-gray-900">{order.userName || 'Unknown'}</div>
-                    <div className="text-xs text-gray-500">{order.userEmail || 'No email'}</div>
+                  <div className="flex items-center gap-3">
+                    {order.donorImage || order.billingInfo?.image ? (
+                      <img
+                        src={order.donorImage || order.billingInfo?.image}
+                        alt={order.userName || "User"}
+                        className="w-9 h-9 rounded-full object-cover border border-emerald-300 shadow-xs shrink-0"
+                      />
+                    ) : null}
+                    <div>
+                      <div className="font-medium text-gray-900">{order.userName || 'Unknown'}</div>
+                      <div className="text-xs text-gray-500">{order.userEmail || 'No email'}</div>
+                    </div>
                   </div>
                 </td>
                 <td className="p-4">

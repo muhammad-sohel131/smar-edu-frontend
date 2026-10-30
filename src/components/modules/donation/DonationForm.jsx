@@ -14,7 +14,9 @@ import {
   FaEnvelope,
   FaPhone,
   FaSpinner,
-  FaSearch
+  FaSearch,
+  FaCamera,
+  FaTimes
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -37,6 +39,8 @@ const DonationForm = ({
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
+  const [donorImage, setDonorImage] = useState("");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Auto-fill from authenticated user if available
@@ -45,6 +49,7 @@ const DonationForm = ({
       if (user.name && !donorName) setDonorName(user.name);
       if (user.email && !donorEmail) setDonorEmail(user.email);
       if (user.phone && !donorPhone) setDonorPhone(user.phone);
+      if (user.picture && !donorImage) setDonorImage(user.picture);
     }
   }, [user]);
 
@@ -52,6 +57,61 @@ const DonationForm = ({
   const paymentProviders = [
     { id: "sslcommerz", name: "SSLCommerz", icon: FaCreditCard, description: "Secure Payment Gateway" }
   ];
+
+  // Optional profile image upload handler
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file (PNG, JPG, JPEG, WEBP)");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image size must be less than 5MB");
+      return;
+    }
+
+    try {
+      setIsUploadingImage(true);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("folder", "donor-avatars");
+
+      let uploadRes;
+      try {
+        uploadRes = await api.post("/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      } catch (err) {
+        // Fallback to /upload/public
+        uploadRes = await api.post("/upload/public", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      }
+
+      const url = uploadRes?.data?.data?.url;
+      if (url) {
+        setDonorImage(url);
+        toast.success("Profile photo uploaded successfully!");
+      } else {
+        throw new Error("No URL returned from upload server");
+      }
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      toast.error(err?.response?.data?.message || "Failed to upload image. Please try again.");
+    } finally {
+      setIsUploadingImage(false);
+      // reset file input value
+      if (e.target) e.target.value = "";
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setDonorImage("");
+    toast.info("Profile photo removed");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +141,7 @@ const DonationForm = ({
 
     try {
       setIsSubmitting(true);
-      // Prepare donation data with guest donor information
+      // Prepare donation data with optional donor profile image
       const donationData = {
         fund: selectedFundData?.id || "educational-scholarships",
         amount: parseFloat(donationAmount),
@@ -90,7 +150,8 @@ const DonationForm = ({
         donorInfo: {
           name: donorName.trim(),
           email: donorEmail.trim(),
-          phone: cleanPhone
+          phone: cleanPhone,
+          image: donorImage || undefined
         }
       };
 
@@ -303,6 +364,99 @@ const DonationForm = ({
                 className="w-full pl-10 pr-3 py-3 text-sm bg-white border-2 border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition font-bold text-gray-900 placeholder-gray-400"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Optional Profile Image Upload */}
+        <div className="mt-5 pt-4 border-t border-emerald-200/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3.5">
+            <div className="relative shrink-0">
+              {donorImage ? (
+                <div className="relative">
+                  <img
+                    src={donorImage}
+                    alt="Donor Profile"
+                    className="w-14 h-14 rounded-2xl object-cover border-2 border-emerald-500 shadow-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs shadow-md transition"
+                    title="Remove profile photo"
+                  >
+                    <FaTimes className="w-2.5 h-2.5" />
+                  </button>
+                </div>
+              ) : (
+                <div className="w-14 h-14 rounded-2xl bg-white/90 border-2 border-dashed border-emerald-400 flex items-center justify-center text-emerald-600 shadow-sm">
+                  {isUploadingImage ? (
+                    <FaSpinner className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <FaCamera className="w-5 h-5" />
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <div className="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                <span>Donor Profile Image</span>
+                <span className="text-[10px] text-emerald-700 bg-emerald-100 font-semibold px-2 py-0.5 rounded-full">
+                  Optional
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-600 mt-0.5 max-w-sm">
+                {donorImage
+                  ? "Your profile photo is attached and will be displayed on donor records."
+                  : "Upload a picture if you wish to be displayed in our donor community (PNG, JPG, WEBP up to 5MB)."}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+            <label
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm ${
+                isUploadingImage
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : donorImage
+                  ? "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-emerald-500"
+                  : "bg-emerald-600 hover:bg-emerald-700 text-white"
+              }`}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={isUploadingImage}
+                className="hidden"
+              />
+              {isUploadingImage ? (
+                <>
+                  <FaSpinner className="w-3.5 h-3.5 animate-spin" />
+                  <span>Uploading...</span>
+                </>
+              ) : donorImage ? (
+                <>
+                  <FaCamera className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Change Photo</span>
+                </>
+              ) : (
+                <>
+                  <FaCamera className="w-3.5 h-3.5" />
+                  <span>Upload Photo</span>
+                </>
+              )}
+            </label>
+
+            {donorImage && (
+              <button
+                type="button"
+                onClick={handleRemoveImage}
+                className="px-3 py-2 bg-white border border-red-200 text-red-600 hover:bg-red-50 rounded-xl text-xs font-semibold transition"
+              >
+                Remove
+              </button>
+            )}
           </div>
         </div>
       </div>

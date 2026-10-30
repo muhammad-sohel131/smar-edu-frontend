@@ -267,6 +267,7 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
                   const fundName = fundTitles[item.fund] || item.fund || "SMARTEDU Fund";
                   const isPaid = item.status === "paid";
                   const isPending = item.status === "pending";
+                  const donorPhotoUrl = item.donorImage || item.billingInfo?.image;
 
                   return (
                     <div
@@ -275,17 +276,30 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
                     >
                       {/* Left info */}
                       <div className="flex items-start space-x-4">
-                        <div
-                          className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${
-                            isPaid
-                              ? "bg-emerald-100 text-emerald-700"
-                              : isPending
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                        >
-                          <FundIcon className="w-6 h-6" />
-                        </div>
+                        {donorPhotoUrl ? (
+                          <div className="relative flex-shrink-0">
+                            <img
+                              src={donorPhotoUrl}
+                              alt={item.donorName || "Donor"}
+                              className="w-12 h-12 rounded-2xl object-cover border-2 border-emerald-500 shadow-sm"
+                            />
+                            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] border border-white shadow-sm">
+                              <FundIcon className="w-2.5 h-2.5" />
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${
+                              isPaid
+                                ? "bg-emerald-100 text-emerald-700"
+                                : isPending
+                                ? "bg-amber-100 text-amber-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            <FundIcon className="w-6 h-6" />
+                          </div>
+                        )}
 
                         <div>
                           <div className="flex flex-wrap items-center gap-2">
@@ -324,8 +338,8 @@ const DonationTracker = ({ onDonateClick, initialPhone = "" }) => {
                           {/* Donor name & phone & email */}
                           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 mt-2">
                             {(item.donorName || item.billingInfo?.name) && (
-                              <span className="flex items-center space-x-1">
-                                <FaUser className="w-3 h-3 text-gray-400" />
+                              <span className="flex items-center space-x-1 font-medium text-gray-700">
+                                <FaUser className="w-3 h-3 text-emerald-600" />
                                 <span>{item.donorName || item.billingInfo?.name}</span>
                               </span>
                             )}

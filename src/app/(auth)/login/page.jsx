@@ -36,7 +36,10 @@ export default function LoginPage() {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    await login(data);
+    await login({
+      email: data.email?.trim(),
+      password: data.password?.trim(),
+    });
     setIsLoading(false);
   };
 

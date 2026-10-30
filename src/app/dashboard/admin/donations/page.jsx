@@ -792,18 +792,33 @@ export default function DonationsManagementPage() {
                       return (
                         <tr key={donation._id} className="hover:bg-gray-50/50 transition">
                           <td className="p-4">
-                            <div className="font-semibold text-[var(--color-text)]">
-                              {donation.donorName || donation.userName || "Anonymous"}
-                            </div>
-                            <div className="text-xs text-gray-500 truncate max-w-[200px]">
-                              {donation.donorEmail || donation.userEmail || "N/A"}
-                            </div>
-                            {(donation.donorPhone || donation.userPhone || donation.phone) && (
-                              <div className="text-xs text-gray-500 mt-1 flex items-center gap-1 font-mono">
-                                <Phone className="w-3 h-3 text-[var(--color-primary)] shrink-0" />
-                                <span>{donation.donorPhone || donation.userPhone || donation.phone}</span>
+                            <div className="flex items-center gap-3">
+                              {donation.donorImage || donation.billingInfo?.image ? (
+                                <img
+                                  src={donation.donorImage || donation.billingInfo?.image}
+                                  alt={donation.donorName || "Donor"}
+                                  className="w-10 h-10 rounded-full object-cover border border-emerald-300 shadow-sm shrink-0"
+                                />
+                              ) : (
+                                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0">
+                                  {(donation.donorName || donation.userName || "D").charAt(0).toUpperCase()}
+                                </div>
+                              )}
+                              <div>
+                                <div className="font-semibold text-[var(--color-text)]">
+                                  {donation.donorName || donation.userName || "Anonymous"}
+                                </div>
+                                <div className="text-xs text-gray-500 truncate max-w-[200px]">
+                                  {donation.donorEmail || donation.userEmail || "N/A"}
+                                </div>
+                                {(donation.donorPhone || donation.userPhone || donation.phone) && (
+                                  <div className="text-xs text-gray-500 mt-1 flex items-center gap-1 font-mono">
+                                    <Phone className="w-3 h-3 text-[var(--color-primary)] shrink-0" />
+                                    <span>{donation.donorPhone || donation.userPhone || donation.phone}</span>
+                                  </div>
+                                )}
                               </div>
-                            )}
+                            </div>
                           </td>
                           <td className="p-4">
                             <span className={`text-xs px-2.5 py-1 rounded-full border font-medium whitespace-nowrap ${fundObj.badgeClass}`}>
