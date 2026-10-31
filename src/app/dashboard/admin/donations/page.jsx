@@ -30,7 +30,10 @@ import {
   Percent,
   Sparkles,
   BookOpen,
-  ArrowRight
+  ArrowRight,
+  Ticket,
+  Copy,
+  Check
 } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -136,6 +139,27 @@ export default function DonationsManagementPage() {
   });
   const [subsidySearch, setSubsidySearch] = useState("");
 
+  // Scholarship Coupons State
+  const [coupons, setCoupons] = useState([]);
+  const [couponStats, setCouponStats] = useState({
+    total: 0,
+    active: 0,
+    used: 0,
+    disabled: 0,
+    totalSubsidized: 0
+  });
+  const [couponSearch, setCouponSearch] = useState("");
+  const [couponStatusFilter, setCouponStatusFilter] = useState("all");
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
+  const [couponFormData, setCouponFormData] = useState({
+    code: "",
+    discountPercentage: 50,
+    title: "",
+    expiryDate: ""
+  });
+  const [submittingCoupon, setSubmittingCoupon] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(null);
+
   useEffect(() => {
     loadAllData();
   }, []);
@@ -143,7 +167,7 @@ export default function DonationsManagementPage() {
   const loadAllData = async () => {
     try {
       setLoading(true);
-      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations(), fetchDiscount(), fetchSubsidies()]);
+      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations(), fetchDiscount(), fetchSubsidies(), fetchCoupons()]);
     } catch (error) {
       console.error("Error loading donation data:", error);
     } finally {
@@ -154,7 +178,7 @@ export default function DonationsManagementPage() {
   const handleRefresh = async () => {
     try {
       setRefreshing(true);
-      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations(), fetchDiscount(), fetchSubsidies()]);
+      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations(), fetchDiscount(), fetchSubsidies(), fetchCoupons()]);
       toast.success("Data refreshed successfully");
     } catch (error) {
       console.error("Refresh failed:", error);
@@ -260,6 +284,78 @@ export default function DonationsManagementPage() {
     } finally {
       setSavingDiscount(false);
     }
+  };
+
+  const fetchCoupons = async () => {
+    try {
+      const res = await api.get("/coupons", { params: { limit: 1000 } });
+      if (res?.data?.data) {
+        setCoupons(res.data.data.coupons || []);
+        if (res.data.data.stats) {
+          setCouponStats(res.data.data.stats);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching coupons:", error);
+    }
+  };
+
+  const handleCreateCoupon = async (e) => {
+    e.preventDefault();
+    const pct = Number(couponFormData.discountPercentage);
+    if (isNaN(pct) || pct < 0 || pct > 100) {
+      toast.error("Discount percentage must be between 0% and 100%");
+      return;
+    }
+
+    try {
+      setSubmittingCoupon(true);
+      const res = await api.post("/coupons", {
+        code: couponFormData.code ? couponFormData.code.trim().toUpperCase() : undefined,
+        discountPercentage: pct,
+        title: couponFormData.title?.trim() || undefined,
+        expiryDate: couponFormData.expiryDate || undefined
+      });
+      toast.success(`Scholarship coupon "${res.data.data.code}" (${res.data.data.discountPercentage}%) created!`);
+      setIsCouponModalOpen(false);
+      setCouponFormData({ code: "", discountPercentage: 50, title: "", expiryDate: "" });
+      fetchCoupons();
+    } catch (error) {
+      console.error("Error creating coupon:", error);
+      toast.error(error?.response?.data?.message || "Failed to create coupon");
+    } finally {
+      setSubmittingCoupon(false);
+    }
+  };
+
+  const handleToggleCoupon = async (id, nextActive) => {
+    try {
+      await api.patch(`/coupons/${id}`, { isActive: nextActive });
+      toast.success(`Coupon ${nextActive ? "enabled" : "disabled"}`);
+      fetchCoupons();
+    } catch (error) {
+      console.error("Error toggling coupon:", error);
+      toast.error(error?.response?.data?.message || "Failed to update coupon status");
+    }
+  };
+
+  const handleDeleteCoupon = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this scholarship coupon?")) return;
+    try {
+      await api.delete(`/coupons/${id}`);
+      toast.success("Coupon deleted");
+      fetchCoupons();
+    } catch (error) {
+      console.error("Error deleting coupon:", error);
+      toast.error(error?.response?.data?.message || "Failed to delete coupon");
+    }
+  };
+
+  const handleCopyCode = (code) => {
+    navigator.clipboard.writeText(code);
+    setCopiedCode(code);
+    toast.info(`Coupon code "${code}" copied to clipboard!`);
+    setTimeout(() => setCopiedCode(null), 2500);
   };
 
   // Open Modal for Create
@@ -398,14 +494,39 @@ export default function DonationsManagementPage() {
     const studentName = item.student?.name?.toLowerCase() || "";
     const studentEmail = item.student?.email?.toLowerCase() || "";
     const studentPhone = item.student?.phone?.toLowerCase() || "";
+    const couponCode = item.couponCode?.toLowerCase() || "";
     const txId = item.transactionId?.toLowerCase() || "";
     return (
       courseTitle.includes(q) ||
       studentName.includes(q) ||
       studentEmail.includes(q) ||
       studentPhone.includes(q) ||
+      couponCode.includes(q) ||
       txId.includes(q)
     );
+  });
+
+  // Filtered Coupons List
+  const filteredCoupons = coupons.filter((c) => {
+    const q = couponSearch.toLowerCase();
+    const matchesSearch =
+      !couponSearch ||
+      (c.code && c.code.toLowerCase().includes(q)) ||
+      (c.title && c.title.toLowerCase().includes(q)) ||
+      (c.usedBy?.name && c.usedBy.name.toLowerCase().includes(q)) ||
+      (c.usedBy?.email && c.usedBy.email.toLowerCase().includes(q)) ||
+      (c.usedCourse?.title && c.usedCourse.title.toLowerCase().includes(q));
+
+    let matchesStatus = true;
+    if (couponStatusFilter === "active") {
+      matchesStatus = !c.isUsed && c.isActive;
+    } else if (couponStatusFilter === "used") {
+      matchesStatus = c.isUsed;
+    } else if (couponStatusFilter === "disabled") {
+      matchesStatus = !c.isUsed && !c.isActive;
+    }
+
+    return matchesSearch && matchesStatus;
   });
 
   if (loading) {
@@ -839,17 +960,44 @@ export default function DonationsManagementPage() {
                 {subsidies.length}
               </span>
             </button>
+
+            <button
+              onClick={() => setActiveTab("coupons")}
+              className={`pb-4 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+                activeTab === "coupons"
+                  ? "border-purple-600 text-purple-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              <Ticket className="h-4 w-4 text-purple-600" />
+              <span>Scholarship Coupons</span>
+              <span className="text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full font-bold">
+                {coupons.length}
+              </span>
+            </button>
           </div>
 
-          {activeTab === "spends" && (
-            <button
-              onClick={handleOpenCreateModal}
-              className="mb-3 px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 border border-rose-200"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              <span>New Expense</span>
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {activeTab === "spends" && (
+              <button
+                onClick={handleOpenCreateModal}
+                className="mb-3 px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 border border-rose-200"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                <span>New Expense</span>
+              </button>
+            )}
+
+            {activeTab === "coupons" && (
+              <button
+                onClick={() => setIsCouponModalOpen(true)}
+                className="mb-3 px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                <span>Create Scholarship Coupon</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* TAB 1: FUND SPENDS */}
@@ -1338,6 +1486,267 @@ export default function DonationsManagementPage() {
             )}
           </div>
         )}
+
+        {/* TAB 4: SCHOLARSHIP COUPONS */}
+        {activeTab === "coupons" && (
+          <div>
+            {/* Metric Highlights Banner */}
+            <div className="p-4 sm:p-6 bg-gradient-to-r from-purple-50/70 via-indigo-50/50 to-white border-b border-gray-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-white p-4 rounded-xl border border-purple-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Total Coupons Created
+                  </span>
+                  <div className="text-xl font-extrabold text-purple-700">
+                    {couponStats.total} Coupons
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Single-use scholarship vouchers
+                  </span>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Active & Ready to Share
+                  </span>
+                  <div className="text-xl font-extrabold text-emerald-600">
+                    {couponStats.active} Available
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Unused and ready for students
+                  </span>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-rose-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Redeemed & Disabled
+                  </span>
+                  <div className="text-xl font-extrabold text-rose-600">
+                    {couponStats.used} Redeemed
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Completed single-use enrollments
+                  </span>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Total Subsidized (Fund Deducted)
+                  </span>
+                  <div className="text-xl font-extrabold text-indigo-700">
+                    ৳{couponStats.totalSubsidized.toLocaleString()} BDT
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Debited from scholarship fund
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Search and Filters Bar */}
+            <div className="p-4 sm:p-6 border-b border-gray-100 bg-gray-50/40">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <input
+                    type="text"
+                    placeholder="Search by code, note, student name, email or course..."
+                    value={couponSearch}
+                    onChange={(e) => setCouponSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <select
+                    value={couponStatusFilter}
+                    onChange={(e) => setCouponStatusFilter(e.target.value)}
+                    className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:ring-2 focus:ring-purple-400 outline-none"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="active">Active (Available)</option>
+                    <option value="used">Used (Disabled)</option>
+                    <option value="disabled">Disabled by Admin</option>
+                  </select>
+
+                  <button
+                    onClick={() => setIsCouponModalOpen(true)}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm whitespace-nowrap"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Create Coupon</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Coupons Table */}
+            {filteredCoupons.length === 0 ? (
+              <div className="p-12 text-center text-gray-500">
+                <Ticket className="h-12 w-12 text-gray-200 mx-auto mb-3" />
+                <p className="font-medium text-gray-700">No scholarship coupons found</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  Create a scholarship coupon to give specific students a single-use 0-100% discount.
+                </p>
+                <button
+                  onClick={() => setIsCouponModalOpen(true)}
+                  className="mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 shadow"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  <span>Create First Coupon</span>
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-sm">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-100 text-gray-600 font-medium">
+                      <th className="p-4">Coupon Code</th>
+                      <th className="p-4 text-center">Discount</th>
+                      <th className="p-4">Purpose / Note</th>
+                      <th className="p-4 text-center">Status</th>
+                      <th className="p-4">Redemption Details</th>
+                      <th className="p-4 text-right">Fund Deducted</th>
+                      <th className="p-4 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {filteredCoupons.map((c) => {
+                      const isUsed = c.isUsed;
+                      const isActive = c.isActive;
+
+                      return (
+                        <tr key={c._id} className="hover:bg-gray-50/50 transition">
+                          {/* Code */}
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono font-bold text-sm text-purple-700 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-200">
+                                {c.code}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => handleCopyCode(c.code)}
+                                title="Copy Code"
+                                className="p-1 text-gray-400 hover:text-purple-600 rounded transition"
+                              >
+                                {copiedCode === c.code ? (
+                                  <Check className="h-3.5 w-3.5 text-emerald-600" />
+                                ) : (
+                                  <Copy className="h-3.5 w-3.5" />
+                                )}
+                              </button>
+                            </div>
+                            <span className="text-[10px] text-gray-400 block mt-1">
+                              Created {new Date(c.createdAt).toLocaleDateString()}
+                            </span>
+                          </td>
+
+                          {/* Discount % */}
+                          <td className="p-4 text-center whitespace-nowrap">
+                            <span className="px-2.5 py-1 rounded-full text-xs font-extrabold bg-amber-50 text-amber-700 border border-amber-200">
+                              {c.discountPercentage}% OFF
+                            </span>
+                          </td>
+
+                          {/* Title / Note */}
+                          <td className="p-4">
+                            <div className="text-gray-800 font-medium text-xs">
+                              {c.title || "Scholarship Grant"}
+                            </div>
+                            <div className="text-[10px] text-gray-400">
+                              Funded by Educational Scholarships
+                            </div>
+                          </td>
+
+                          {/* Status */}
+                          <td className="p-4 text-center whitespace-nowrap">
+                            {isUsed ? (
+                              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                Redeemed & Disabled
+                              </span>
+                            ) : !isActive ? (
+                              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-gray-100 text-gray-600 border border-gray-200">
+                                Disabled
+                              </span>
+                            ) : (
+                              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Active (Ready to share)
+                              </span>
+                            )}
+                          </td>
+
+                          {/* Redemption Details */}
+                          <td className="p-4">
+                            {isUsed ? (
+                              <div className="space-y-0.5">
+                                <div className="text-xs font-semibold text-gray-800">
+                                  {c.usedBy?.name || "Student"} ({c.usedBy?.email || "N/A"})
+                                </div>
+                                <div className="text-[11px] text-gray-500 line-clamp-1">
+                                  Course: {c.usedCourse?.title || "Course"}
+                                </div>
+                                <div className="text-[10px] text-gray-400">
+                                  Redeemed on {new Date(c.usedAt || c.updatedAt).toLocaleDateString()}
+                                </div>
+                              </div>
+                            ) : (
+                              <span className="text-xs text-gray-400 italic">
+                                — Not used yet (Single-use) —
+                              </span>
+                            )}
+                          </td>
+
+                          {/* Fund Deducted */}
+                          <td className="p-4 text-right whitespace-nowrap">
+                            {isUsed ? (
+                              <div>
+                                <span className="font-bold text-rose-600">
+                                  -৳{c.reducedAmount?.toLocaleString()} BDT
+                                </span>
+                                <span className="text-[10px] text-gray-400 block">
+                                  (Paid: ৳{c.finalPaidPrice?.toLocaleString()})
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-xs text-gray-400">—</span>
+                            )}
+                          </td>
+
+                          {/* Actions */}
+                          <td className="p-4 text-center whitespace-nowrap">
+                            <div className="flex items-center justify-center gap-2">
+                              {!isUsed && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleCoupon(c._id, !isActive)}
+                                  className={`text-xs px-2 py-1 rounded font-medium border transition ${
+                                    isActive
+                                      ? "text-amber-700 bg-amber-50 hover:bg-amber-100 border-amber-200"
+                                      : "text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border-emerald-200"
+                                  }`}
+                                >
+                                  {isActive ? "Disable" : "Enable"}
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteCoupon(c._id)}
+                                className="p-1 text-gray-400 hover:text-rose-600 transition"
+                                title="Delete Coupon"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* CREATE / EDIT EXPENSE MODAL */}
@@ -1514,6 +1923,191 @@ export default function DonationsManagementPage() {
                     </>
                   ) : (
                     <span>{modalMode === "create" ? "Save Expense" : "Update Expense"}</span>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* CREATE SCHOLARSHIP COUPON MODAL */}
+      {isCouponModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-purple-50 text-purple-600 border border-purple-200">
+                  <Ticket className="h-5 w-5" />
+                </span>
+                <h3 className="text-base font-bold text-gray-900">
+                  Create Single-Use Scholarship Coupon
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsCouponModalOpen(false)}
+                className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateCoupon} className="space-y-4">
+              {/* Coupon Code Input */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Coupon Code (কুপন কোড)
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="e.g. SCHOLAR100 (leave blank to auto-generate)"
+                    value={couponFormData.code}
+                    onChange={(e) =>
+                      setCouponFormData({
+                        ...couponFormData,
+                        code: e.target.value.toUpperCase()
+                      })
+                    }
+                    className="flex-1 px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm font-mono font-bold uppercase focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
+                      setCouponFormData({
+                        ...couponFormData,
+                        code: `SCHOLAR${couponFormData.discountPercentage}-${rand}`
+                      });
+                    }}
+                    className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition"
+                  >
+                    Auto Generate
+                  </button>
+                </div>
+              </div>
+
+              {/* Discount Percentage */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Discount Percentage (০ থেকে ১০০% স্কলারশিপ) *
+                </label>
+                <div className="flex items-center gap-3">
+                  <div className="relative flex-1">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      required
+                      value={couponFormData.discountPercentage}
+                      onChange={(e) =>
+                        setCouponFormData({
+                          ...couponFormData,
+                          discountPercentage: e.target.value
+                        })
+                      }
+                      className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-base font-bold text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+                    />
+                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 font-bold text-gray-400">
+                      %
+                    </span>
+                  </div>
+                </div>
+
+                {/* Preset Buttons */}
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {[10, 25, 50, 75, 100].map((pct) => (
+                    <button
+                      key={pct}
+                      type="button"
+                      onClick={() =>
+                        setCouponFormData({
+                          ...couponFormData,
+                          discountPercentage: pct
+                        })
+                      }
+                      className={`px-2.5 py-1 text-xs font-semibold rounded-lg border transition ${
+                        Number(couponFormData.discountPercentage) === pct
+                          ? "bg-purple-600 text-white border-purple-600"
+                          : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100"
+                      }`}
+                    >
+                      {pct === 100 ? "100% (Full Scholarship)" : `${pct}%`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Title / Recipient Note */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Recipient Note / Purpose (কার জন্য বা কোন কারণে)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Merit scholarship for Tanvir, Need-based aid for Rahim"
+                  value={couponFormData.title}
+                  onChange={(e) =>
+                    setCouponFormData({
+                      ...couponFormData,
+                      title: e.target.value
+                    })
+                  }
+                  className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+                />
+              </div>
+
+              {/* Expiry Date */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Expiry Date (Optional)
+                </label>
+                <input
+                  type="date"
+                  value={couponFormData.expiryDate}
+                  onChange={(e) =>
+                    setCouponFormData({
+                      ...couponFormData,
+                      expiryDate: e.target.value
+                    })
+                  }
+                  className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition"
+                />
+              </div>
+
+              {/* Info Note */}
+              <div className="p-3 bg-purple-50 rounded-xl border border-purple-200 text-xs text-purple-900 space-y-1">
+                <div className="font-bold flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-purple-600" />
+                  <span>Single-Use Constraint:</span>
+                </div>
+                <p className="text-[11px] text-purple-800 leading-relaxed">
+                  এই কুপনটি একজন স্টুডেন্ট মাত্র <strong>একবারই</strong> ব্যবহার করতে পারবে। পারচেজ সম্পন্ন হওয়ামাত্র কুপনটি স্বয়ংক্রিয়ভাবে ডিসেবল হয়ে যাবে এবং রিডিউস হওয়া অংশটুকু ডোনেশনের <strong>Educational Scholarships</strong> ফান্ড থেকে মাইনাস হবে।
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="pt-3 border-t border-gray-100 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsCouponModalOpen(false)}
+                  className="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submittingCoupon}
+                  className="px-5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2 disabled:opacity-50"
+                >
+                  {submittingCoupon ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Generating...</span>
+                    </>
+                  ) : (
+                    <span>Create Coupon</span>
                   )}
                 </button>
               </div>
