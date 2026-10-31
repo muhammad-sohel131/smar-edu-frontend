@@ -24,6 +24,11 @@ export default function CourseCard({ course }) {
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]" />
                     {course?.category}
                 </span>
+                {course?.discountPercentage > 0 && (
+                    <span className="absolute top-3 right-3 bg-emerald-600/90 backdrop-blur-sm text-white text-[11px] font-bold px-2 py-0.5 rounded-md z-10 shadow-sm">
+                        {course.discountPercentage}% Scholarship
+                    </span>
+                )}
             </div>
 
             {/* Body */}
@@ -45,17 +50,32 @@ export default function CourseCard({ course }) {
                     {/* Pricing */}
                     <div className="mb-3">
                         {course?.price === 0 || course?.price === null || course?.price === undefined ? (
-                            <span className="text-[var(--color-accent)] font-bold text-lg inline-flex items-center gap-1">
+                            <div className="flex flex-wrap items-baseline gap-2">
                                 <span className="text-xs px-2 py-0.5 rounded bg-orange-100/80 text-orange-700 font-bold uppercase tracking-wider">Free</span>
-                            </span>
+                                {course?.oldPrice ? (
+                                    <span className="line-through text-gray-400 text-xs">
+                                        ৳{course.oldPrice}
+                                    </span>
+                                ) : null}
+                                {course?.discountPercentage > 0 && (
+                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">
+                                        100% Scholarship
+                                    </span>
+                                )}
+                            </div>
                         ) : (
-                            <div className="flex items-baseline gap-2">
+                            <div className="flex flex-wrap items-baseline gap-2">
                                 <span className="text-[var(--color-primary)] font-bold text-lg">
                                     ৳{course?.price || "0.00"}
                                 </span>
                                 {course?.oldPrice && (
                                     <span className="line-through text-gray-400 text-sm">
                                         ৳{course.oldPrice}
+                                    </span>
+                                )}
+                                {course?.discountPercentage > 0 && (
+                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
+                                        -{course.discountPercentage}% Scholarship
                                     </span>
                                 )}
                             </div>

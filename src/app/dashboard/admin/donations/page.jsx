@@ -26,7 +26,11 @@ import {
   Receipt,
   CheckCircle2,
   Building,
-  RefreshCw
+  RefreshCw,
+  Percent,
+  Sparkles,
+  BookOpen,
+  ArrowRight
 } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -110,6 +114,28 @@ export default function DonationsManagementPage() {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
+  // Course Discount State
+  const [discountConfig, setDiscountConfig] = useState({
+    percentage: 0,
+    isActive: false,
+    title: "General Scholarship Subsidy",
+    fundedBy: "educational-scholarships",
+    scholarshipFundBalance: 0
+  });
+  const [discountInput, setDiscountInput] = useState(0);
+  const [discountActiveInput, setDiscountActiveInput] = useState(false);
+  const [savingDiscount, setSavingDiscount] = useState(false);
+
+  // Subsidies History State
+  const [subsidies, setSubsidies] = useState([]);
+  const [subsidyStats, setSubsidyStats] = useState({
+    totalSubsidized: 0,
+    totalPaid: 0,
+    totalOriginal: 0,
+    count: 0
+  });
+  const [subsidySearch, setSubsidySearch] = useState("");
+
   useEffect(() => {
     loadAllData();
   }, []);
@@ -117,7 +143,7 @@ export default function DonationsManagementPage() {
   const loadAllData = async () => {
     try {
       setLoading(true);
-      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations()]);
+      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations(), fetchDiscount(), fetchSubsidies()]);
     } catch (error) {
       console.error("Error loading donation data:", error);
     } finally {
@@ -128,7 +154,7 @@ export default function DonationsManagementPage() {
   const handleRefresh = async () => {
     try {
       setRefreshing(true);
-      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations()]);
+      await Promise.all([fetchSummary(), fetchSpends(), fetchDonations(), fetchDiscount(), fetchSubsidies()]);
       toast.success("Data refreshed successfully");
     } catch (error) {
       console.error("Refresh failed:", error);
@@ -168,6 +194,71 @@ export default function DonationsManagementPage() {
       setDonations(res?.data?.data?.orders || []);
     } catch (error) {
       console.error("Error fetching donations:", error);
+    }
+  };
+
+  const fetchDiscount = async () => {
+    try {
+      const res = await api.get("/course-discount");
+      if (res?.data?.data) {
+        const d = res.data.data;
+        setDiscountConfig(d);
+        setDiscountInput(d.percentage || 0);
+        setDiscountActiveInput(Boolean(d.isActive));
+      }
+    } catch (error) {
+      console.error("Error fetching course discount:", error);
+    }
+  };
+
+  const fetchSubsidies = async () => {
+    try {
+      const res = await api.get("/course-discount/subsidies", {
+        params: { limit: 1000 }
+      });
+      if (res?.data?.data) {
+        setSubsidies(res.data.data.records || []);
+        if (res.data.data.stats) {
+          setSubsidyStats(res.data.data.stats);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching subsidy history:", error);
+    }
+  };
+
+  const handleUpdateDiscount = async (overrideActive = null) => {
+    const numPct = Number(discountInput);
+    if (isNaN(numPct) || numPct < 0 || numPct > 100) {
+      toast.error("Discount percentage must be between 0% and 100%");
+      return;
+    }
+
+    const nextActive = overrideActive !== null ? overrideActive : discountActiveInput;
+
+    try {
+      setSavingDiscount(true);
+      const res = await api.patch("/course-discount", {
+        percentage: numPct,
+        isActive: nextActive
+      });
+      if (res?.data?.data) {
+        setDiscountConfig((prev) => ({ ...prev, ...res.data.data }));
+        setDiscountActiveInput(Boolean(res.data.data.isActive));
+        setDiscountInput(res.data.data.percentage);
+      }
+      toast.success(
+        nextActive
+          ? `Scholarship discount set to ${numPct}% across all courses!`
+          : "Course scholarship discount deactivated"
+      );
+      fetchSummary();
+      fetchSubsidies();
+    } catch (error) {
+      console.error("Error updating discount:", error);
+      toast.error(error?.response?.data?.message || "Failed to update discount");
+    } finally {
+      setSavingDiscount(false);
     }
   };
 
@@ -298,6 +389,24 @@ export default function DonationsManagementPage() {
       const dateB = new Date(b.createdAt || b.date);
       return donationSortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
+
+  // Filtered Subsidies List
+  const filteredSubsidies = subsidies.filter((item) => {
+    if (!subsidySearch) return true;
+    const q = subsidySearch.toLowerCase();
+    const courseTitle = item.course?.title?.toLowerCase() || "";
+    const studentName = item.student?.name?.toLowerCase() || "";
+    const studentEmail = item.student?.email?.toLowerCase() || "";
+    const studentPhone = item.student?.phone?.toLowerCase() || "";
+    const txId = item.transactionId?.toLowerCase() || "";
+    return (
+      courseTitle.includes(q) ||
+      studentName.includes(q) ||
+      studentEmail.includes(q) ||
+      studentPhone.includes(q) ||
+      txId.includes(q)
+    );
+  });
 
   if (loading) {
     return (
@@ -512,6 +621,175 @@ export default function DonationsManagementPage() {
         </div>
       </div>
 
+      {/* Global Course Scholarship Discount Control Card */}
+      <div className="bg-gradient-to-br from-indigo-900 via-slate-900 to-blue-950 text-white rounded-2xl p-6 sm:p-7 shadow-lg border border-indigo-800/60 relative overflow-hidden">
+        <div className="absolute -top-12 -right-12 w-48 h-48 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
+
+        <div className="relative z-10 space-y-6">
+          {/* Header & Status Toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-indigo-800/50">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  <GraduationCap className="h-5 w-5" />
+                </span>
+                <h2 className="text-lg font-bold text-white tracking-tight">
+                  Global Course Scholarship Discount (অটো স্কলারশিপ ফান্ড রিডাকশন)
+                </h2>
+              </div>
+              <p className="text-xs text-indigo-200/80">
+                Set a global discount % for all courses. When students enroll, the reduced portion will automatically be deducted from the Educational Scholarships fund.
+              </p>
+            </div>
+
+            {/* Active Status Badge & Toggle Switch */}
+            <div className="flex items-center gap-3 bg-black/30 backdrop-blur-md px-4 py-2 rounded-xl border border-indigo-700/50 self-start sm:self-auto">
+              <span className="text-xs font-medium text-indigo-200">
+                Discount Status:
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  const next = !discountActiveInput;
+                  setDiscountActiveInput(next);
+                  handleUpdateDiscount(next);
+                }}
+                disabled={savingDiscount}
+                className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  discountActiveInput ? "bg-emerald-500" : "bg-gray-600"
+                }`}
+                role="switch"
+                aria-checked={discountActiveInput}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                    discountActiveInput ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </button>
+              <span
+                className={`text-xs font-bold px-2 py-0.5 rounded-md ${
+                  discountActiveInput
+                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                    : "bg-gray-700 text-gray-300 border border-gray-600"
+                }`}
+              >
+                {discountActiveInput ? "ACTIVE" : "INACTIVE"}
+              </span>
+            </div>
+          </div>
+
+          {/* Controls & Metrics Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            {/* Left: Percentage Input & Quick Preset Buttons (7 cols) */}
+            <div className="lg:col-span-7 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-indigo-200 uppercase tracking-wider mb-2">
+                  Discount Percentage (% অফ সকল কোর্সে)
+                </label>
+                <div className="flex items-center gap-3">
+                  <div className="relative flex-1 max-w-xs">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={discountInput}
+                      onChange={(e) => setDiscountInput(e.target.value)}
+                      placeholder="0"
+                      className="w-full bg-slate-950/80 border border-indigo-700/60 rounded-xl px-4 py-2.5 text-xl font-bold text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-indigo-400 font-bold text-lg">
+                      %
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleUpdateDiscount()}
+                    disabled={savingDiscount}
+                    className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-xl text-sm font-semibold shadow-md hover:shadow-indigo-500/30 transition flex items-center gap-2 disabled:opacity-50"
+                  >
+                    {savingDiscount ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span>Apply Discount</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Quick presets */}
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs text-indigo-300 font-medium mr-1">Quick Select:</span>
+                {[0, 10, 20, 25, 30, 50, 75, 100].map((pct) => (
+                  <button
+                    key={pct}
+                    type="button"
+                    onClick={() => setDiscountInput(pct)}
+                    className={`px-3 py-1 rounded-lg text-xs font-semibold transition border ${
+                      Number(discountInput) === pct
+                        ? "bg-indigo-500 text-white border-indigo-400 shadow-sm"
+                        : "bg-slate-800/80 text-indigo-200 border-indigo-800 hover:bg-slate-700 hover:text-white"
+                    }`}
+                  >
+                    {pct === 0 ? "0% (None)" : pct === 100 ? "100% (Full)" : `${pct}%`}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Funding Status & Live Simulation Preview (5 cols) */}
+            <div className="lg:col-span-5 bg-slate-950/60 rounded-xl p-4 border border-indigo-800/40 space-y-3">
+              <div className="flex items-center justify-between text-xs pb-2 border-b border-indigo-900/60">
+                <span className="text-indigo-300 flex items-center gap-1.5 font-medium">
+                  <Wallet className="h-3.5 w-3.5 text-emerald-400" />
+                  Scholarship Fund Balance:
+                </span>
+                <span className="font-bold text-emerald-400 text-sm">
+                  {(
+                    summary.fundBreakdown?.find((f) => f.fund === "educational-scholarships")?.balance ??
+                    discountConfig.scholarshipFundBalance ??
+                    0
+                  ).toLocaleString()}{" "}
+                  BDT
+                </span>
+              </div>
+
+              <div className="text-xs space-y-1.5 text-indigo-200">
+                <div className="font-semibold text-white flex items-center gap-1">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+                  Live Simulation (৳1,000 Course):
+                </div>
+                <div className="grid grid-cols-2 gap-2 bg-indigo-950/50 p-2.5 rounded-lg border border-indigo-900/40 text-[11px]">
+                  <div>
+                    <span className="text-indigo-400 block">Student Pays</span>
+                    <span className="font-bold text-emerald-300 text-sm">
+                      ৳{Math.max(0, 1000 - Math.round((1000 * (Number(discountInput) || 0)) / 100)).toLocaleString()}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-indigo-400 block">Deducted from Fund</span>
+                    <span className="font-bold text-rose-300 text-sm">
+                      -৳{Math.round((1000 * (Number(discountInput) || 0)) / 100).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-[10px] text-indigo-300/70 leading-tight">
+                  * Every course purchase automatically deducts the reduced amount from the Educational Scholarships fund and records it in history.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Tabbed Container */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {/* Tab Headers */}
@@ -544,6 +822,21 @@ export default function DonationsManagementPage() {
               <span>Donations Received</span>
               <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full font-bold">
                 {donations.length}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("subsidies")}
+              className={`pb-4 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+                activeTab === "subsidies"
+                  ? "border-indigo-600 text-indigo-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              <GraduationCap className="h-4 w-4 text-indigo-600" />
+              <span>Course Subsidies & History</span>
+              <span className="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-bold">
+                {subsidies.length}
               </span>
             </button>
           </div>
@@ -837,6 +1130,208 @@ export default function DonationsManagementPage() {
                         </tr>
                       );
                     })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 3: COURSE SUBSIDIES & REDUCTIONS HISTORY */}
+        {activeTab === "subsidies" && (
+          <div>
+            {/* Metric Highlights Banner */}
+            <div className="p-4 sm:p-6 bg-gradient-to-r from-indigo-50/70 via-blue-50/50 to-white border-b border-gray-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Total Subsidized (Fund Deductions)
+                  </span>
+                  <div className="text-xl font-extrabold text-rose-600">
+                    ৳{subsidyStats.totalSubsidized.toLocaleString()} BDT
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Subsidized from scholarship donations
+                  </span>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Subsidized Students / Purchases
+                  </span>
+                  <div className="text-xl font-extrabold text-indigo-600">
+                    {subsidyStats.count} Enrollments
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Benefited through scholarship fund
+                  </span>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Paid by Students
+                  </span>
+                  <div className="text-xl font-extrabold text-emerald-600">
+                    ৳{subsidyStats.totalPaid.toLocaleString()} BDT
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Net collected from students
+                  </span>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    Total Course Value
+                  </span>
+                  <div className="text-xl font-extrabold text-gray-800">
+                    ৳{subsidyStats.totalOriginal.toLocaleString()} BDT
+                  </div>
+                  <span className="text-[11px] text-gray-400 mt-1 block">
+                    Original price value before reduction
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Search Bar */}
+            <div className="p-4 sm:p-6 border-b border-gray-100 bg-gray-50/40">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Search by student name, email, phone, or course title..."
+                  value={subsidySearch}
+                  onChange={(e) => setSubsidySearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                />
+              </div>
+            </div>
+
+            {/* Table Area */}
+            {filteredSubsidies.length === 0 ? (
+              <div className="p-12 text-center text-gray-500">
+                <GraduationCap className="h-12 w-12 text-gray-200 mx-auto mb-3" />
+                <p className="font-medium text-gray-700">No course subsidies match your query</p>
+                <p className="text-xs text-gray-400 mt-1">
+                  When students purchase courses with an active scholarship discount, each reduction will be tracked here.
+                </p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-sm">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-100 text-gray-600 font-medium">
+                      <th className="p-4">Course</th>
+                      <th className="p-4">Student (Buyer)</th>
+                      <th className="p-4 text-right">Original Price</th>
+                      <th className="p-4 text-center">Discount</th>
+                      <th className="p-4 text-right">Reduced / Fund Subsidized</th>
+                      <th className="p-4 text-right">Student Paid</th>
+                      <th className="p-4">Date</th>
+                      <th className="p-4">Order ID</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {filteredSubsidies.map((item) => (
+                      <tr key={item.orderId} className="hover:bg-gray-50/50 transition">
+                        {/* Course */}
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
+                            {item.course?.thumbnail ? (
+                              <img
+                                src={item.course.thumbnail}
+                                alt={item.course.title}
+                                className="w-12 h-8 rounded-lg object-cover border border-gray-200 shrink-0 shadow-sm"
+                              />
+                            ) : (
+                              <div className="w-12 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs shrink-0">
+                                <BookOpen className="w-4 h-4" />
+                              </div>
+                            )}
+                            <div>
+                              <div className="font-semibold text-gray-900 line-clamp-1 max-w-[200px]" title={item.course?.title}>
+                                {item.course?.title || "Unknown Course"}
+                              </div>
+                              <div className="text-xs text-gray-400">
+                                {item.course?.category || "General"}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* Student */}
+                        <td className="p-4">
+                          <div className="flex items-center gap-2.5">
+                            {item.student?.picture ? (
+                              <img
+                                src={item.student.picture}
+                                alt={item.student.name}
+                                className="w-8 h-8 rounded-full object-cover border border-indigo-200 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs shrink-0">
+                                {(item.student?.name || "S").charAt(0).toUpperCase()}
+                              </div>
+                            )}
+                            <div>
+                              <div className="font-semibold text-gray-800 text-xs">
+                                {item.student?.name || "Student"}
+                              </div>
+                              <div className="text-[11px] text-gray-500">
+                                {item.student?.email || "N/A"}
+                              </div>
+                              {item.student?.phone && item.student?.phone !== "N/A" && (
+                                <div className="text-[10px] text-gray-400 font-mono flex items-center gap-1">
+                                  <Phone className="w-2.5 h-2.5 text-indigo-500" />
+                                  <span>{item.student.phone}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* Original Price */}
+                        <td className="p-4 text-right text-gray-500 font-medium whitespace-nowrap">
+                          ৳{item.originalPrice?.toLocaleString()} BDT
+                        </td>
+
+                        {/* Discount */}
+                        <td className="p-4 text-center whitespace-nowrap">
+                          <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                            {item.discountPercentage}% OFF
+                          </span>
+                        </td>
+
+                        {/* Reduced / Fund Subsidized */}
+                        <td className="p-4 text-right whitespace-nowrap">
+                          <div className="font-bold text-rose-600">
+                            -৳{item.reducedAmount?.toLocaleString()} BDT
+                          </div>
+                          <span className="text-[10px] bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded border border-rose-200 font-medium inline-block mt-0.5">
+                            Fund Deducted
+                          </span>
+                        </td>
+
+                        {/* Student Paid */}
+                        <td className="p-4 text-right font-bold text-emerald-600 whitespace-nowrap">
+                          ৳{item.paidAmount?.toLocaleString()} BDT
+                        </td>
+
+                        {/* Date */}
+                        <td className="p-4 text-gray-500 whitespace-nowrap text-xs">
+                          {new Date(item.date).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric"
+                          })}
+                        </td>
+
+                        {/* Transaction / Order ID */}
+                        <td className="p-4 text-xs font-mono text-gray-400 whitespace-nowrap">
+                          {item.transactionId || item.orderId.slice(-8)}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

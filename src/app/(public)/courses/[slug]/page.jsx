@@ -296,22 +296,31 @@ export default function CourseSinglePage() {
                     <aside className="w-full lg:w-96 flex-shrink-0 lg:sticky lg:top-24 self-start space-y-6">
                         {/* Price & Enroll Card */}
                         <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl p-8 border border-gray-200">
-                            <div className="flex items-center justify-between mb-4">
+                            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                                 {course?.price ? (
-                                    <div className="flex items-baseline gap-2">
+                                    <div className="flex items-baseline gap-2.5">
                                         <span className="text-3xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-blue-600 bg-clip-text text-transparent">
                                             ৳{course?.price}
                                         </span>
-                                        <span className="text-sm text-gray-500 line-through">৳{(course?.price * 2).toFixed(2)}</span>
+                                        {course?.oldPrice ? (
+                                            <span className="text-base text-gray-400 line-through">৳{course?.oldPrice}</span>
+                                        ) : null}
                                     </div>
                                 ) : (
-                                    <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
-                                        FREE
-                                    </h3>
+                                    <div className="flex items-baseline gap-2.5">
+                                        <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 bg-clip-text text-transparent">
+                                            FREE
+                                        </h3>
+                                        {course?.oldPrice ? (
+                                            <span className="text-base text-gray-400 line-through">৳{course?.oldPrice}</span>
+                                        ) : null}
+                                    </div>
                                 )}
-                                {/* <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
-                                    50% OFF
-                                </span> */}
+                                {course?.discountPercentage > 0 && (
+                                    <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                                        <span>🎓 {course.discountPercentage}% Scholarship Fund</span>
+                                    </span>
+                                )}
                             </div>
 
                             {/* <div className="flex gap-3 mb-6">

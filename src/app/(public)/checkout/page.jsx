@@ -40,7 +40,10 @@ export default function CheckoutPage() {
   const getConvertedPrice = (usd) => `৳${Number(usd || 0).toFixed(2)}`;
 
 
-  const subTotal = course.price
+  const originalPrice = course?.originalPrice ?? course?.price ?? 0;
+  const discountAmount = course?.discountAmount ?? 0;
+  const discountPercentage = course?.discountPercentage ?? 0;
+  const subTotal = course?.price ?? 0;
   const tax = 0;
   const total = subTotal + tax;
 
@@ -177,15 +180,29 @@ export default function CheckoutPage() {
 
                 <div className="my-6 border-t border-gray-200" />
 
-                <div className="text-sm text-gray-700 space-y-2">
-                  <Row label="Subtotal" value={getConvertedPrice(subTotal)} />
-                  {/* <Row label="Discount" value={getConvertedPrice(tax)} /> */}
+                <div className="text-sm text-gray-700 space-y-2.5">
+                  <Row label="Original Course Price" value={getConvertedPrice(originalPrice)} />
+                  {discountAmount > 0 && (
+                    <div className="flex justify-between items-center text-emerald-600 font-medium">
+                      <span className="flex items-center gap-1">
+                        🎓 Scholarship Subsidy ({discountPercentage}%)
+                      </span>
+                      <span>-{getConvertedPrice(discountAmount)}</span>
+                    </div>
+                  )}
                   <div className="border-t border-gray-100 my-2" />
-                  <Row label="Total" value={getConvertedPrice(total)} highlight />
+                  <Row label="Total Payable" value={getConvertedPrice(total)} highlight />
                 </div>
 
-                <div className="mt-6 bg-gray-50 border border-gray-100 p-4 text-xs text-gray-700 rounded-lg flex items-start gap-2">
-                  <BadgeCheck className="h-4 w-4 text-[var(--color-primary,#0ea5e9)] mt-0.5" />
+                {discountAmount > 0 && (
+                  <div className="mt-4 bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-800 rounded-lg flex items-start gap-2">
+                    <BadgeCheck className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                    <p>৳{discountAmount.toLocaleString()} is subsidized by our Community Donation Scholarship Fund.</p>
+                  </div>
+                )}
+
+                <div className="mt-4 bg-gray-50 border border-gray-100 p-3 text-xs text-gray-700 rounded-lg flex items-start gap-2">
+                  <BadgeCheck className="h-4 w-4 text-[var(--color-primary,#0ea5e9)] mt-0.5 shrink-0" />
                   <p>7-day, 95% money-back guarantee. No hidden charges.</p>
                 </div>
               </div>
